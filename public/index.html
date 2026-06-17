@@ -64,7 +64,7 @@
       <div class="draft-header">
         <span id="draft-formation-label" class="draft-formation-badge">4-3-3</span>
         <div class="wildcards-container">
-          <span class="wildcard-label">Wildcards:</span>
+          <span class="wildcard-label">Re-rolls:</span>
           <div id="wildcards-display"></div>
         </div>
       </div>
@@ -81,7 +81,6 @@
         <button class="dice-btn" id="dice-btn">
           <span class="dice-face" id="dice-face">🎲</span>
         </button>
-        <button class="btn btn-ghost" id="wildcard-btn" disabled>Pular (Wildcard)</button>
       </div>
 
       <div id="draft-pick-list" class="draft-pick-list hidden">
@@ -93,11 +92,20 @@
               <span id="pick-year" class="pick-year"></span>
             </div>
           </div>
-          <div class="pick-slot-info">
-            Posição aberta: <strong id="pick-position"></strong>
+          <div class="pick-reroll-area">
+            <span class="wildcards-tag">⚡ <span id="wildcards-remaining">3</span></span>
+            <button class="btn btn-ghost btn-sm" id="reroll-year-btn" disabled title="Manter Copa, mudar País">🔄 País</button>
+            <button class="btn btn-ghost btn-sm" id="reroll-country-btn" disabled title="Manter País, mudar Copa">🔄 Copa</button>
           </div>
         </div>
         <div class="players-list" id="players-list"></div>
+        <div id="position-selector" class="position-selector hidden">
+          <div class="pos-selector-header">
+            <span>Onde escalar <strong id="pos-selector-name"></strong>?</span>
+            <button class="btn-close-pos" id="btn-cancel-pick">✕ Cancelar</button>
+          </div>
+          <div id="pos-selector-slots" class="pos-slots-grid"></div>
+        </div>
       </div>
     </div>
   </div>

@@ -65,10 +65,11 @@ function renderDraftScreen() {
   document.getElementById('draft-formation-label').textContent = state.formation;
   document.getElementById('draft-mode-badge').textContent =
     state.mode === 'classic' ? 'CLÁSSICO' : 'DE MEMÓRIA';
+  _swapSourceIndex = null;
   renderField();
   renderWildcards();
   hideDraftPick();
-  updateWildcardBtn();
+  updateRerollBtns();
 }
 
 // ── Field Visual ──────────────────────────────────────────────
@@ -89,18 +90,32 @@ function renderField() {
 
     if (slot.player) {
       const tier = getTier(slot.player.overall);
+      const isSwapSource = _swapSourceIndex === i;
+      el.className = 'field-slot clickable';
       el.innerHTML = `
-        <div class="slot-circle filled tier-${tier}">
+        <div class="slot-circle filled tier-${tier}${isSwapSource ? ' swap-source' : ''}">
           ${state.mode === 'classic' ? slot.player.overall : '?'}
         </div>
         <div class="slot-name">${slot.player.name.split(' ').pop()}</div>
         <div class="slot-ovr">${slot.pos}</div>
       `;
+      el.addEventListener('click', () => {
+        if (state.currentRoll) return;
+        if (_swapSourceIndex !== null) {
+          handleSwapClick(i);
+        } else {
+          startSwapMode(i);
+        }
+      });
     } else {
       el.innerHTML = `
         <div class="slot-circle ${isActive ? 'active' : ''}">${slot.pos}</div>
         <div class="slot-name"></div>
       `;
+      if (_swapSourceIndex !== null) {
+        el.className = 'field-slot clickable';
+        el.addEventListener('click', () => handleSwapClick(i));
+      }
     }
     field.appendChild(el);
   });
@@ -131,9 +146,9 @@ function renderDraftPick(roll) {
   document.getElementById('pick-country').textContent = roll.squad.country;
   document.getElementById('pick-year').textContent = `Copa ${roll.squad.worldCup}`;
 
-  const nextPos = getNextOpenPosition();
-  document.getElementById('pick-position').textContent = nextPos || '?';
+  hidePositionSelector();
 
+  const openPositions = getOpenPositions();
   const list = document.getElementById('players-list');
   list.innerHTML = '';
 
@@ -141,9 +156,11 @@ function renderDraftPick(roll) {
   for (const player of sorted) {
     const tier = getTier(player.overall);
     const showRating = state.mode === 'classic';
+    const compatible = openPositions.some(op => playerFitsSlot(player, op));
 
+    const allPos = [player.position, ...(player.altPositions || [])].join('/');
     const card = document.createElement('div');
-    card.className = 'player-card';
+    card.className = `player-card${compatible ? '' : ' incompatible'}`;
     card.innerHTML = `
       <div class="player-ovr ${showRating ? `tier-${tier}` : 'hidden-rating'}">
         ${showRating ? player.overall : '?'}
@@ -152,25 +169,85 @@ function renderDraftPick(roll) {
         <div class="player-name">${player.name}</div>
         <div class="player-meta">${player.country} · Copa ${player.worldCup}</div>
       </div>
-      <div class="player-pos-badge">${player.position}</div>
+      <div class="player-pos-badge">${allPos}</div>
     `;
-    card.addEventListener('click', () => {
-      if (pickPlayer(player.id)) {
-        hideDraftPick();
-        renderField();
-        updateWildcardBtn();
-        document.getElementById('wildcard-btn').disabled = true;
-      }
-    });
+    if (compatible) {
+      card.addEventListener('click', () => showPositionSelector(player));
+    }
     list.appendChild(card);
   }
 
-  updateWildcardBtn();
+  updateRerollBtns();
+}
+
+// ── Position Selector ─────────────────────────────────────────
+let _selectedPickPlayer = null;
+
+function showPositionSelector(player) {
+  _selectedPickPlayer = player;
+  const openSlots = state.slots
+    .map((s, i) => ({ ...s, index: i }))
+    .filter(s => !s.player && playerFitsSlot(player, s.pos));
+
+  document.getElementById('pos-selector-name').textContent = player.name;
+  const slotsEl = document.getElementById('pos-selector-slots');
+  slotsEl.innerHTML = '';
+
+  for (const slot of openSlots) {
+    const btn = document.createElement('button');
+    btn.className = 'btn-pos-option';
+    btn.textContent = slot.pos;
+    btn.addEventListener('click', () => {
+      if (pickPlayerToSlot(player.id, slot.index)) {
+        hidePositionSelector();
+        hideDraftPick();
+        renderField();
+        updateRerollBtns();
+      }
+    });
+    slotsEl.appendChild(btn);
+  }
+
+  document.getElementById('players-list').classList.add('hidden');
+  document.getElementById('position-selector').classList.remove('hidden');
+}
+
+function hidePositionSelector() {
+  _selectedPickPlayer = null;
+  document.getElementById('position-selector').classList.add('hidden');
+  document.getElementById('players-list').classList.remove('hidden');
 }
 
 function hideDraftPick() {
   document.getElementById('draft-waiting').style.display = '';
   document.getElementById('draft-pick-list').classList.add('hidden');
+  hidePositionSelector();
+}
+
+// ── Swap mode (mover jogadores já escalados) ──────────────────
+let _swapSourceIndex = null;
+
+function startSwapMode(slotIndex) {
+  _swapSourceIndex = slotIndex;
+  renderField();
+  showToast('Clique em outro jogador para trocar, ou no mesmo para cancelar.');
+}
+
+function handleSwapClick(slotIndex) {
+  if (_swapSourceIndex === slotIndex) {
+    _swapSourceIndex = null;
+    renderField();
+    return;
+  }
+  movePlayer(_swapSourceIndex, slotIndex);
+  _swapSourceIndex = null;
+  renderField();
+  showToast('Posições trocadas!');
+}
+
+function cancelSwapMode() {
+  _swapSourceIndex = null;
+  renderField();
 }
 
 // ── Wildcards ─────────────────────────────────────────────────
@@ -328,6 +405,8 @@ function animateSimulation(simResult) {
 
 // Override the simulate button to animate
 document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btn-cancel-pick').addEventListener('click', hidePositionSelector);
+
   document.getElementById('btn-simulate').addEventListener('click', () => {
     const players = state.slots.map(s => s.player).filter(Boolean);
     if (players.length < 11) { showToast('Monte o time completo primeiro!'); return; }

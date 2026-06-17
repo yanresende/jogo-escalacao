@@ -131,11 +131,7 @@ function rollDice() {
   if (eligible.length === 0) return null;
 
   const squad = eligible[Math.floor(Math.random() * eligible.length)];
-  const players = squad.players.filter(p =>
-    openPositions.some(op => playerFitsSlot(p, op))
-  );
-
-  state.currentRoll = { squad, players };
+  state.currentRoll = { squad, players: squad.players };
   return state.currentRoll;
 }
 
@@ -144,6 +140,71 @@ function useWildcard() {
   if (state.wildcards <= 0) return false;
   state.wildcards--;
   state.currentRoll = null;
+  return true;
+}
+
+// ── Reroll: manter Copa, mudar País ──────────────────────────
+function rollSameYear() {
+  if (state.wildcards <= 0 || !state.currentRoll) return null;
+  const currentYear = state.currentRoll.squad.worldCup;
+  const openPositions = getOpenPositions();
+
+  const eligible = SQUAD_LIST.filter(squad =>
+    squad.worldCup === currentYear &&
+    squad.country !== state.currentRoll.squad.country &&
+    squad.players.some(p => openPositions.some(op => playerFitsSlot(p, op)))
+  );
+  if (eligible.length === 0) return null;
+
+  state.wildcards--;
+  const squad = eligible[Math.floor(Math.random() * eligible.length)];
+  state.currentRoll = { squad, players: squad.players };
+  return state.currentRoll;
+}
+
+// ── Reroll: manter País, mudar Copa ──────────────────────────
+function rollSameCountry() {
+  if (state.wildcards <= 0 || !state.currentRoll) return null;
+  const currentCountry = state.currentRoll.squad.country;
+  const openPositions = getOpenPositions();
+
+  const eligible = SQUAD_LIST.filter(squad =>
+    squad.country === currentCountry &&
+    squad.worldCup !== state.currentRoll.squad.worldCup &&
+    squad.players.some(p => openPositions.some(op => playerFitsSlot(p, op)))
+  );
+  if (eligible.length === 0) return null;
+
+  state.wildcards--;
+  const squad = eligible[Math.floor(Math.random() * eligible.length)];
+  state.currentRoll = { squad, players: squad.players };
+  return state.currentRoll;
+}
+
+// ── Pick player em slot específico ────────────────────────────
+function pickPlayerToSlot(playerId, slotIndex) {
+  const player = PLAYERS.find(p => p.id === playerId);
+  if (!player) return false;
+  const slot = state.slots[slotIndex];
+  if (!slot || slot.player) return false;
+  if (!playerFitsSlot(player, slot.pos)) return false;
+
+  slot.player = player;
+  state.pickedPlayers.push(player);
+  state.currentRoll = null;
+  return true;
+}
+
+// ── Trocar posição de jogadores já escalados ──────────────────
+function movePlayer(fromIndex, toIndex) {
+  const from = state.slots[fromIndex];
+  const to = state.slots[toIndex];
+  if (!from || !to) return false;
+
+  const temp = from.player;
+  from.player = to.player;
+  to.player = temp;
+  state.pickedPlayers = state.slots.filter(s => s.player).map(s => s.player);
   return true;
 }
 
@@ -246,7 +307,8 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('dice-btn').addEventListener('click', onDiceClick);
-  document.getElementById('wildcard-btn').addEventListener('click', onWildcardClick);
+  document.getElementById('reroll-year-btn').addEventListener('click', onRerollYearClick);
+  document.getElementById('reroll-country-btn').addEventListener('click', onRerollCountryClick);
   // btn-simulate is handled by ui.js (animated version)
   document.getElementById('btn-share').addEventListener('click', onShare);
   document.getElementById('btn-play-again').addEventListener('click', onPlayAgain);
@@ -261,22 +323,34 @@ function onDiceClick() {
   renderDraftPick(roll);
   document.getElementById('dice-btn').classList.add('rolling');
   setTimeout(() => document.getElementById('dice-btn').classList.remove('rolling'), 500);
-  updateWildcardBtn();
+  updateRerollBtns();
 }
 
-function onWildcardClick() {
-  if (useWildcard()) {
-    hideDraftPick();
-    updateWildcardBtn();
-    renderWildcards();
-    showToast('Wildcard usado!');
-  }
+function onRerollYearClick() {
+  const roll = rollSameYear();
+  if (!roll) { showToast('Nenhuma outra seleção disponível para essa Copa!'); return; }
+  renderDraftPick(roll);
+  updateRerollBtns();
+  renderWildcards();
 }
 
-function updateWildcardBtn() {
-  const btn = document.getElementById('wildcard-btn');
-  btn.disabled = state.wildcards <= 0 || !state.currentRoll;
-  btn.textContent = `Pular (Wildcard ${state.wildcards} restante${state.wildcards !== 1 ? 's' : ''})`;
+function onRerollCountryClick() {
+  const roll = rollSameCountry();
+  if (!roll) { showToast('Nenhuma outra Copa disponível para esse país!'); return; }
+  renderDraftPick(roll);
+  updateRerollBtns();
+  renderWildcards();
+}
+
+function updateRerollBtns() {
+  const hasRoll = !!state.currentRoll;
+  const hasWildcards = state.wildcards > 0;
+  const yearBtn = document.getElementById('reroll-year-btn');
+  const countryBtn = document.getElementById('reroll-country-btn');
+  const remaining = document.getElementById('wildcards-remaining');
+  if (yearBtn) yearBtn.disabled = !hasRoll || !hasWildcards;
+  if (countryBtn) countryBtn.disabled = !hasRoll || !hasWildcards;
+  if (remaining) remaining.textContent = state.wildcards;
 }
 
 function onSimulate() {
