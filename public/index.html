@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7a0 — Sete a Zero</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ========== MENU ========== -->
+<div id="screen-menu" class="screen active">
+  <div class="menu-bg"></div>
+  <div class="menu-content">
+    <div class="logo">
+      <span class="logo-7">7</span><span class="logo-a">a</span><span class="logo-0">0</span>
+    </div>
+    <p class="logo-sub">Sete a Zero</p>
+    <p class="logo-desc">Monte seu time dos sonhos com craques históricos das Copas do Mundo</p>
+    <div class="menu-buttons">
+      <button class="btn btn-primary" id="btn-solo">⚽ Jogar Solo</button>
+      <button class="btn btn-secondary" id="btn-multi">🌐 Multiplayer</button>
+    </div>
+    <p class="menu-hint">250 seleções · 1000+ jogadores · 18 Copas do Mundo</p>
+  </div>
+</div>
+
+<!-- ========== MODO DE JOGO ========== -->
+<div id="screen-mode" class="screen">
+  <div class="screen-header">
+    <button class="btn-back" id="back-from-mode">← Voltar</button>
+    <h2>Escolha o Modo</h2>
+  </div>
+  <div class="mode-cards">
+    <div class="mode-card" id="mode-classic">
+      <div class="mode-icon">👁️</div>
+      <h3>Clássico</h3>
+      <p>Os ratings dos jogadores ficam visíveis. Ideal para iniciantes.</p>
+      <span class="mode-badge">Recomendado</span>
+    </div>
+    <div class="mode-card" id="mode-memory">
+      <div class="mode-icon">🧠</div>
+      <h3>De Memória</h3>
+      <p>Ratings ocultos. Você precisa conhecer o futebol histórico.</p>
+      <span class="mode-badge hard">Difícil</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SELEÇÃO DE FORMAÇÃO ========== -->
+<div id="screen-formation" class="screen">
+  <div class="screen-header">
+    <button class="btn-back" id="back-from-formation">← Voltar</button>
+    <h2>Escolha a Formação</h2>
+  </div>
+  <div class="formation-grid" id="formation-grid"></div>
+</div>
+
+<!-- ========== DRAFT ========== -->
+<div id="screen-draft" class="screen">
+  <div class="draft-layout">
+    <!-- Painel esquerdo: formação atual -->
+    <div class="draft-field-panel">
+      <div class="draft-header">
+        <span id="draft-formation-label" class="draft-formation-badge">4-3-3</span>
+        <div class="wildcards-container">
+          <span class="wildcard-label">Wildcards:</span>
+          <div id="wildcards-display"></div>
+        </div>
+      </div>
+      <div class="field-container">
+        <div class="field" id="field-visual"></div>
+      </div>
+      <div class="draft-mode-badge" id="draft-mode-badge">CLÁSSICO</div>
+    </div>
+
+    <!-- Painel direito: rolagem e seleção -->
+    <div class="draft-pick-panel">
+      <div id="draft-waiting" class="draft-waiting">
+        <p>Clique no dado para receber uma seleção</p>
+        <button class="dice-btn" id="dice-btn">
+          <span class="dice-face" id="dice-face">🎲</span>
+        </button>
+        <button class="btn btn-ghost" id="wildcard-btn" disabled>Pular (Wildcard)</button>
+      </div>
+
+      <div id="draft-pick-list" class="draft-pick-list hidden">
+        <div class="pick-header">
+          <div class="pick-team-info">
+            <span class="pick-flag" id="pick-flag"></span>
+            <div>
+              <strong id="pick-country"></strong>
+              <span id="pick-year" class="pick-year"></span>
+            </div>
+          </div>
+          <div class="pick-slot-info">
+            Posição aberta: <strong id="pick-position"></strong>
+          </div>
+        </div>
+        <div class="players-list" id="players-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SIMULAÇÃO ========== -->
+<div id="screen-simulation" class="screen">
+  <div class="screen-header">
+    <h2>🏆 Torneio</h2>
+    <div class="team-overall-badge">
+      Time: <strong id="sim-overall"></strong> OVR
+    </div>
+  </div>
+  <div class="sim-team-preview" id="sim-team-preview"></div>
+  <div class="sim-stages" id="sim-stages"></div>
+  <div class="sim-actions">
+    <button class="btn btn-primary btn-large" id="btn-simulate">▶ Simular Torneio</button>
+  </div>
+</div>
+
+<!-- ========== RESULTADO FINAL ========== -->
+<div id="screen-results" class="screen">
+  <div class="results-container">
+    <div class="results-trophy" id="results-trophy"></div>
+    <h2 id="results-title"></h2>
+    <p id="results-subtitle"></p>
+    <div class="results-stages" id="results-stages"></div>
+    <div class="results-team" id="results-team"></div>
+    <div class="results-actions">
+      <button class="btn btn-primary" id="btn-share">🔗 Compartilhar Time</button>
+      <button class="btn btn-secondary" id="btn-play-again">↩ Jogar Novamente</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== LOBBY MULTIPLAYER ========== -->
+<div id="screen-lobby" class="screen">
+  <div class="screen-header">
+    <button class="btn-back" id="back-from-lobby">← Voltar</button>
+    <h2>🌐 Multiplayer</h2>
+  </div>
+  <div class="lobby-content">
+    <div class="lobby-card" id="lobby-create-section">
+      <h3>Criar Sala</h3>
+      <p>Crie uma sala e compartilhe o código com seu amigo.</p>
+      <button class="btn btn-primary" id="btn-create-room">Criar Sala</button>
+      <div id="room-code-display" class="room-code-display hidden">
+        <p>Código da sala:</p>
+        <div class="room-code" id="room-code-value"></div>
+        <p class="waiting-text">Aguardando oponente<span class="dots"></span></p>
+      </div>
+    </div>
+    <div class="lobby-divider">ou</div>
+    <div class="lobby-card">
+      <h3>Entrar em Sala</h3>
+      <p>Digite o código de 6 letras compartilhado pelo seu amigo.</p>
+      <div class="join-input-group">
+        <input type="text" id="room-code-input" maxlength="6" placeholder="CÓDIGO" autocomplete="off" />
+        <button class="btn btn-primary" id="btn-join-room">Entrar</button>
+      </div>
+      <p class="lobby-error hidden" id="lobby-error"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== AGUARDANDO OPONENTE (PÓS-DRAFT) ========== -->
+<div id="screen-waiting" class="screen">
+  <div class="waiting-center">
+    <div class="spinner"></div>
+    <h2>Aguardando oponente</h2>
+    <p id="waiting-msg">Seu oponente ainda está montando o time<span class="dots"></span></p>
+  </div>
+</div>
+
+<!-- ========== RESULTADO MULTIPLAYER ========== -->
+<div id="screen-match" class="screen">
+  <div class="match-container">
+    <h2 class="match-title">⚔️ Resultado da Partida</h2>
+    <div class="match-scoreboard">
+      <div class="match-team" id="match-team-a">
+        <div class="match-team-name">Você</div>
+        <div class="match-score" id="match-score-a">0</div>
+      </div>
+      <div class="match-vs">×</div>
+      <div class="match-team" id="match-team-b">
+        <div class="match-team-name">Oponente</div>
+        <div class="match-score" id="match-score-b">0</div>
+      </div>
+    </div>
+    <div class="match-winner" id="match-winner"></div>
+    <div class="match-stats" id="match-stats"></div>
+    <div class="match-events hidden" id="match-events"></div>
+    <button class="btn btn-secondary" id="btn-match-again">↩ Jogar Novamente</button>
+  </div>
+</div>
+
+<!-- ========== TOAST ========== -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- Scripts -->
+<script src="js/data.js"></script>
+<script src="js/simulation.js"></script>
+<script src="js/game.js"></script>
+<script src="js/ui.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/multiplayer.js"></script>
+</body>
+</html>

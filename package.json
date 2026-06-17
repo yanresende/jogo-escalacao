@@ -1,0 +1,14 @@
+{
+  "name": "7a0-sete-a-zero",
+  "version": "1.0.0",
+  "description": "Clone do jogo viral 7a0 — Sete a Zero da Copa do Mundo 2026",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  }
+}
