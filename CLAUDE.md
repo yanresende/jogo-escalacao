@@ -1,7 +1,9 @@
 # CLAUDE.md — 7a0 Sete a Zero
 
 Clone do jogo viral brasileiro "7a0 — Sete a Zero" (Copa do Mundo 2026).
-Draft de jogadores históricos por dados + simulação de torneio por distribuição de Poisson + multiplayer via Socket.io.
+Draft de jogadores históricos por dados + **torneio formato Copa do Mundo** (grupos + mata-mata, com
+pênaltis) simulado por distribuição de Poisson. Single-player contra bots (seleções reais) e
+multiplayer até 16 jogadores via Socket.io — **mesmo motor de torneio** (`tournament.js`) nos dois.
 
 ## Como rodar
 
@@ -35,46 +37,108 @@ jogo/
     ├── index.html             SPA — todas as telas em um único arquivo
     ├── style.css              Dark theme + cards FUT, mobile-first
     └── js/
-        ├── engine.js          Motor compartilhado (UMD): Poisson, química, táticas, conquistas
-        ├── data.js            Banco de dados de jogadores + helpers
+        ├── engine.js          Motor compartilhado (UMD): Poisson, química, táticas, pênaltis, conquistas
+        ├── data.js            Banco de dados de jogadores + helpers (com export Node no fim)
+        ├── tournament.js      Motor de torneio (UMD): grupos + mata-mata, bots de seleções reais
         ├── simulation.js      Shim legado (núcleo migrou para engine.js)
         ├── game.js            Estado global + lógica de draft + restrições
         ├── profile.js         Perfil anônimo (uid no localStorage) + sync com backend
-        ├── modes.js           Modos: Diário, Carreira, Restrição/Survival + conquistas UI
-        ├── ui.js              Renderização DOM + cards + animações
-        └── multiplayer.js     Cliente Socket.io
+        ├── modes.js           Modos single-player (Solo/Diário/Carreira/Restrição/Survival) + torneio local
+        ├── ui.js              Renderização DOM + cards + animações + bracket + ordem de pênaltis
+        └── multiplayer.js     Cliente Socket.io (lobby + torneio até 16)
 ```
 
 **Ordem de carregamento dos scripts** (declarada no `index.html`):
-`engine.js` → `data.js` → `simulation.js` → `game.js` → `profile.js` → `modes.js` → `ui.js` → `socket.io.js` → `multiplayer.js`
+`engine.js` → `data.js` → `tournament.js` → `simulation.js` → `game.js` → `profile.js` → `modes.js` → `ui.js` → `socket.io.js` → `multiplayer.js`
 
-Crítico: `engine.js` carrega **primeiro** (expõe globais via UMD). `server.js` faz
-`require('./public/js/engine.js')` para usar a **mesma** matemática do client. `game.js` depende de
-globais de `engine.js`/`data.js`; `modes.js` e `ui.js` dependem de `game.js`/`profile.js`;
-`multiplayer.js` por último. Se a ordem mudar, quebra com "X is not defined".
+Crítico: `engine.js` carrega **primeiro** (expõe globais via UMD `Object.assign(window, api)`).
+`data.js` vem em seguida (expõe `PLAYERS`, `SQUAD_LIST`, etc.). `tournament.js` depende de ambos.
+`server.js` faz `require('./public/js/engine.js')` e `require('./public/js/tournament.js')` para usar
+a **mesma** matemática do client. `game.js` depende de globais de `engine.js`/`data.js`; `modes.js` e
+`ui.js` dependem de `game.js`/`profile.js`/`tournament.js`; `multiplayer.js` por último. Se a ordem
+mudar, quebra com "X is not defined".
+
+> **Pegadinha UMD (`tournament.js`):** no browser, as funções do engine estão em `window` (via
+> `Object.assign`), mas `SQUAD_LIST` é um `const` de topo em `data.js` — binding léxico global, **não**
+> propriedade de `window`. Por isso o wrapper UMD passa `SQUAD_LIST`/`playerFitsSlot` **por nome** ao
+> factory (não via `window.SQUAD_LIST`, que seria `undefined`).
 
 ## Motor compartilhado (`engine.js`)
 
 Núcleo de simulação em padrão UMD (Node `module.exports` + browser globais). Principais exports:
-`simulateTournament(players, seed, opts)`, `simulateVersus(teamA, teamB, seed)`, `calcChemistry`,
-`calcTeamStats`, `TACTICS`, `PLAY_STYLES`/`getStyle`, `evaluateAchievements`/`ACHIEVEMENTS`,
+`simulateTournament(players, seed, opts)`, `simulateVersus(teamA, teamB, seed)`,
+`simulateShootout(teamA, teamB, seed)`, `penaltySkill(player)`, `calcChemistry`, `calcTeamStats`,
+`TACTICS`, `PLAY_STYLES`/`getStyle`, `evaluateAchievements`/`ACHIEVEMENTS`, `mulberry32`,
 `hashStringToSeed`, `encodeTeam`/`decodeTeam`. `opts = { tactic, captainId, slots, stages }`.
 
 **Química por estilo:** cada jogador tem um campo opcional `style` no `data.js` (ver Posições/Estilos);
 sem ele, `getStyle()` deriva por posição. Química = sinergia de estilos + alinhamento com a tática +
 capitão. Alimenta o OVR efetivo usado em `calcTeamStats`.
 
+### Disputa de pênaltis (`simulateShootout`)
+
+Usada no **mata-mata** quando a partida empata (tanto no torneio solo quanto no multiplayer).
+Decidida pela **qualidade** dos times, não por sorteio 50/50:
+
+- `penaltySkill(p)` = `overall + PENALTY_POS_BONUS[posição]` (atacante +10 … zagueiro −7, goleiro −14).
+- Prob. de gol de cada cobrança = `clamp(0.74 + (penaltySkill(cobrador) − overall do goleiro) × 0.011, 0.25, 0.96)`.
+  Sobe com a habilidade do cobrador, desce com o goleiro adversário; o `rng()` é a aleatoriedade
+  (azar/sorte). Quando não é gol, sorteia **defesa** (mais provável com goleiro bom) ou **para fora**.
+- Ordem de batedores = `team.penaltyOrder` (escolhida pelo usuário) + resto por habilidade.
+- **Melhor de 5** com parada antecipada; empate após 5 → **morte súbita** (1 cobrança p/ cada até
+  alguém abrir vantagem). Determinístico pelo seed.
+- Retorno: `{ a, b, kicks[], suddenDeath, winner:'a'|'b' }`. Cada `kick` tem
+  `{ team, round, kicker, result:'goal'|'save'|'miss', scored, sa, sb }`.
+
+## Motor de torneio (`tournament.js`)
+
+UMD compartilhado client+server. **Mesmo formato Copa do Mundo no solo e no multiplayer** — a única
+diferença é quem ocupa as vagas (bots no solo; humanos + bots no multiplayer).
+
+`runTournament(humanParticipants, opts)` → roda grupos de 4 (round-robin) + mata-mata até a final,
+usando `E.simulateVersus`/`E.simulateShootout` por partida. `opts = { bracketSize?, seed?, minAvgOverall? }`:
+- `bracketSize`: 4 / 8 / 16. Default escala por nº de participantes (`bracketSizeFor`). Solo usa **16**.
+- `seed`: torna o torneio determinístico (Diário usa `hashStringToSeed(data+':tour')` → mesmos bots/chave p/ todos).
+- `minAvgOverall`: filtra seleções mais fortes (dificuldade da Carreira escala por rodada).
+
+**Bots = seleções históricas reais.** `pickBotSquads` sorteia seleções distintas de `SQUAD_LIST`
+(≥11 jogadores); `buildBotTeam` escala os 11 melhores numa formação viável (`BOT_FORMATIONS`) e
+escolhe uma tática (`BOT_TACTICS`). Nome do bot = `país + ano` (ex: "Brasil 2006").
+
+Vagas (16) preenchidas: 4 grupos de 4 → top 2 de cada (8) → quartas → semi → final. Cruzamento em
+`KO_SEEDING`. Empate no grupo classifica; empate no mata-mata vai aos pênaltis.
+
+**Payload de retorno:** `{ bracketSize, champion: pid, participants[], groups[], knockout:{rounds[]}, seed }`.
+Cada `group` tem `table[]` (P/V/E/D/SG/Pts/rank) + `matches[]`. Cada `knockout.round` tem `matches[]`
+com `{a, b, ga, gb, winner, pens? }`.
+
 ## Modos de jogo (`modes.js`)
 
-`state.gameMode`: `'solo' | 'daily' | 'career' | 'survival'` (+ `'restrict'`). 
-- **Diário:** seed = `hashStringToSeed(YYYY-MM-DD)` gera `state.dailySeq` (mesma sequência de dados p/
-  todos); `rollDice()` consome dessa sequência. Pontuação enviada a `/api/daily`.
-- **Carreira:** `Profile` guarda `coins`/`careerRound`; dificuldade escala por rodada (`currentSimOpts`).
-- **Restrição/Survival:** `state.restrictions` (`budget`, `oneCountry`) é checado em `pickPlayer`/
-  `pickPlayerToSlot` via `canPickPlayer()`. Survival usa `buildSurvivalStages()` (fases infinitas).
+`state.gameMode`: `'solo' | 'daily' | 'career' | 'survival'` (+ `'restrict'`).
 
-`onTournamentComplete(simResult)` (chamado no fim de `animateSimulation`) faz recompensas, conquistas
-e submissão do ranking diário.
+**Solo, Diário, Carreira e Restrição rodam o torneio de bots** (`tournament.js`) localmente no client —
+`isLocalTournamentMode()` em `game.js` retorna `true` para esses modos. Fluxo: draft → tática →
+**ordem de pênaltis** → `runLocalTournament()` (em `modes.js`) → tela de **bracket**.
+
+`runLocalTournament()` monta o participante humano de `state.slots` (+ tática, capitão, `penaltyOrder`),
+preenche com 15 bots (chave 16) e chama `Tournament.runTournament([human], opts)`:
+- **Solo:** seed aleatório.
+- **Diário:** `opts.seed = hashStringToSeed(data+':tour')` → mesmos bots/chave p/ todos (ranking justo).
+  O draft continua determinístico via `state.dailySeq` (consumido em `rollDice()`).
+- **Carreira:** `opts.minAvgOverall = min(84, 70 + careerRound × 1.8)` → adversários mais fortes por rodada.
+  `Profile` guarda `coins`/`careerRound`/`careerWins`.
+- **Restrição:** `state.restrictions` (`budget`, `oneCountry`) checado em `pickPlayer`/`pickPlayerToSlot`
+  via `canPickPlayer()` (vale no draft); a simulação é o torneio normal.
+
+**Survival é a exceção:** mantém a campanha animada antiga (`simulateTournament` vs força crescente,
+tela `simulation` + `animateSimulation`). `buildSurvivalStages()` gera fases infinitas.
+
+`humanResultShape(result, pid)` converte o caminho do humano no torneio de volta para a "forma" antiga
+de `simResult` (`results[]`, `champion`, `stats`, `stagesReached`, `chemistry`) para reaproveitar
+conquistas, pontuação diária e moedas sem reescrever `onTournamentComplete`.
+
+`onTournamentComplete(simResult)` (chamado no fim de `runLocalTournament` ou de `animateSimulation` no
+Survival) faz recompensas, conquistas e submissão do ranking diário.
 
 ## API REST (`server.js` → `db.js`)
 
@@ -89,13 +153,18 @@ O estado global `state.screen` controla qual tela está visível. A função `go
 
 ```
 menu
- ├── Solo:  menu → mode → formation → draft → simulation → results
- └── Multi: menu → lobby → formation → draft → waiting → match
+ ├── Solo/Diário/Carreira/Restrição:  menu → (mode) → formation → draft → tactics → penalties → bracket
+ ├── Survival:                        menu → restrict → formation → draft → tactics → simulation → results
+ └── Multiplayer:  menu → lobby → (host inicia) → formation → draft → tactics → penalties → waiting → bracket
 ```
 
+`confirmTactics()` (ui.js) decide o destino: modos de torneio (multiplayer ou `isLocalTournamentMode()`)
+vão para `penalties`; Survival vai para `simulation`. Após a ordem de pênaltis, `onPenaltiesConfirmed()`
+envia ao servidor (multiplayer) ou roda `runLocalTournament()` (single-player).
+
 IDs das telas no HTML (mapeiam direto para `goTo`):
-- `menu`, `mode`, `formation`, `draft`, `simulation`, `results`
-- `lobby`, `waiting`, `match`
+- `menu`, `mode`, `formation`, `draft`, `tactics`, `penalties`, `simulation`, `results`
+- `lobby`, `waiting`, `bracket`, `achievements`, `daily`, `career`, `restrict`
 
 ---
 
@@ -103,16 +172,22 @@ IDs das telas no HTML (mapeiam direto para `goTo`):
 
 ```js
 const state = {
-  screen:        'menu',    // tela atual
-  mode:          'classic', // 'classic' | 'memory'
-  formation:     null,      // chave de FORMATIONS, ex: '4-3-3'
-  slots:         [],        // [{ pos: 'ST', player: null | PlayerObj }]
+  screen:        'menu',         // tela atual
+  mode:          'classic',      // 'classic' | 'memory' (afeta só o draft)
+  formation:     null,           // chave de FORMATIONS, ex: '4-3-3'
+  slots:         [],             // [{ pos: 'ST', player: null | PlayerObj }]
   wildcards:     3,
-  currentRoll:   null,      // { squad, players[] } — resultado do dado atual
-  pickedPlayers: [],        // jogadores já escolhidos (espelho de slots com player)
-  seed:          null,      // seed numérico gerado no initDraft
+  currentRoll:   null,           // { squad, players[] } — resultado do dado atual
+  pickedPlayers: [],             // jogadores já escolhidos (espelho de slots com player)
+  seed:          null,           // seed numérico gerado no initDraft
+  tactic:        'equilibrada',  // chave de TACTICS (engine.js)
+  captainId:     null,           // id do jogador capitão
+  penaltyOrder:  null,           // ordem de batedores de pênalti (ids) — torneio
+  gameMode:      'solo',         // 'solo' | 'daily' | 'career' | 'survival' | 'restrict'
+  restrictions:  null,           // { budget?, oneCountry?, label } | null
+  dailySeq:      null,           // sequência determinística de squads (modo diário)
   isMultiplayer: false,
-  simResults:    null,      // retorno de simulateTournament()
+  simResults:    null,           // retorno de runTournament() ou simulateTournament()
 }
 ```
 
@@ -212,7 +287,11 @@ FIELD_POSITIONS['4-3-3'] = [
 
 ---
 
-## Motor de simulação (`simulation.js`)
+## Motor de simulação (núcleo em `engine.js`)
+
+> **Nota:** `simulation.js` é um shim legado; o núcleo abaixo vive em `engine.js`. `simulateTournament`
+> (vs força crescente por fase) hoje só é usado pelo **Survival**. Os demais modos e o multiplayer usam
+> `simulateVersus` (1×1 entre times reais) via `tournament.js`.
 
 ### PRNG determinístico (Mulberry32)
 
@@ -236,7 +315,7 @@ Algoritmo de inversão. Usado para simular gols por partida. Lambda mínimo de 0
 function calcTeamStats(players) → { attack, defense, overall }
 ```
 
-Cada posição tem um peso de ataque e defesa (ver tabela em `simulation.js`). O ataque e defesa do time são médias ponderadas dos overalls dos jogadores multiplicados pelos pesos.
+Cada posição tem um peso de ataque e defesa (`WEIGHT_MAP` em `engine.js`). O ataque e defesa do time são médias ponderadas dos overalls dos jogadores multiplicados pelos pesos.
 
 Pesos principais:
 - ST: atk 1.0 / def 0.0
@@ -308,7 +387,11 @@ Para alterar a dificuldade, mude os `strength` aqui. Para adicionar fases (ex: f
 
 ### Lógica do `pickPlayer`
 
-Primeiro tenta encaixe exato (posição do jogador == posição do slot). Se não houver, usa qualquer slot aberto onde `playerFitsSlot` retorne true. Isso evita desperdiçar um ST em um slot de GK.
+Rejeita jogador **já escalado** (`state.slots.some(s => s.player?.id === id)`) — sem isso, o mesmo
+jogador poderia ocupar dois slots. Depois tenta encaixe exato (posição do jogador == posição do slot);
+se não houver, usa qualquer slot aberto onde `playerFitsSlot` retorne true (evita desperdiçar um ST num
+slot de GK). `pickPlayerToSlot` aplica a mesma dedup. No painel de draft, jogadores já escalados ou
+incompatíveis aparecem como `.incompatible` (sem clique).
 
 ### Wildcards
 
@@ -328,10 +411,13 @@ Primeiro tenta encaixe exato (posição do jogador == posição do slot). Se nã
 | `renderDraftPick(roll)` | Mostra a lista de jogadores da rolagem atual |
 | `hideDraftPick()` | Esconde a lista, mostra o dado novamente |
 | `renderWildcards()` | Atualiza os 3 ícones ⚡ (risca os usados) |
-| `renderSimulation()` | Monta a tela de preview do time + stage cards vazios |
-| `animateSimulation(result)` | Revela os resultados fase a fase (600ms por fase) |
-| `renderResults(result, players)` | Preenche a tela de resultados finais |
-| `renderMatchResult(data, isPlayerA)` | Preenche a tela de resultado multiplayer |
+| `renderSimulation()` | Monta a tela de preview do time + stage cards vazios (Survival) |
+| `animateSimulation(result)` | Revela os resultados fase a fase, 600ms por fase (Survival) |
+| `renderResults(result, players)` | Preenche a tela de resultados finais (Survival) |
+| `renderTactics()` / `confirmTactics()` | Tela de tática + capitão; roteia p/ pênaltis ou simulação |
+| `renderPenaltyOrder()` | Tela de ordem de batedores (setas ▲▼, "Auto" por habilidade) |
+| `renderTournamentResult(data)` | Tela de bracket: campeão, "seu caminho", grupos, mata-mata, pênaltis |
+| `renderLobbyRoster(data, myId)` | Lista de jogadores na sala + botão "Iniciar" (host) |
 | `showToast(msg)` | Exibe notificação temporária por 3 segundos |
 
 ### Responsividade do campo
@@ -350,48 +436,60 @@ O campo usa `position: relative` e cada slot usa `position: absolute; left: X%; 
 
 ## Multiplayer (`multiplayer.js` + `server.js`)
 
+Torneio formato Copa do Mundo para **até 16 jogadores**. O host cria a sala, jogadores entram com
+apelido, o host inicia (mín. 2). Vagas restantes da chave viram **bots**. Cada jogador monta **um time**
+e o servidor simula o **torneio inteiro de uma vez** quando todos os times chegam — cada jogador
+percorre seu próprio caminho (um pode chegar à final enquanto outro cai nos grupos).
+
 ### Estrutura de salas no servidor
 
 ```js
 rooms = Map<roomCode, {
-  players: [socketId, socketId?],   // máx 2
-  teams:   [team|null, team|null],  // time de cada jogador
-  timeout: Timer|null               // cleanup timer
+  hostId, started, finished,
+  members: [{ id (socketId), name, team|null, connected }],   // até 16
+  draftTimer: Timer|null, cleanupTimer: Timer|null,
 }>
 ```
 
-`socket.data.roomCode` e `socket.data.playerIndex` ficam guardados no socket para rastrear qual sala/jogador cada conexão representa.
+`socket.data.roomCode` guarda a sala de cada conexão. Tamanho da chave (4/8/16) escala pelo nº de
+membros (`tournament.bracketSizeFor`).
 
 ### Eventos Socket.io
 
 **Client → Server:**
 | Evento | Payload | Resposta (callback) |
 |--------|---------|---------------------|
-| `create_room` | — | `{ roomCode }` |
-| `join_room` | código (string) | `{ ok }` ou `{ error }` |
-| `draft_complete` | array de 11 jogadores | — |
+| `create_room` | `name` | `{ roomCode }` |
+| `join_room` | `code, name` | `{ ok }` ou `{ error }` |
+| `start_tournament` | — (só host, ≥2) | `{ ok }` ou `{ error }` |
+| `draft_complete` | `{ players, slots, tactic, captainId, penaltyOrder }` | — |
 
 **Server → Client:**
 | Evento | Payload | Quando |
 |--------|---------|--------|
-| `opponent_joined` | — | Oponente entrou (emitido só para o criador) |
-| `both_connected` | — | Ambos estão na sala (emitido para os dois) |
-| `opponent_ready` | — | Oponente terminou o draft |
-| `match_result` | `{ goalsA, goalsB, statsA, statsB, teamA, teamB, seed }` | Ambos terminaram |
-| `opponent_disconnected` | — | Oponente desconectou |
+| `lobby_update` | `{ roomCode, hostId, started, count, max, players[] }` | Entrou/saiu alguém |
+| `tournament_starting` | `{ bracketSize, count }` | Host iniciou → clientes vão à formação |
+| `opponent_ready` | `{ name }` | Um jogador terminou o draft |
+| `tournament_result` | resultado de `runTournament` + `youId` | Todos draftaram (ou deadline) |
 
 ### Simulação no servidor
 
-O servidor recalcula as stats dos dois times e roda a simulação (mesmas fórmulas Poisson do client) quando ambos os `draft_complete` chegam. O resultado é emitido via `match_result` para os dois sockets da sala.
+`finishTournament(room)` monta os participantes humanos (times com 11 jogadores) e chama
+`tournament.runTournament(humans)` (que completa com bots). O payload é emitido **por socket** com
+`youId` próprio de cada um, para o cliente destacar o caminho do jogador. Há um **deadline de draft**
+(`DRAFT_DEADLINE_MS`, 90s): quem não enviar o time a tempo perde a vaga (vira bot).
 
-### Flag `isPlayerA`
+### Cliente
 
-Em `multiplayer.js`, `isPlayerA = true` para quem criou a sala, `false` para quem entrou. Usada em `renderMatchResult(data, isPlayerA)` para saber se `data.goalsA` é o score "meu" ou do oponente.
+`multiplayer.js` mantém o lobby (roster via `renderLobbyRoster`), o botão "Iniciar" (só host),
+`sendDraftComplete()` (envia o time + `penaltyOrder`, vai p/ `waiting`) e, ao receber
+`tournament_result`, chama `renderTournamentResult` → tela `bracket`.
 
 ### Cleanup de salas
 
-- Após `match_result`: sala deletada em 5 minutos
-- Após `disconnect`: sala deletada em 30 segundos (janela para reconexão)
+- Após `tournament_result`: sala deletada em 5 minutos (`cleanupTimer`).
+- `disconnect` antes de iniciar: remove o membro, reatribui host, `lobby_update`.
+- `disconnect` depois de iniciar: mantém o time já enviado; encerra se os restantes já draftaram.
 
 ---
 
@@ -429,10 +527,18 @@ Definidas em `style.css` na seção `── Draft Pick Panel ──`.
 O `game.js` NÃO adiciona listener no `btn-simulate` (está comentado). Só o `ui.js` adiciona, na sua própria `DOMContentLoaded`. Se por acidente o listener for adicionado nos dois, a simulação roda duas vezes e o jogo avança direto para resultados sem animação.
 
 ### 2. Ordem dos scripts importa
-`data.js` expõe `PLAYERS`, `SQUAD_LIST`, `POS_COMPAT`, `getTier`, `playerFitsSlot` como globais. `simulation.js` expõe `simulateTournament`, `calcTeamStats`, `generateSeed`, `encodeTeam`, `decodeTeam`. `game.js` expõe `state`, `FORMATIONS`, `FIELD_POSITIONS` e todas as funções de lógica. Se a ordem for alterada no `index.html`, o jogo quebra com "X is not defined".
+`engine.js` expõe a matemática como globais (`Object.assign(window, …)`). `data.js` expõe `PLAYERS`,
+`SQUAD_LIST`, `POS_COMPAT`, `getTier`, `playerFitsSlot`. `tournament.js` expõe `window.Tournament`
+(usa engine + data). `game.js` expõe `state`, `FORMATIONS`, `FIELD_POSITIONS`, `isLocalTournamentMode`.
+Se a ordem for alterada no `index.html`, o jogo quebra com "X is not defined". Ver também a **pegadinha
+UMD do `tournament.js`** na seção de estrutura de arquivos.
 
-### 3. `sendDraftComplete` é global de `multiplayer.js`
-Em `ui.js`, `renderField()` chama `sendDraftComplete()` via `typeof sendDraftComplete === 'function'`. Isso funciona porque `multiplayer.js` declara a função no escopo global. Se `multiplayer.js` for refatorado para um módulo ES, esse acoplamento precisa ser resolvido.
+### 3. Fluxo do fim do draft (tática → pênaltis → torneio)
+Quando o draft completa, `ui.js` vai para `tactics`. `confirmTactics()` então decide: modos de torneio
+(multiplayer ou `isLocalTournamentMode()`) vão para a tela `penalties`; Survival vai para `simulation`.
+`onPenaltiesConfirmed()` (ui.js) chama `sendDraftComplete()` (multiplayer, global de `multiplayer.js`)
+ou `runLocalTournament()` (single-player, global de `modes.js`). Esse acoplamento por globais quebra se
+algum desses arquivos virar módulo ES.
 
 ### 4. `state.pickedPlayers` vs `state.slots`
 `state.slots` é a fonte da verdade — 11 objetos `{pos, player}`. `state.pickedPlayers` é uma lista auxiliar de jogadores escolhidos, usada em `calcTeamStats` e em algumas verificações. Ao resetar o jogo (`onPlayAgain`), ambos precisam ser limpos.
@@ -450,11 +556,19 @@ Quando um time é carregado via URL (`?team=`), a formação usada é sempre `'4
 ### Adicionar jogador
 Adicione no array `PLAYERS` em `public/js/data.js`. ID único, posição válida, worldCup numérico.
 
-### Mudar força dos adversários
-Edite os valores `strength` em `STAGE_CONFIG` em `public/js/simulation.js`.
+### Mudar força dos adversários (Survival)
+Edite os valores `strength` em `STAGE_CONFIG` em `engine.js`. Só afeta o Survival/campanha legada.
 
-### Adicionar nova fase ao torneio
-Adicione objeto em `STAGE_CONFIG`. Adicione o `id` no mapa `stageNames` em `renderResults()` em `ui.js`.
+### Mudar dificuldade da Carreira
+Ajuste `opts.minAvgOverall` em `runLocalTournament()` (`modes.js`) — escala por `careerRound`.
+
+### Mudar a matemática dos pênaltis
+`PENALTY_POS_BONUS` (bônus por posição) e a constante `0.011` em `penaltyConvProb` (`engine.js`)
+controlam o peso da qualidade vs. sorte. Limites em `clamp(..., 0.25, 0.96)`.
+
+### Mudar tamanho/seed do torneio
+`runTournament(humans, { bracketSize, seed, minAvgOverall })` em `tournament.js`. Solo usa
+`bracketSize: 16`; Diário passa `seed` determinístico. Cruzamentos do mata-mata em `KO_SEEDING`.
 
 ### Mudar tempo da animação
 Em `animateSimulation()` em `ui.js`, o `setTimeout(showNext, 600)` controla o delay entre fases. O `setTimeout(..., 300)` inicial é o delay antes da primeira fase aparecer.
