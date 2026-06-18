@@ -425,6 +425,84 @@
     };
   }
 
+  // ── Disputa de pênaltis (mata-mata) ─────────────────────────
+  // Bônus de cobrança por posição: atacante converte mais fácil que zagueiro/goleiro.
+  const PENALTY_POS_BONUS = {
+    ST: 10, CF: 10, SS: 9, LW: 8, RW: 8, CAM: 7,
+    CM: 3, LM: 4, RM: 4, CDM: 0,
+    LWB: -1, RWB: -1, LB: -3, RB: -3, CB: -7, GK: -14,
+  };
+  // "Habilidade de pênalti" do jogador = overall + ajuste de posição.
+  function penaltySkill(p) {
+    const b = PENALTY_POS_BONUS[p.position];
+    return p.overall + (b == null ? 0 : b);
+  }
+  function findGoalkeeper(team) {
+    const players = team.players || [];
+    return players.find(p => p.position === 'GK')
+      || players.reduce((lo, p) => (!lo || p.overall < lo.overall ? p : lo), null);
+  }
+  // Ordem de batedores: usa a escolhida pelo usuário; completa o resto por habilidade.
+  function penaltyOrderFor(team) {
+    const players = team.players || [];
+    const byId = {}; players.forEach(p => { byId[p.id] = p; });
+    const chosen = (team.penaltyOrder || []).map(id => byId[id]).filter(Boolean);
+    const seen = new Set(chosen.map(p => p.id));
+    const rest = players.filter(p => !seen.has(p.id)).sort((a, b) => penaltySkill(b) - penaltySkill(a));
+    return chosen.concat(rest);
+  }
+  // Probabilidade do cobrador converter contra o goleiro adversário.
+  // Sobe com a habilidade do cobrador, desce com o overall do goleiro.
+  function penaltyConvProb(kicker, gk) {
+    const gkOv = gk ? gk.overall : 70;
+    const pr = 0.74 + (penaltySkill(kicker) - gkOv) * 0.011;
+    return clamp(pr, 0.25, 0.96);
+  }
+  // Uma cobrança. rng() é a aleatoriedade (azar/sorte do cobrador e do goleiro).
+  function takePenalty(kicker, gk, rng) {
+    const pr = penaltyConvProb(kicker, gk);
+    const k = { id: kicker.id, name: kicker.name, position: kicker.position };
+    if (rng() < pr) return { kicker: k, result: 'goal', scored: true };
+    // Não converteu: defesa do goleiro (mais provável c/ goleiro bom) ou erro do cobrador.
+    const saveShare = clamp((gk ? gk.overall : 70) / 140 + 0.1, 0.2, 0.75);
+    return { kicker: k, result: rng() < saveShare ? 'save' : 'miss', scored: false };
+  }
+
+  // simulateShootout(teamA, teamB, seed) → { a, b, kicks[], suddenDeath, winner:'a'|'b' }
+  // Melhor de 5 com parada antecipada; empate após 5 → morte súbita.
+  function simulateShootout(teamA, teamB, seed) {
+    const rng = mulberry32(seed >>> 0);
+    const gkA = findGoalkeeper(teamA), gkB = findGoalkeeper(teamB);
+    const orderA = penaltyOrderFor(teamA), orderB = penaltyOrderFor(teamB);
+    let sa = 0, sb = 0, ia = 0, ib = 0;
+    const kicks = [];
+
+    function kick(team) {
+      if (team === 'a') {
+        const r = takePenalty(orderA[ia % orderA.length], gkB, rng); ia++;
+        if (r.scored) sa++;
+        kicks.push({ team: 'a', round: ia, ...r, sa, sb });
+      } else {
+        const r = takePenalty(orderB[ib % orderB.length], gkA, rng); ib++;
+        if (r.scored) sb++;
+        kicks.push({ team: 'b', round: ib, ...r, sa, sb });
+      }
+    }
+
+    // Melhor de 5 (alternando A/B), parando quando já estiver decidido.
+    for (let i = 0; i < 10; i++) {
+      const remA = 5 - ia, remB = 5 - ib;
+      if (sa > sb + remB || sb > sa + remA) break; // matematicamente decidido
+      kick(i % 2 === 0 ? 'a' : 'b');
+    }
+    // Morte súbita: rodadas de 1 cobrança p/ cada; quem tiver gol de vantagem (e o outro
+    // não converter) vence. Guard evita loop infinito teórico.
+    let guard = 0;
+    while (sa === sb && guard++ < 50) { kick('a'); kick('b'); }
+
+    return { a: sa, b: sb, kicks, suddenDeath: (ia > 5 || ib > 5), winner: sa > sb ? 'a' : 'b' };
+  }
+
   // ── Utilidades ──────────────────────────────────────────────
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
@@ -485,6 +563,7 @@
     WEIGHT_MAP, calcTeamStats,
     SCORER_WEIGHTS, pickGoalScorer, goalMinute, goalLambda, winProbability,
     simulateMatch, STAGE_CONFIG, simulateTournament, simulateVersus, computeMvp,
+    PENALTY_POS_BONUS, penaltySkill, penaltyConvProb, simulateShootout,
     generateSeed, hashStringToSeed, encodeTeam, decodeTeam,
     ACHIEVEMENTS, evaluateAchievements, clamp,
   };

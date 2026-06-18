@@ -678,3 +678,101 @@ input[type="text"]:focus { border-color: var(--accent); }
 .achv-name { font-weight: 800; font-size: .85rem; margin-top: 6px; }
 .achv-card.got .achv-name { color: var(--gold2); }
 .achv-desc { font-size: .68rem; color: var(--text2); margin-top: 4px; line-height: 1.35; }
+
+/* ════════════════ Multiplayer: Lobby roster ════════════════ */
+#nickname-input, .lobby-room { width: 100%; }
+#nickname-input {
+  margin-top: 8px; padding: 12px 14px; border-radius: 12px;
+  background: var(--bg2); border: 2px solid var(--border); color: var(--text);
+  font-size: 1rem; box-sizing: border-box;
+}
+.lobby-room { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+.room-code-banner {
+  text-align: center; background: var(--glass); border: 1px solid var(--border);
+  border-radius: 14px; padding: 14px;
+}
+.room-code-banner .rc-label { display: block; font-size: .75rem; color: var(--text3); text-transform: uppercase; letter-spacing: .1em; }
+.room-code-banner .room-code { font-size: 2rem; font-weight: 900; letter-spacing: .25em; color: var(--accent); }
+.roster-head { display: flex; align-items: baseline; justify-content: space-between; }
+.roster-head h3 { font-size: 1.05rem; }
+.roster-count { color: var(--text2); font-weight: 700; }
+.roster-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; max-height: 320px; overflow-y: auto; }
+.roster-item {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px;
+}
+.roster-item.is-you { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(34,197,94,.25); }
+.roster-name { font-weight: 700; }
+.roster-tags { display: flex; gap: 6px; }
+.roster-tag { font-size: .62rem; font-weight: 800; padding: 3px 7px; border-radius: 999px; letter-spacing: .05em; }
+.roster-tag.host { background: rgba(245,158,11,.18); color: var(--gold); }
+.roster-tag.ready { background: rgba(34,197,94,.18); color: var(--accent); }
+
+/* ════════════════ Multiplayer: Bracket ════════════════ */
+.bracket-container { max-width: 1000px; width: 100%; margin: 0 auto; padding: 12px 14px 40px; display: flex; flex-direction: column; gap: 18px; }
+.bracket-section-title { font-size: 1.05rem; color: var(--text2); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+
+.bracket-champion { text-align: center; }
+.bracket-champion .champ-trophy { font-size: 3rem; }
+.bracket-champion .champ-name { font-size: 1.5rem; font-weight: 900; color: var(--gold); }
+.bracket-champion .champ-sub { color: var(--text2); font-size: .9rem; }
+
+.yourpath-card { background: var(--glass); border: 1px solid var(--accent); border-radius: 14px; padding: 14px 16px; }
+.yourpath-title { font-weight: 800; margin-bottom: 8px; }
+.yourpath-steps { display: flex; flex-direction: column; gap: 5px; }
+.path-step { font-size: .85rem; padding: 6px 10px; border-radius: 8px; background: var(--bg2); border-left: 3px solid var(--border); }
+.path-step.ok { border-left-color: var(--accent); }
+.path-step.out { border-left-color: var(--red); }
+.path-step.champ { border-left-color: var(--gold); color: var(--gold); font-weight: 800; }
+
+.groups-wrap { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.group-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; }
+.group-name { font-weight: 800; margin-bottom: 6px; color: var(--text2); }
+.group-table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+.group-table th { color: var(--text3); font-weight: 600; text-align: center; padding: 3px 2px; }
+.group-table td { text-align: center; padding: 4px 2px; border-top: 1px solid var(--border); }
+.group-table td.gt-name { text-align: left; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.group-table tr.qualified td { background: rgba(34,197,94,.07); }
+.group-table tr.is-you td { color: var(--accent); font-weight: 700; }
+
+.knockout-wrap { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px; }
+.ko-round { display: flex; flex-direction: column; gap: 12px; justify-content: space-around; min-width: 180px; }
+.ko-round-title { font-size: .8rem; font-weight: 800; color: var(--text3); text-align: center; text-transform: uppercase; letter-spacing: .05em; }
+.ko-match { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.ko-match.is-you { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(34,197,94,.25); }
+.ko-team { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; font-size: .82rem; }
+.ko-team + .ko-team { border-top: 1px solid var(--border); }
+.ko-team.win { font-weight: 800; }
+.ko-team.lose { color: var(--text3); }
+.ko-team .ko-score { font-weight: 800; margin-left: 8px; }
+.ko-pens-row { text-align: center; font-size: .68rem; color: var(--gold); padding-bottom: 5px; }
+
+/* Shootout detail (colapsável) */
+.ko-shootout { border-top: 1px solid var(--border); }
+.ko-shootout summary { cursor: pointer; font-size: .7rem; color: var(--text2); padding: 6px 10px; list-style: none; }
+.ko-shootout summary::-webkit-details-marker { display: none; }
+.ko-shootout summary:hover { color: var(--accent); }
+.pk-list { padding: 4px 8px 8px; display: flex; flex-direction: column; gap: 3px; }
+.pk-row { display: grid; grid-template-columns: 18px 1fr auto auto auto; align-items: center; gap: 6px; font-size: .68rem; padding: 3px 4px; border-radius: 6px; background: var(--bg3, #0d1424); }
+.pk-row.pk-miss { opacity: .7; }
+.pk-kicker { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pk-team-tag { color: var(--text3); font-size: .6rem; max-width: 70px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pk-res { font-size: .6rem; color: var(--text3); }
+.pk-row.pk-goal .pk-res { color: var(--accent); }
+.pk-tally { font-weight: 800; font-variant-numeric: tabular-nums; }
+
+/* ════════════════ Ordem dos pênaltis ════════════════ */
+.penalties-content { max-width: 560px; margin: 0 auto; width: 100%; padding: 8px 14px 40px; }
+.pen-actions-top { display: flex; justify-content: flex-end; margin: 6px 0 10px; }
+.btn-sm { padding: 7px 12px; font-size: .8rem; }
+.pen-order-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.pen-item { display: flex; align-items: center; gap: 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; }
+.pen-num { width: 26px; height: 26px; flex: none; display: grid; place-items: center; border-radius: 50%; background: var(--accent); color: #000; font-weight: 900; font-size: .8rem; }
+.pen-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.pen-name { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pen-pos { font-size: .68rem; color: var(--text3); }
+.pen-skill { font-weight: 800; color: var(--gold); font-variant-numeric: tabular-nums; min-width: 28px; text-align: right; }
+.pen-move { display: flex; flex-direction: column; gap: 2px; }
+.pen-move button { width: 28px; height: 20px; border: 1px solid var(--border); background: var(--bg3, #0d1424); color: var(--text2); border-radius: 6px; cursor: pointer; font-size: .6rem; line-height: 1; }
+.pen-move button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.pen-move button:disabled { opacity: .3; cursor: default; }

@@ -4,6 +4,7 @@ const { Server } = require('socket.io');
 const path = require('path');
 const E = require('./public/js/engine.js'); // motor compartilhado client/server
 const db = require('./db.js');               // persistência (PostgreSQL / memória)
+const tournament = require('./tournament.js'); // motor de torneio multiplayer
 
 const app = express();
 const server = http.createServer(app);
@@ -44,8 +45,15 @@ app.get('/api/daily/:date', async (req, res) => {
   } catch (e) { console.error('GET /api/daily', e); res.status(500).json({ error: 'db' }); }
 });
 
-// Map<roomCode, { players: [socketId], teams: [team|null, team|null], timeout: Timer|null }>
+// ── Multiplayer: salas de torneio (até 16 jogadores) ─────────
+// Map<roomCode, {
+//   code, hostId, started, finished,
+//   members: [{ id, name, team|null, connected }],
+//   draftTimer: Timer|null, cleanupTimer: Timer|null,
+// }>
 const rooms = new Map();
+const MAX_PLAYERS = 16;
+const DRAFT_DEADLINE_MS = 90_000;
 
 function generateRoomCode() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -56,75 +64,132 @@ function generateRoomCode() {
   return code;
 }
 
-// Normaliza o payload do draft (array antigo OU objeto novo { players, slots, tactic, captainId })
+// Normaliza o payload do draft (array antigo OU objeto { players, slots, tactic, captainId })
 function normalizeTeam(payload) {
-  if (Array.isArray(payload)) return { players: payload };
+  if (Array.isArray(payload)) return { players: payload, slots: null, tactic: null, captainId: null, penaltyOrder: null };
   return {
     players: payload.players || [],
     slots: payload.slots || null,
     tactic: payload.tactic || null,
     captainId: payload.captainId || null,
+    penaltyOrder: payload.penaltyOrder || null,
   };
 }
 
-// Simula o confronto direto usando o motor compartilhado (mesma matemática do client).
-function simulateMultiplayerMatch(teamA, teamB) {
-  const seed = E.generateSeed();
-  return E.simulateVersus(normalizeTeam(teamA), normalizeTeam(teamB), seed);
+function sanitizeName(name, fallback) {
+  const n = (typeof name === 'string' ? name : '').trim().slice(0, 18);
+  return n || fallback;
+}
+
+function lobbyState(room) {
+  return {
+    roomCode: room.code,
+    hostId: room.hostId,
+    started: room.started,
+    max: MAX_PLAYERS,
+    count: room.members.length,
+    players: room.members.map(m => ({ id: m.id, name: m.name, isHost: m.id === room.hostId, ready: !!m.team })),
+  };
+}
+
+function broadcastLobby(room) {
+  io.to(room.code).emit('lobby_update', lobbyState(room));
+}
+
+// Roda o torneio com os times disponíveis e emite o resultado por socket (com youId).
+function finishTournament(room) {
+  if (room.finished) return;
+  room.finished = true;
+  if (room.draftTimer) { clearTimeout(room.draftTimer); room.draftTimer = null; }
+
+  const humans = room.members
+    .filter(m => m.team && m.team.players && m.team.players.length === 11)
+    .map(m => ({ id: m.id, name: m.name, isBot: false, flag: '🎮', team: normalizeTeam(m.team) }));
+
+  const result = tournament.runTournament(humans);
+
+  for (const m of room.members) {
+    const youId = result.participants.some(p => p.id === m.id) ? m.id : null;
+    io.to(m.id).emit('tournament_result', { ...result, youId });
+  }
+  // Limpa a sala depois de alguns minutos
+  room.cleanupTimer = setTimeout(() => rooms.delete(room.code), 5 * 60 * 1000);
+}
+
+function maybeFinish(room) {
+  const connected = room.members.filter(m => m.connected);
+  if (connected.length > 0 && connected.every(m => m.team)) finishTournament(room);
 }
 
 io.on('connection', (socket) => {
-  socket.on('create_room', (cb) => {
+  socket.on('create_room', (name, cb) => {
+    if (typeof name === 'function') { cb = name; name = ''; }
     const code = generateRoomCode();
-    rooms.set(code, { players: [socket.id], teams: [null, null], timeout: null });
+    const room = {
+      code, hostId: socket.id, started: false, finished: false,
+      members: [{ id: socket.id, name: sanitizeName(name, 'Host'), team: null, connected: true }],
+      draftTimer: null, cleanupTimer: null,
+    };
+    rooms.set(code, room);
     socket.join(code);
     socket.data.roomCode = code;
-    socket.data.playerIndex = 0;
     if (typeof cb === 'function') cb({ roomCode: code });
+    broadcastLobby(room);
   });
 
-  socket.on('join_room', (code, cb) => {
+  socket.on('join_room', (code, name, cb) => {
+    if (typeof name === 'function') { cb = name; name = ''; }
     const room = rooms.get(code);
     if (!room) return typeof cb === 'function' && cb({ error: 'Sala não encontrada.' });
-    if (room.players.length >= 2) return typeof cb === 'function' && cb({ error: 'Sala cheia.' });
-    room.players.push(socket.id);
+    if (room.started) return typeof cb === 'function' && cb({ error: 'O torneio já começou.' });
+    if (room.members.length >= MAX_PLAYERS) return typeof cb === 'function' && cb({ error: 'Sala cheia (16).' });
+    room.members.push({ id: socket.id, name: sanitizeName(name, `Jogador ${room.members.length + 1}`), team: null, connected: true });
     socket.join(code);
     socket.data.roomCode = code;
-    socket.data.playerIndex = 1;
     if (typeof cb === 'function') cb({ ok: true });
-    socket.to(code).emit('opponent_joined');
-    io.to(code).emit('both_connected');
+    broadcastLobby(room);
+  });
+
+  socket.on('start_tournament', (cb) => {
+    const room = rooms.get(socket.data.roomCode);
+    if (!room) return typeof cb === 'function' && cb({ error: 'Sala não encontrada.' });
+    if (room.hostId !== socket.id) return typeof cb === 'function' && cb({ error: 'Só o host pode iniciar.' });
+    if (room.started) return typeof cb === 'function' && cb({ error: 'Já iniciado.' });
+    if (room.members.filter(m => m.connected).length < 2) return typeof cb === 'function' && cb({ error: 'Mínimo de 2 jogadores.' });
+    room.started = true;
+    const bracketSize = tournament.bracketSizeFor(room.members.length);
+    if (typeof cb === 'function') cb({ ok: true });
+    io.to(room.code).emit('tournament_starting', { bracketSize, count: room.members.length });
+    // Deadline: quem não draftar vira ausente (vaga vira bot)
+    room.draftTimer = setTimeout(() => finishTournament(room), DRAFT_DEADLINE_MS);
   });
 
   socket.on('draft_complete', (team) => {
-    const code = socket.data.roomCode;
-    const idx = socket.data.playerIndex;
-    const room = rooms.get(code);
-    if (!room || idx === undefined) return;
-    room.teams[idx] = team;
-    socket.to(code).emit('opponent_ready');
-    if (room.teams[0] && room.teams[1]) {
-      const result = simulateMultiplayerMatch(room.teams[0], room.teams[1]);
-      io.to(code).emit('match_result', {
-        ...result,
-        teamA: normalizeTeam(room.teams[0]).players,
-        teamB: normalizeTeam(room.teams[1]).players,
-      });
-      // Clean up room after 5 min
-      room.timeout = setTimeout(() => rooms.delete(code), 5 * 60 * 1000);
-    }
+    const room = rooms.get(socket.data.roomCode);
+    if (!room || !room.started) return;
+    const member = room.members.find(m => m.id === socket.id);
+    if (!member) return;
+    member.team = normalizeTeam(team);
+    socket.to(room.code).emit('opponent_ready', { name: member.name });
+    maybeFinish(room);
   });
 
   socket.on('disconnect', () => {
-    const code = socket.data.roomCode;
-    if (!code) return;
-    const room = rooms.get(code);
+    const room = rooms.get(socket.data.roomCode);
     if (!room) return;
-    socket.to(code).emit('opponent_disconnected');
-    // Give 30s for reconnect before deleting
-    room.timeout = setTimeout(() => {
-      if (rooms.get(code) === room) rooms.delete(code);
-    }, 30_000);
+    const member = room.members.find(m => m.id === socket.id);
+    if (member) member.connected = false;
+
+    if (!room.started) {
+      // Remove da sala e reatribui host se necessário
+      room.members = room.members.filter(m => m.id !== socket.id);
+      if (room.members.length === 0) { rooms.delete(room.code); return; }
+      if (room.hostId === socket.id) room.hostId = room.members[0].id;
+      broadcastLobby(room);
+    } else if (!room.finished) {
+      // Time já enviado é mantido; se todos os restantes já draftaram, encerra
+      maybeFinish(room);
+    }
   });
 });
 

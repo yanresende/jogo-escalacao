@@ -6254,3 +6254,8 @@ function playerFitsSlot(player, slotPos) {
   const alts = (typeof player === 'object' && player.altPositions) ? player.altPositions : [];
   return [pos, ...alts].includes(slotPos);
 }
+
+// ── Export para Node (servidor) — no browser as <script> já expõem os globais ──
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { PLAYERS, SQUADS, SQUAD_LIST, WORLD_CUPS, POS_COMPAT, getTier, playerFitsSlot };
+}

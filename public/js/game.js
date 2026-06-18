@@ -88,6 +88,7 @@ const state = {
   simResults:   null,
   tactic:       'equilibrada', // chave de TACTICS (engine.js)
   captainId:    null,          // id do jogador capitão
+  penaltyOrder: null,          // ordem de batedores de pênalti (ids) — multiplayer
   gameMode:     'solo',        // 'solo' | 'daily' | 'career' | 'survival'
   restrictions: null,          // { budget?, oneCountry?, label } | null
   dailySeq:     null,          // sequência determinística de squads (modo diário)
@@ -140,6 +141,7 @@ function initDraft(formation) {
   state.seed = generateSeed();
   state.tactic = 'equilibrada';
   state.captainId = null;
+  state.penaltyOrder = null;
   state.dailySeq = null;
   state.dailyPtr = 0;
 }
@@ -456,6 +458,16 @@ function onShare() {
 
 function onPlayAgain() {
   const prevMode = state.gameMode;
+  if (state.isMultiplayer && typeof resetMultiplayer === 'function') {
+    resetMultiplayer();
+    state.formation = null;
+    state.slots = [];
+    state.pickedPlayers = [];
+    state.simResults = null;
+    state.gameMode = 'solo';
+    goTo('menu');
+    return;
+  }
   state.formation = null;
   state.slots = [];
   state.currentRoll = null;
@@ -463,6 +475,7 @@ function onPlayAgain() {
   state.simResults = null;
   state.tactic = 'equilibrada';
   state.captainId = null;
+  state.penaltyOrder = null;
   state.dailySeq = null;
   state.dailyPtr = 0;
 

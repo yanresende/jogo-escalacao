@@ -433,10 +433,53 @@ function renderTactics() {
 function confirmTactics() {
   renderSimulation();
   if (state.isMultiplayer) {
-    if (typeof sendDraftComplete === 'function') sendDraftComplete();
+    renderPenaltyOrder();
+    goTo('penalties');
   } else {
     goTo('simulation');
   }
+}
+
+// ── Ordem dos pênaltis (multiplayer) ──────────────────────────
+function renderPenaltyOrder() {
+  const players = state.slots.map(s => s.player).filter(Boolean);
+  // Ordem default/atual: usa a salva (filtrada para o time atual) ou ordena por habilidade
+  const byId = {}; players.forEach(p => { byId[p.id] = p; });
+  let order = (state.penaltyOrder || []).map(id => byId[id]).filter(Boolean);
+  const seen = new Set(order.map(p => p.id));
+  const rest = players.filter(p => !seen.has(p.id))
+    .sort((a, b) => penaltySkillOf(b) - penaltySkillOf(a));
+  order = order.concat(rest);
+  state.penaltyOrder = order.map(p => p.id);
+
+  const list = document.getElementById('pen-order-list');
+  if (!list) return;
+  list.innerHTML = order.map((p, i) => `
+    <li class="pen-item" data-id="${p.id}">
+      <span class="pen-num">${i + 1}</span>
+      <span class="pen-info">
+        <span class="pen-name">${escapeHtml(p.name)}</span>
+        <span class="pen-pos">${p.position} · OVR ${p.overall}</span>
+      </span>
+      <span class="pen-skill" title="Habilidade de cobrança">${penaltySkillOf(p)}</span>
+      <span class="pen-move">
+        <button class="pen-up" data-i="${i}" ${i === 0 ? 'disabled' : ''} aria-label="Subir">▲</button>
+        <button class="pen-down" data-i="${i}" ${i === order.length - 1 ? 'disabled' : ''} aria-label="Descer">▼</button>
+      </span>
+    </li>`).join('');
+}
+
+function penaltySkillOf(p) {
+  return (typeof penaltySkill === 'function') ? penaltySkill(p) : p.overall;
+}
+
+function movePenalty(from, to) {
+  const order = state.penaltyOrder.slice();
+  if (to < 0 || to >= order.length) return;
+  const [m] = order.splice(from, 1);
+  order.splice(to, 0, m);
+  state.penaltyOrder = order;
+  renderPenaltyOrder();
 }
 
 // ── Resumo de resultado (química, tática, MVP) ────────────────
@@ -533,6 +576,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const backTactics = document.getElementById('back-from-tactics');
   if (backTactics) backTactics.addEventListener('click', () => goTo('draft'));
 
+  // Ordem dos pênaltis (multiplayer)
+  const backPen = document.getElementById('back-from-penalties');
+  if (backPen) backPen.addEventListener('click', () => goTo('tactics'));
+  const confirmPen = document.getElementById('btn-confirm-penalties');
+  if (confirmPen) confirmPen.addEventListener('click', () => {
+    if (typeof sendDraftComplete === 'function') sendDraftComplete();
+  });
+  const penAuto = document.getElementById('btn-pen-auto');
+  if (penAuto) penAuto.addEventListener('click', () => { state.penaltyOrder = null; renderPenaltyOrder(); });
+  const penList = document.getElementById('pen-order-list');
+  if (penList) penList.addEventListener('click', (e) => {
+    const up = e.target.closest('.pen-up'), down = e.target.closest('.pen-down');
+    if (up) { const i = +up.dataset.i; movePenalty(i, i - 1); }
+    else if (down) { const i = +down.dataset.i; movePenalty(i, i + 1); }
+  });
+
   document.getElementById('btn-simulate').addEventListener('click', () => {
     const players = state.slots.map(s => s.player).filter(Boolean);
     if (players.length < 11) { showToast('Monte o time completo primeiro!'); return; }
@@ -542,61 +601,163 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { once: false });
 });
 
-// ── Match result (multiplayer) ────────────────────────────────
-function renderMatchResult(data, isPlayerA) {
-  const myGoals  = isPlayerA ? data.goalsA : data.goalsB;
-  const oppGoals = isPlayerA ? data.goalsB : data.goalsA;
-  const myStats  = isPlayerA ? data.statsA : data.statsB;
-  const oppStats = isPlayerA ? data.statsB : data.statsA;
+// ── Lobby roster (multiplayer) ────────────────────────────────
+function renderLobbyRoster(data, myId) {
+  const countEl = document.getElementById('roster-count');
+  if (countEl) countEl.textContent = data.count;
 
-  document.getElementById('match-score-a').textContent = myGoals;
-  document.getElementById('match-score-b').textContent = oppGoals;
-
-  const winnerEl = document.getElementById('match-winner');
-  if (myGoals > oppGoals) {
-    winnerEl.textContent = '🏆 Você Venceu!';
-    winnerEl.className = 'match-winner you-win';
-  } else if (myGoals < oppGoals) {
-    winnerEl.textContent = '💀 Você Perdeu!';
-    winnerEl.className = 'match-winner you-lose';
-  } else {
-    winnerEl.textContent = '🤝 Empate!';
-    winnerEl.className = 'match-winner draw';
+  const list = document.getElementById('roster-list');
+  if (list) {
+    list.innerHTML = data.players.map(p => `
+      <li class="roster-item${p.id === myId ? ' is-you' : ''}">
+        <span class="roster-name">${escapeHtml(p.name)}${p.id === myId ? ' (você)' : ''}</span>
+        <span class="roster-tags">
+          ${p.isHost ? '<span class="roster-tag host">HOST</span>' : ''}
+          ${p.ready ? '<span class="roster-tag ready">PRONTO</span>' : ''}
+        </span>
+      </li>`).join('');
   }
 
-  document.getElementById('match-stats').innerHTML = `
-    <div class="stat-row"><span class="stat-label">Seu OVR médio</span><span class="stat-val">${myStats.overall}</span></div>
-    <div class="stat-row"><span class="stat-label">Seu Ataque</span><span class="stat-val">${myStats.attack}</span></div>
-    <div class="stat-row"><span class="stat-label">Sua Defesa</span><span class="stat-val">${myStats.defense}</span></div>
-    <div class="stat-row"><span class="stat-label">OVR do Oponente</span><span class="stat-val">${oppStats.overall}</span></div>
-  `;
+  const isHost = data.hostId === myId;
+  const startBtn = document.getElementById('btn-start-tournament');
+  const hint = document.getElementById('roster-hint');
+  if (startBtn) {
+    startBtn.classList.toggle('hidden', !isHost);
+    startBtn.disabled = data.count < 2;
+    startBtn.textContent = data.count < 2 ? '▶ Aguardando jogadores…' : `▶ Iniciar Torneio (${data.count})`;
+  }
+  if (hint) hint.classList.toggle('hidden', isHost);
+}
 
-  const myEvents  = isPlayerA ? (data.eventsA || []) : (data.eventsB || []);
-  const oppEvents = isPlayerA ? (data.eventsB || []) : (data.eventsA || []);
-  const allEvents = [
-    ...myEvents .map(e => ({ ...e, team: 'my'  })),
-    ...oppEvents.map(e => ({ ...e, team: 'opp' })),
-  ].sort((a, b) => a.minute - b.minute);
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
 
-  const matchEventsEl = document.getElementById('match-events');
-  if (matchEventsEl) {
-    if (allEvents.length > 0) {
-      matchEventsEl.classList.remove('hidden');
-      matchEventsEl.innerHTML =
-        `<div class="match-events-title">Linha do Tempo</div>` +
-        `<div class="events-timeline">` +
-        allEvents.map(e =>
-          `<div class="event-row ${e.team === 'my' ? 'my-event' : 'opp-event'}">` +
-          `<span class="event-minute">${e.minute}'</span>` +
-          `<span class="event-ball">⚽</span>` +
-          `<span class="event-name">${e.scorer?.name ?? 'Adversário'}</span>` +
-          `</div>`
-        ).join('') +
-        `</div>`;
+// ── Resultado do torneio (multiplayer) ────────────────────────
+function renderTournamentResult(data) {
+  const byId = {};
+  data.participants.forEach(p => { byId[p.id] = p; });
+  const you = data.youId ? byId[data.youId] : null;
+  const champ = data.champion ? byId[data.champion] : null;
+  const pName = (id) => byId[id] ? `${byId[id].flag} ${byId[id].name}` : '—';
+
+  // Campeão
+  const champEl = document.getElementById('bracket-champion');
+  if (champEl) {
+    const youWon = champ && you && champ.id === you.id;
+    champEl.innerHTML = champ
+      ? `<div class="champ-trophy">🏆</div>
+         <div class="champ-name">${champ.flag} ${escapeHtml(champ.name)}</div>
+         <div class="champ-sub">${youWon ? 'Você é o campeão do mundo!' : 'Campeão do torneio'}</div>`
+      : '';
+  }
+
+  // Seu caminho
+  const pathEl = document.getElementById('bracket-yourpath');
+  if (pathEl) {
+    if (!you) {
+      pathEl.innerHTML = `<div class="yourpath-card">Você entrou como espectador deste torneio.</div>`;
     } else {
-      matchEventsEl.classList.add('hidden');
+      const steps = buildPath(data, you.id);
+      pathEl.innerHTML = `
+        <div class="yourpath-card">
+          <div class="yourpath-title">Seu caminho — ${you.flag} ${escapeHtml(you.name)}</div>
+          <div class="yourpath-steps">${steps}</div>
+        </div>`;
     }
   }
 
-  goTo('match');
+  // Grupos
+  const groupsWrap = document.getElementById('groups-wrap');
+  if (groupsWrap) {
+    groupsWrap.innerHTML = data.groups.map(g => `
+      <div class="group-card">
+        <div class="group-name">Grupo ${g.name}</div>
+        <table class="group-table">
+          <thead><tr><th>#</th><th>Time</th><th>P</th><th>V</th><th>E</th><th>D</th><th>SG</th><th>Pts</th></tr></thead>
+          <tbody>
+            ${g.table.map(r => `
+              <tr class="${data.youId === r.pid ? 'is-you' : ''} ${r.rank <= 2 ? 'qualified' : ''}">
+                <td>${r.rank}</td>
+                <td class="gt-name">${byId[r.pid] ? byId[r.pid].flag : ''} ${escapeHtml(byId[r.pid] ? byId[r.pid].name : r.pid)}</td>
+                <td>${r.P}</td><td>${r.W}</td><td>${r.D}</td><td>${r.L}</td>
+                <td>${r.gd > 0 ? '+' : ''}${r.gd}</td><td><b>${r.pts}</b></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`).join('');
+  }
+
+  // Mata-mata
+  const koWrap = document.getElementById('knockout-wrap');
+  if (koWrap) {
+    koWrap.innerHTML = data.knockout.rounds.map(round => `
+      <div class="ko-round">
+        <div class="ko-round-title">${round.label}</div>
+        ${round.matches.map(m => {
+          const winA = m.winner === m.a, winB = m.winner === m.b;
+          const youHere = data.youId && (m.a === data.youId || m.b === data.youId);
+          const pens = m.pens ? ` <span class="ko-pens">(${m.pens.a}-${m.pens.b} pên${m.pens.suddenDeath ? ', MS' : ''})</span>` : '';
+          return `
+            <div class="ko-match${youHere ? ' is-you' : ''}">
+              <div class="ko-team ${winA ? 'win' : 'lose'}">${pName(m.a)}<span class="ko-score">${m.ga}</span></div>
+              <div class="ko-team ${winB ? 'win' : 'lose'}">${pName(m.b)}<span class="ko-score">${m.gb}</span></div>
+              ${pens ? `<div class="ko-pens-row">${pens}</div>` : ''}
+              ${m.pens && m.pens.kicks ? renderShootout(m, byId) : ''}
+            </div>`;
+        }).join('')}
+      </div>`).join('');
+  }
+}
+
+// Detalhe da disputa de pênaltis (colapsável), cobrança a cobrança.
+function renderShootout(m, byId) {
+  const nameA = byId[m.a] ? byId[m.a].name : 'A';
+  const nameB = byId[m.b] ? byId[m.b].name : 'B';
+  const icon = { goal: '⚽', save: '🧤', miss: '❌' };
+  const rows = m.pens.kicks.map(k => {
+    const who = k.team === 'a' ? nameA : nameB;
+    const res = k.result === 'goal' ? 'Gol' : k.result === 'save' ? 'Defesa' : 'Para fora';
+    return `<div class="pk-row pk-${k.team} ${k.scored ? 'pk-goal' : 'pk-miss'}">
+      <span class="pk-icon">${icon[k.result] || '•'}</span>
+      <span class="pk-kicker">${escapeHtml(k.kicker.name)}</span>
+      <span class="pk-team-tag">${escapeHtml(who)}</span>
+      <span class="pk-res">${res}</span>
+      <span class="pk-tally">${k.sa}-${k.sb}</span>
+    </div>`;
+  }).join('');
+  return `<details class="ko-shootout">
+    <summary>Ver pênaltis (${m.pens.a}-${m.pens.b})</summary>
+    <div class="pk-list">${rows}</div>
+  </details>`;
+}
+
+// Resume a trajetória de um participante (grupos + mata-mata)
+function buildPath(data, pid) {
+  const byId = {};
+  data.participants.forEach(p => { byId[p.id] = p; });
+  const out = [];
+
+  for (const g of data.groups) {
+    const row = g.table.find(r => r.pid === pid);
+    if (row) {
+      const adv = row.rank <= 2;
+      out.push(`<div class="path-step ${adv ? 'ok' : 'out'}">Grupo ${g.name}: ${row.rank}º lugar (${row.pts} pts) — ${adv ? 'classificou' : 'eliminado'}</div>`);
+      if (!adv) return out.join('');
+      break;
+    }
+  }
+  for (const round of data.knockout.rounds) {
+    const m = round.matches.find(x => x.a === pid || x.b === pid);
+    if (!m) continue;
+    const oppId = m.a === pid ? m.b : m.a;
+    const myG = m.a === pid ? m.ga : m.gb;
+    const opG = m.a === pid ? m.gb : m.ga;
+    const won = m.winner === pid;
+    const pens = m.pens ? ` (pên ${m.a === pid ? m.pens.a + '-' + m.pens.b : m.pens.b + '-' + m.pens.a})` : '';
+    out.push(`<div class="path-step ${won ? 'ok' : 'out'}">${round.label}: ${myG}×${opG}${pens} vs ${byId[oppId] ? byId[oppId].name : '—'} — ${won ? 'venceu' : 'eliminado'}</div>`);
+    if (!won) break;
+    if (round.id === 'final' && won) out.push(`<div class="path-step champ">🏆 Campeão!</div>`);
+  }
+  return out.join('');
 }

@@ -1,84 +1,89 @@
 /* ============================================================
-   7a0 — Multiplayer Client (Socket.io)
+   7a0 — Multiplayer Client (Socket.io) — Torneio até 16 jogadores
    ============================================================ */
 
 let socket = null;
-let isPlayerA = true;
+let lobby = null; // último lobby_update recebido
+
+function getNickname() {
+  const el = document.getElementById('nickname-input');
+  const typed = el && el.value.trim();
+  if (typed) return typed.slice(0, 18);
+  if (typeof Profile !== 'undefined' && Profile.data && Profile.data.name) return Profile.data.name;
+  return 'Jogador';
+}
 
 function initSocket() {
   if (socket) return;
   socket = io();
 
-  socket.on('both_connected', () => {
-    showToast('Oponente conectado! Escolha sua formação.');
-    // If on lobby screen, advance to formation
-    if (state.screen === 'lobby') {
-      state.isMultiplayer = true;
-      goTo('formation');
-      renderFormationGrid();
-    }
+  socket.on('lobby_update', (data) => {
+    lobby = data;
+    showLobbyRoom();
+    renderLobbyRoster(data, socket.id);
   });
 
-  socket.on('opponent_joined', () => {
-    showToast('Oponente entrou na sala!');
+  socket.on('tournament_starting', (info) => {
+    showToast(`Torneio iniciado! Chave de ${info.bracketSize}. Monte seu time.`);
+    state.isMultiplayer = true;
+    goTo('formation');
+    renderFormationGrid();
   });
 
-  socket.on('opponent_ready', () => {
+  socket.on('opponent_ready', (d) => {
     if (state.screen === 'waiting') {
-      document.getElementById('waiting-msg').innerHTML =
-        'Oponente terminou! Aguardando resultado<span class="dots"></span>';
+      const msg = document.getElementById('waiting-msg');
+      if (msg) msg.innerHTML = `${(d && d.name) || 'Um jogador'} terminou. Aguardando os demais<span class="dots"></span>`;
     }
   });
 
-  socket.on('match_result', (data) => {
-    renderMatchResult(data, isPlayerA);
+  socket.on('tournament_result', (data) => {
+    renderTournamentResult(data);
+    goTo('bracket');
   });
 
-  socket.on('opponent_disconnected', () => {
-    showToast('Oponente desconectou da partida.');
-    if (state.screen === 'waiting' || state.screen === 'match') {
-      setTimeout(() => goTo('menu'), 2000);
-    }
+  socket.on('disconnect', () => {
+    showToast('Conexão perdida com o servidor.');
   });
 }
 
-// ── Create Room ───────────────────────────────────────────────
+// ── Lobby: telas ──────────────────────────────────────────────
+function showLobbyRoom() {
+  document.getElementById('lobby-entry').classList.add('hidden');
+  document.getElementById('lobby-room').classList.remove('hidden');
+}
+function showLobbyEntry() {
+  document.getElementById('lobby-entry').classList.remove('hidden');
+  document.getElementById('lobby-room').classList.add('hidden');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-create-room').addEventListener('click', () => {
     initSocket();
-    isPlayerA = true;
-    socket.emit('create_room', ({ roomCode }) => {
+    socket.emit('create_room', getNickname(), ({ roomCode }) => {
       document.getElementById('room-code-value').textContent = roomCode;
-      document.getElementById('room-code-display').classList.remove('hidden');
-      document.getElementById('btn-create-room').style.display = 'none';
     });
   });
 
-  // ── Join Room ───────────────────────────────────────────────
   document.getElementById('btn-join-room').addEventListener('click', () => {
     const code = document.getElementById('room-code-input').value.trim().toUpperCase();
-    if (code.length < 4) {
-      showLobbyError('Código inválido.');
-      return;
-    }
+    if (code.length < 4) { showLobbyError('Código inválido.'); return; }
     initSocket();
-    isPlayerA = false;
-    socket.emit('join_room', code, ({ ok, error }) => {
-      if (error) {
-        showLobbyError(error);
-      } else {
-        showToast('Entrou na sala! Aguardando oponente iniciar...');
-        // Advance to formation after joining
-        state.isMultiplayer = true;
-        goTo('formation');
-        renderFormationGrid();
-      }
+    socket.emit('join_room', code, getNickname(), ({ ok, error }) => {
+      if (error) { showLobbyError(error); return; }
+      document.getElementById('room-code-value').textContent = code;
     });
   });
 
-  // Allow Enter key in room code input
   document.getElementById('room-code-input').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') document.getElementById('btn-join-room').click();
+  });
+
+  document.getElementById('btn-start-tournament').addEventListener('click', () => {
+    if (!socket) return;
+    socket.emit('start_tournament', (res) => {
+      if (res && res.error) showToast(res.error);
+    });
   });
 });
 
@@ -89,26 +94,24 @@ function showLobbyError(msg) {
   setTimeout(() => err.classList.add('hidden'), 3000);
 }
 
-// ── Send draft complete ───────────────────────────────────────
+// ── Envio do time (pós-draft) ─────────────────────────────────
 function sendDraftComplete() {
   if (!socket) return;
   const players = state.slots.map(s => s.player).filter(Boolean);
   socket.emit('draft_complete', {
     players,
-    slots:     state.slots.map(s => s.pos),
-    tactic:    state.tactic,
-    captainId: state.captainId,
+    slots:       state.slots.map(s => s.pos),
+    tactic:      state.tactic,
+    captainId:   state.captainId,
+    penaltyOrder: state.penaltyOrder || players.map(p => p.id),
   });
   goTo('waiting');
 }
 
-// Override isDraftComplete to also notify server in multiplayer mode
-const _origPickPlayer = pickPlayer;
-window._onDraftCompleteMultiplayer = function () {
-  if (state.isMultiplayer && isDraftComplete()) {
-    setTimeout(sendDraftComplete, 800);
-  }
-};
-
-// Patch pickPlayer to trigger multiplayer hook after each pick
-const origPickPlayer = window.pickPlayer || pickPlayer;
+// Reset do estado multiplayer ao voltar ao menu
+function resetMultiplayer() {
+  if (socket) { socket.disconnect(); socket = null; }
+  lobby = null;
+  state.isMultiplayer = false;
+  showLobbyEntry();
+}
