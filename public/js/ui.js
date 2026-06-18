@@ -223,7 +223,8 @@ function renderDraftPick(roll) {
 
   const sorted = [...roll.players].sort((a, b) => b.overall - a.overall);
   sorted.forEach((player, idx) => {
-    const compatible = openPositions.some(op => playerFitsSlot(player, op));
+    const alreadyPicked = state.slots.some(s => s.player && s.player.id === player.id);
+    const compatible = !alreadyPicked && openPositions.some(op => playerFitsSlot(player, op));
     const card = document.createElement('div');
     card.className = `player-card${compatible ? '' : ' incompatible'}`;
     card.style.animationDelay = `${Math.min(idx * 40, 400)}ms`;

@@ -4,8 +4,11 @@
     {
       "name": "7a0",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["server.js"],
-      "port": 3000
+      "runtimeArgs": [
+        "server.js"
+      ],
+      "port": 3000,
+      "autoPort": true
     }
   ]
 }

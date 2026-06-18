@@ -247,6 +247,7 @@ function canPickPlayer(player) {
 function pickPlayerToSlot(playerId, slotIndex) {
   const player = PLAYERS.find(p => p.id === playerId);
   if (!player) return false;
+  if (state.slots.some(s => s.player && s.player.id === playerId)) return false; // já escalado
   const slot = state.slots[slotIndex];
   if (!slot || slot.player) return false;
   if (!playerFitsSlot(player, slot.pos)) return false;
@@ -276,6 +277,7 @@ function movePlayer(fromIndex, toIndex) {
 function pickPlayer(playerId) {
   const player = PLAYERS.find(p => p.id === playerId);
   if (!player) return false;
+  if (state.slots.some(s => s.player && s.player.id === playerId)) return false; // já escalado
   const allowed = canPickPlayer(player);
   if (!allowed.ok) { if (typeof showToast === 'function') showToast(allowed.reason); return false; }
 
