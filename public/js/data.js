@@ -1793,18 +1793,365 @@ const PLAYERS = [
 
   // ===== CRO (Croácia) =====
   // 1998 
+
+  { id: "ladic-cro-98", name: "Dražen Ladić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "GK", altPositions: [], overall: 81 },
+  { id: "krpan-cro-98", name: "Petar Krpan", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "ST", altPositions: ["RW"], overall: 74 },
+  { id: "seric-cro-98", name: "Anthony Šerić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "LB", altPositions: ["LWB"], overall: 75 },
+  { id: "stimac-cro-98", name: "Igor Štimac", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "CB", altPositions: [], overall: 80 },
+  { id: "juric-cro-98", name: "Goran Jurić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "CB", altPositions: [], overall: 76 },
+  { id: "bilic-cro-98", name: "Slaven Bilić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "CB", altPositions: [], overall: 82 },
+  { id: "asanovic-cro-98", name: "Aljoša Asanović", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "CAM", altPositions: ["CM"], overall: 81 },
+  { id: "prosinecki-cro-98", name: "Robert Prosinečki", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "CM", altPositions: ["CAM"], overall: 84 },
+  { id: "suker-cro-98", name: "Davor Šuker", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "ST", altPositions: ["CF"], overall: 90 },
+  { id: "boban-cro-98", name: "Zvonimir Boban", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "CAM", altPositions: ["CM"], overall: 86 },
+  { id: "maric-cro-98", name: "Silvio Marić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "CAM", altPositions: ["LM", "RM"], overall: 77 },
+  { id: "mrmic-cro-98", name: "Marijan Mrmić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "GK", altPositions: [], overall: 75 },
+  { id: "stanic-cro-98", name: "Mario Stanić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "RM", altPositions: ["CM", "ST"], overall: 80 },
+  { id: "soldo-cro-98", name: "Zvonimir Soldo", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "CDM", altPositions: ["CB"], overall: 80 },
+  { id: "tudor-cro-98", name: "Igor Tudor", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "CB", altPositions: ["CDM"], overall: 79 },
+  { id: "kozniku-cro-98", name: "Ardian Kozniku", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "ST", altPositions: ["LW"], overall: 73 },
+  { id: "jarni-cro-98", name: "Robert Jarni", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "LWB", altPositions: ["LB", "LM"], overall: 82 },
+  { id: "mamic-cro-98", name: "Zoran Mamić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "CB", altPositions: ["CDM"], overall: 74 },
+  { id: "vlaovic-cro-98", name: "Goran Vlaović", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "ST", altPositions: ["RW"], overall: 79 },
+  { id: "simic-cro-98", name: "Dario Šimić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "CB", altPositions: ["RB"], overall: 78 },
+  { id: "jurcic-cro-98", name: "Krunoslav Jurčić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "CDM", altPositions: ["CM"], overall: 76 },
+  { id: "vasilj-cro-98", name: "Vladimir Vasilj", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "GK", altPositions: [], overall: 73 },
+
   // 2018 
+
+  { id: "livakovic-cro-18", name: "Dominik Livaković", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "GK", altPositions: [], overall: 78 },
+  { id: "vrsaljko-cro-18", name: "Šime Vrsaljko", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "RB", altPositions: ["RWB"], overall: 81 },
+  { id: "strinic-cro-18", name: "Ivan Strinić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "LB", altPositions: ["LWB"], overall: 76 },
+  { id: "perisic-cro-18", name: "Ivan Perišić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "LM", altPositions: ["LW", "RM"], overall: 85 },
+  { id: "corluka-cro-18", name: "Vedran Ćorluka", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "CB", altPositions: [], overall: 78 },
+  { id: "lovren-cro-18", name: "Dejan Lovren", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "CB", altPositions: [], overall: 81 },
+  { id: "rakitic-cro-18", name: "Ivan Rakitić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "CM", altPositions: ["CAM", "CDM"], overall: 87 },
+  { id: "kovacic-cro-18", name: "Mateo Kovačić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "CM", altPositions: ["CAM", "CDM"], overall: 82 },
+  { id: "kramaric-cro-18", name: "Andrej Kramarić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "ST", altPositions: ["CF", "CAM"], overall: 82 },
+  { id: "modric-cro-18", name: "Luka Modrić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "CM", altPositions: ["CAM"], overall: 89 },
+  { id: "brozovic-cro-18", name: "Marcelo Brozović", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "CDM", altPositions: ["CM"], overall: 82 },
+  { id: "kalinic-l-cro-18", name: "Lovre Kalinić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "GK", altPositions: [], overall: 77 },
+  { id: "jedvaj-cro-18", name: "Tin Jedvaj", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "RB", altPositions: ["CB"], overall: 75 },
+  { id: "bradaric-cro-18", name: "Filip Bradarić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "CDM", altPositions: ["CM"], overall: 73 },
+  { id: "caleta-car-cro-18", name: "Duje Ćaleta-Car", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "CB", altPositions: [], overall: 77 },
+  { id: "kalinic-n-cro-18", name: "Nikola Kalinić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "ST", altPositions: [], overall: 79 },
+  { id: "mandzukic-cro-18", name: "Mario Mandžukić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "ST", altPositions: ["LW"], overall: 83 },
+  { id: "rebic-cro-18", name: "Ante Rebić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "LW", altPositions: ["RW", "ST"], overall: 79 },
+  { id: "badelj-cro-18", name: "Milan Badelj", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "CDM", altPositions: ["CM"], overall: 79 },
+  { id: "pjaca-cro-18", name: "Marko Pjaca", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "LW", altPositions: ["RW"], overall: 76 },
+  { id: "vida-cro-18", name: "Domagoj Vida", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "CB", altPositions: ["RB"], overall: 79 },
+  { id: "pivaric-cro-18", name: "Josip Pivarić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "LB", altPositions: ["LWB"], overall: 74 },
+  { id: "subasic-cro-18", name: "Danijel Subašić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "GK", altPositions: [], overall: 82 },
+
   // 2022
 
-CZE (República Tcheca/Tchecoslováquia): 1990, 2006
+  { id: "livakovic-cro-22", name: "Dominik Livaković", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "GK", altPositions: [], overall: 81 },
+  { id: "grbic-cro-22", name: "Ivo Grbić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "GK", altPositions: [], overall: 75 },
+  { id: "ivusic-cro-22", name: "Ivica Ivušić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "GK", altPositions: [], overall: 74 },
+  { id: "juranovic-cro-22", name: "Josip Juranović", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "RB", altPositions: ["RWB"], overall: 78 },
+  { id: "barisic-cro-22", name: "Borna Barišić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "LB", altPositions: ["LWB"], overall: 76 },
+  { id: "lovren-cro-22", name: "Dejan Lovren", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "CB", altPositions: [], overall: 78 },
+  { id: "gvardiol-cro-22", name: "Joško Gvardiol", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "CB", altPositions: ["LB"], overall: 83 },
+  { id: "sosa-cro-22", name: "Borna Sosa", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "LB", altPositions: ["LWB"], overall: 77 },
+  { id: "vida-cro-22", name: "Domagoj Vida", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "CB", altPositions: ["RB"], overall: 74 },
+  { id: "modric-cro-22", name: "Luka Modrić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "CM", altPositions: ["CAM"], overall: 88 },
+  { id: "kovacic-cro-22", name: "Mateo Kovačić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "CM", altPositions: ["CDM"], overall: 84 },
+  { id: "brozovic-cro-22", name: "Marcelo Brozović", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "CDM", altPositions: ["CM"], overall: 86 },
+  { id: "vlasic-cro-22", name: "Nikola Vlašić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "CAM", altPositions: ["CM", "RW"], overall: 78 },
+  { id: "pasalic-cro-22", name: "Mario Pašalić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "CAM", altPositions: ["CM", "RW"], overall: 81 },
+  { id: "sucic-cro-22", name: "Luka Sučić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "CM", altPositions: ["CAM"], overall: 75 },
+  { id: "majer-cro-22", name: "Lovro Majer", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "CM", altPositions: ["CAM"], overall: 80 },
+  { id: "perisic-cro-22", name: "Ivan Perišić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "LM", altPositions: ["LW", "LWB"], overall: 84 },
+  { id: "kramaric-cro-22", name: "Andrej Kramarić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "ST", altPositions: ["CF", "CAM"], overall: 82 },
+  { id: "livaja-cro-22", name: "Marko Livaja", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "ST", altPositions: ["CF"], overall: 77 },
+  { id: "petkovic-cro-22", name: "Bruno Petković", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "ST", altPositions: ["CF"], overall: 76 },
+  { id: "budimir-cro-22", name: "Ante Budimir", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "ST", altPositions: [], overall: 77 },
+  { id: "orsic-cro-22", name: "Mislav Oršić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "LW", altPositions: ["LM"], overall: 79 },
 
-DEN (Dinamarca): 1986, 1998, 2002
 
-ECU (Equador): 2006, 2022, 2026
+  // ===== CZE (República Tcheca/Tchecoslováquia) =====
+  // 1990 
 
-EGY (Egito): 1990, 2018
+  { id: "stejskal-cze-90", name: "Jan Stejskal", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "GK", altPositions: [], overall: 78 },
+  { id: "bielik-cze-90", name: "Július Bielik", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "CB", altPositions: [], overall: 74 },
+  { id: "kadlec-cze-90", name: "Miroslav Kadlec", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "CB", altPositions: ["LB"], overall: 79 },
+  { id: "hasek-cze-90", name: "Ivan Hašek", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "CM", altPositions: ["CDM"], overall: 80 },
+  { id: "kocian-cze-90", name: "Ján Kocian", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "CB", altPositions: ["CDM"], overall: 77 },
+  { id: "straka-cze-90", name: "František Straka", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "CB", altPositions: ["CDM"], overall: 75 },
+  { id: "bilek-cze-90", name: "Michal Bílek", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "RM", altPositions: ["CM", "CAM"], overall: 78 },
+  { id: "chovanec-cze-90", name: "Jozef Chovanec", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "CB", altPositions: ["CDM"], overall: 77 },
+  { id: "kubik-cze-90", name: "Luboš Kubík", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "CB", altPositions: ["LB"], overall: 78 },
+  { id: "skuhravy-cze-90", name: "Tomáš Skuhravý", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "ST", altPositions: ["CF"], overall: 84 },
+  { id: "moravcik-cze-90", name: "Ľubomír Moravčík", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "CAM", altPositions: ["CM", "LM"], overall: 80 },
+  { id: "fieber-cze-90", name: "Peter Fieber", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "CB", altPositions: [], overall: 72 },
+  { id: "nemec-cze-90", name: "Jiří Němec", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "CM", altPositions: ["CDM", "CAM"], overall: 77 },
+  { id: "weiss-cze-90", name: "Vladimír Weiss", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "RM", altPositions: ["CM"], overall: 75 },
+  { id: "kinier-cze-90", name: "Vladimír Kinier", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "CB", altPositions: [], overall: 71 },
+  { id: "hyravy-cze-90", name: "Viliam Hyravý", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "LM", altPositions: ["LW"], overall: 73 },
+  { id: "knoflicek-cze-90", name: "Ivo Knoflíček", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "LW", altPositions: ["LM", "ST"], overall: 77 },
+  { id: "luhovy-cze-90", name: "Milan Luhový", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "ST", altPositions: ["CF"], overall: 76 },
+  { id: "griga-cze-90", name: "Stanislav Griga", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "ST", altPositions: ["CF"], overall: 75 },
+  { id: "nemecek-cze-90", name: "Václav Němeček", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "CDM", altPositions: ["CM"], overall: 78 },
+  { id: "miklosko-cze-90", name: "Luděk Mikloško", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "GK", altPositions: [], overall: 77 },
+  { id: "paluch-cze-90", name: "Peter Palúch", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "GK", altPositions: [], overall: 70 },
 
-ENG (Inglaterra): 1950, 1954, 1958, 1962, 1966, 1970, 1982, 1986, 1990, 1998, 2006, 2010, 2018, 2026
+  // 2006
+
+  { id: "cech-cze-06", name: "Petr Čech", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "GK", altPositions: [], overall: 89 },
+  { id: "grygera-cze-06", name: "Zdeněk Grygera", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "RB", altPositions: ["CB"], overall: 78 },
+  { id: "mares-cze-06", name: "Pavel Mareš", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "LB", altPositions: [], overall: 73 },
+  { id: "galasek-cze-06", name: "Tomáš Galásek", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "CDM", altPositions: ["CM"], overall: 79 },
+  { id: "kovac-cze-06", name: "Radoslav Kováč", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "CB", altPositions: ["CDM"], overall: 76 },
+  { id: "jankulovski-cze-06", name: "Marek Jankulovski", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "LB", altPositions: ["LM", "LWB"], overall: 82 },
+  { id: "sionko-cze-06", name: "Libor Sionko", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "RM", altPositions: ["RW"], overall: 75 },
+  { id: "poborsky-cze-06", name: "Karel Poborský", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "RM", altPositions: ["RW"], overall: 79 },
+  { id: "koller-cze-06", name: "Jan Koller", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "ST", altPositions: [], overall: 83 },
+  { id: "rosicky-cze-06", name: "Tomáš Rosický", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "CAM", altPositions: ["CM"], overall: 84 },
+  { id: "nedved-cze-06", name: "Pavel Nedvěd", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "LM", altPositions: ["CM", "CAM"], overall: 88 },
+  { id: "lokvenc-cze-06", name: "Vratislav Lokvenc", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "ST", altPositions: [], overall: 74 },
+  { id: "jiranek-cze-06", name: "Martin Jiránek", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "CB", altPositions: ["RB"], overall: 76 },
+  { id: "jarolim-cze-06", name: "David Jarolím", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "CM", altPositions: ["CDM"], overall: 77 },
+  { id: "baros-cze-06", name: "Milan Baroš", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "ST", altPositions: ["CF"], overall: 80 },
+  { id: "blazek-cze-06", name: "Jaromír Blažek", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "GK", altPositions: [], overall: 76 },
+  { id: "stajner-cze-06", name: "Jiří Štajner", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "ST", altPositions: ["RW", "CAM"], overall: 75 },
+  { id: "heinz-cze-06", name: "Marek Heinz", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "ST", altPositions: ["CAM", "LW"], overall: 74 },
+  { id: "polak-cze-06", name: "Jan Polák", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "CDM", altPositions: ["CM"], overall: 76 },
+  { id: "plasil-cze-06", name: "Jaroslav Plašil", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "LM", altPositions: ["CM", "RM"], overall: 76 },
+  { id: "ujfalusi-cze-06", name: "Tomáš Ujfaluši", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "CB", altPositions: ["RB"], overall: 80 },
+  { id: "rozehnal-cze-06", name: "David Rozehnal", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "CB", altPositions: [], overall: 77 },
+  { id: "kinsky-cze-06", name: "Antonín Kinský", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "GK", altPositions: [], overall: 73 },
+
+
+  // ===== DEN (Dinamarca) =====
+  // 1986 
+
+  { id: "rasmussen-den-86", name: "Troels Rasmussen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "GK", altPositions: [], overall: 76 },
+  { id: "sivebaek-den-86", name: "John Sivebæk", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "RB", altPositions: ["RWB"], overall: 77 },
+  { id: "busk-den-86", name: "Søren Busk", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "CB", altPositions: [], overall: 75 },
+  { id: "olsen-m-den-86", name: "Morten Olsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "CB", altPositions: ["CDM"], overall: 81 },
+  { id: "nielsen-i-den-86", name: "Ivan Nielsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "CB", altPositions: [], overall: 77 },
+  { id: "lerby-den-86", name: "Søren Lerby", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "CM", altPositions: ["CAM", "LM"], overall: 83 },
+  { id: "molby-den-86", name: "Jan Mølby", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "CM", altPositions: ["CDM"], overall: 81 },
+  { id: "olsen-j-den-86", name: "Jesper Olsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "LW", altPositions: ["LM"], overall: 80 },
+  { id: "berggreen-den-86", name: "Klaus Berggreen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "RM", altPositions: ["RW"], overall: 78 },
+  { id: "elkjaer-den-86", name: "Preben Elkjær", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "ST", altPositions: ["CF"], overall: 86 },
+  { id: "laudrup-den-86", name: "Michael Laudrup", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "CAM", altPositions: ["ST", "RW"], overall: 88 },
+  { id: "bertelsen-den-86", name: "Jens Jørn Bertelsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "CM", altPositions: ["CDM"], overall: 75 },
+  { id: "frimann-den-86", name: "Per Frimann", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "CM", altPositions: ["CAM"], overall: 74 },
+  { id: "simonsen-den-86", name: "Allan Simonsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "RW", altPositions: ["ST"], overall: 80 },
+  { id: "arnesen-den-86", name: "Frank Arnesen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "RM", altPositions: ["CM"], overall: 80 },
+  { id: "qvist-den-86", name: "Ole Qvist", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "GK", altPositions: [], overall: 73 },
+  { id: "nielsen-k-den-86", name: "Kent Nielsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "CB", altPositions: [], overall: 76 },
+  { id: "christensen-den-86", name: "Flemming Christensen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "ST", altPositions: ["CF"], overall: 73 },
+  { id: "eriksen-den-86", name: "John Eriksen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "ST", altPositions: [], overall: 76 },
+  { id: "bartram-den-86", name: "Jan Bartram", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "LM", altPositions: ["LB"], overall: 74 },
+  { id: "andersen-den-86", name: "Henrik Andersen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "LB", altPositions: ["LM"], overall: 75 },
+  { id: "hogh-den-86", name: "Lars Høgh", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "GK", altPositions: [], overall: 77 },
+
+  // 1998
+
+  { id: "lerby-den-98", name: "Søren Lerby", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "CM", altPositions: [], overall: 75 },
+  { id: "andersen-s-den-98", name: "Steen Andersen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "CM", altPositions: [], overall: 70 },
+  { id: "andersen-h-den-98", name: "Henrik Andersen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "LB", altPositions: [], overall: 72 },
+  { id: "poulsen-den-98", name: "Robert Poulsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "CB", altPositions: [], overall: 68 },
+  { id: "hasselbaink-den-98", name: "Martin Hasselbaink", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "ST", altPositions: [], overall: 70 },
+  { id: "le-fevre-den-98", name: "Ulrik le Fevre", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "LW", altPositions: [], overall: 71 },
+  { id: "simonsen-den-98", name: "Allan Simonsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "RW", altPositions: [], overall: 72 },
+  { id: "thomsen-den-98", name: "Steen Thomsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "CB", altPositions: [], overall: 69 },
+  { id: "povlsen-den-98", name: "Flemming Povlsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "ST", altPositions: ["CAM"], overall: 75 },
+  { id: "hansen-k-den-98", name: "Kim Christian Hansen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "CM", altPositions: [], overall: 68 },
+  { id: "lehmann-den-98", name: "Jens Lehmann", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "GK", altPositions: [], overall: 70 },
+  { id: "nevland-den-98", name: "Erik Nevland", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "ST", altPositions: [], overall: 69 },
+  { id: "hansen-j-den-98", name: "John Hansen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "CB", altPositions: [], overall: 68 },
+  { id: "bosnich-den-98", name: "Niels Bosnich", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "GK", altPositions: [], overall: 67 },
+  { id: "tykjaer-den-98", name: "Michael Tykjaer", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "RB", altPositions: [], overall: 69 },
+  { id: "holmqvist-den-98", name: "Hans Holmqvist", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "ST", altPositions: [], overall: 70 },
+  { id: "bisgaard-den-98", name: "Morten Bisgaard", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "RM", altPositions: ["LM"], overall: 72 },
+  
+  // 2002
+
+  { id: "sorensen-den-02", name: "Thomas Sørensen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "GK", altPositions: [], overall: 80 },
+  { id: "tofting-den-02", name: "Stig Tøfting", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "CDM", altPositions: ["CM"], overall: 76 },
+  { id: "henriksen-den-02", name: "René Henriksen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "CB", altPositions: [], overall: 78 },
+  { id: "laursen-den-02", name: "Martin Laursen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "CB", altPositions: [], overall: 79 },
+  { id: "heintze-den-02", name: "Jan Heintze", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "LB", altPositions: ["LWB"], overall: 74 },
+  { id: "helveg-den-02", name: "Thomas Helveg", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "RB", altPositions: ["RWB", "RM"], overall: 78 },
+  { id: "gravesen-den-02", name: "Thomas Gravesen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "CM", altPositions: ["CDM"], overall: 81 },
+  { id: "gronkjaer-den-02", name: "Jesper Grønkjær", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "RW", altPositions: ["LW", "RM"], overall: 79 },
+  { id: "tomasson-den-02", name: "Jon Dahl Tomasson", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "ST", altPositions: ["CF", "CAM"], overall: 82 },
+  { id: "jorgensen-den-02", name: "Martin Jørgensen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "RM", altPositions: ["LM", "CAM"], overall: 78 },
+  { id: "sand-den-02", name: "Ebbe Sand", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "ST", altPositions: ["CF"], overall: 80 },
+  { id: "jensen-n-den-02", name: "Niclas Jensen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "LB", altPositions: ["LWB"], overall: 75 },
+  { id: "lustu-den-02", name: "Steven Lustü", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "CB", altPositions: ["RB"], overall: 72 },
+  { id: "jensen-c-den-02", name: "Claus Jensen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "CAM", altPositions: ["CM"], overall: 77 },
+  { id: "michaelsen-den-02", name: "Jan Michaelsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "CM", altPositions: ["CDM"], overall: 73 },
+  { id: "kjaer-den-02", name: "Peter Kjær", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "GK", altPositions: [], overall: 72 },
+  { id: "poulsen-den-02", name: "Christian Poulsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "CDM", altPositions: ["CM"], overall: 77 },
+  { id: "lovenkrands-den-02", name: "Peter Løvenkrands", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "LW", altPositions: ["ST", "LM"], overall: 75 },
+  { id: "rommedahl-den-02", name: "Dennis Rommedahl", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "RW", altPositions: ["RM"], overall: 79 },
+  { id: "bogelund-den-02", name: "Kasper Bøgelund", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "RB", altPositions: ["RWB"], overall: 74 },
+  { id: "madsen-den-02", name: "Peter Madsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "ST", altPositions: ["CF"], overall: 73 },
+  { id: "christiansen-den-02", name: "Jesper Christiansen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "GK", altPositions: [], overall: 71 },
+  { id: "nielsen-b-den-02", name: "Brian Steen Nielsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "CM", altPositions: ["CDM"], overall: 72 },
+
+
+  // ===== ECU (Equador) =====
+  // 2006 
+
+  { id: "villafuerte-ecu-06", name: "Edwin Villafuerte", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "GK", altPositions: [], overall: 68 },
+  { id: "guagua-ecu-06", name: "Jorge Guagua", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "CB", altPositions: [], overall: 73 },
+  { id: "hurtado-ecu-06", name: "Iván Hurtado", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "CB", altPositions: [], overall: 77 },
+  { id: "de-la-cruz-ecu-06", name: "Ulises de la Cruz", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "RB", altPositions: ["RWB", "LB"], overall: 76 },
+  { id: "perlaza-ecu-06", name: "José Luis Perlaza", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "CB", altPositions: [], overall: 71 },
+  { id: "urrutia-ecu-06", name: "Patricio Urrutia", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "CM", altPositions: ["CDM"], overall: 72 },
+  { id: "lara-ecu-06", name: "Christian Lara", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "CAM", altPositions: ["LM", "RM"], overall: 70 },
+  { id: "mendez-ecu-06", name: "Edison Méndez", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "CM", altPositions: ["CAM", "RM"], overall: 78 },
+  { id: "borja-ecu-06", name: "Félix Borja", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "ST", altPositions: ["CF"], overall: 71 },
+  { id: "kaviedes-ecu-06", name: "Iván Kaviedes", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "ST", altPositions: ["CF"], overall: 75 },
+  { id: "delgado-ecu-06", name: "Agustín Delgado", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "ST", altPositions: [], overall: 76 },
+  { id: "mora-ecu-06", name: "Cristian Mora", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "GK", altPositions: [], overall: 72 },
+  { id: "ambrosi-ecu-06", name: "Paúl Ambrosi", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "LB", altPositions: ["LM"], overall: 73 },
+  { id: "castillo-ecu-06", name: "Segundo Castillo", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "CDM", altPositions: ["CM"], overall: 75 },
+  { id: "ayovi-ecu-06", name: "Marlon Ayoví", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "CDM", altPositions: ["CM"], overall: 71 },
+  { id: "valencia-ecu-06", name: "Antonio Valencia", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "RM", altPositions: ["RW", "RB"], overall: 80 },
+  { id: "espinoza-ecu-06", name: "Giovanny Espinoza", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "CB", altPositions: [], overall: 74 },
+  { id: "reasco-ecu-06", name: "Néicer Reasco", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "RB", altPositions: ["RWB"], overall: 72 },
+  { id: "saritama-ecu-06", name: "Luis Saritama", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "CM", altPositions: ["CAM"], overall: 70 },
+  { id: "tenorio-e-ecu-06", name: "Edwin Tenorio", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "CDM", altPositions: ["CM"], overall: 71 },
+  { id: "tenorio-c-ecu-06", name: "Carlos Tenorio", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "ST", altPositions: ["CF"], overall: 77 },
+  { id: "lanza-ecu-06", name: "Damián Lanza", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "GK", altPositions: [], overall: 69 },
+  { id: "benitez-ecu-06", name: "Christian Benítez", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "ST", altPositions: ["CF", "RW"], overall: 74 },
+
+  // 2022
+  
+  { id: "galindez-ecu-22", name: "Hernán Galíndez", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "GK", altPositions: [], overall: 73 },
+  { id: "torres-ecu-22", name: "Félix Torres", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "CB", altPositions: [], overall: 74 },
+  { id: "hincapie-ecu-22", name: "Piero Hincapié", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "CB", altPositions: ["LB"], overall: 78 },
+  { id: "arboleda-ecu-22", name: "Robert Arboleda", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "CB", altPositions: [], overall: 75 },
+  { id: "cifuentes-ecu-22", name: "José Cifuentes", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "CM", altPositions: ["CDM"], overall: 74 },
+  { id: "pacho-ecu-22", name: "Willian Pacho", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "CB", altPositions: [], overall: 72 },
+  { id: "estupinan-ecu-22", name: "Pervis Estupiñán", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "LB", altPositions: ["LWB"], overall: 80 },
+  { id: "gruezo-ecu-22", name: "Carlos Gruezo", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "CDM", altPositions: ["CM"], overall: 74 },
+  { id: "preciado-a-ecu-22", name: "Ayrton Preciado", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "LW", altPositions: ["RW"], overall: 72 },
+  { id: "ibarra-ecu-22", name: "Romario Ibarra", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "LW", altPositions: ["RW"], overall: 73 },
+  { id: "estrada-ecu-22", name: "Michael Estrada", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "ST", altPositions: ["CF"], overall: 71 },
+  { id: "ramirez-ecu-22", name: "Moisés Ramírez", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "GK", altPositions: [], overall: 71 },
+  { id: "valencia-ecu-22", name: "Enner Valencia", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "ST", altPositions: ["LW"], overall: 78 },
+  { id: "arreaga-ecu-22", name: "Xavier Arreaga", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "CB", altPositions: [], overall: 71 },
+  { id: "mena-ecu-22", name: "Ángel Mena", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "RW", altPositions: ["RM", "CAM"], overall: 76 },
+  { id: "sarmiento-ecu-22", name: "Jeremy Sarmiento", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "LW", altPositions: ["CAM"], overall: 70 },
+  { id: "preciado-a-ecu-22", name: "Ángelo Preciado", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "RB", altPositions: ["RWB"], overall: 73 },
+  { id: "palacios-ecu-22", name: "Diego Palacios", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "LB", altPositions: ["LWB"], overall: 73 },
+  { id: "plata-ecu-22", name: "Gonzalo Plata", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "RW", altPositions: ["RM"], overall: 76 },
+  { id: "mendez-ecu-22", name: "Sebas Méndez", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "CDM", altPositions: ["CM"], overall: 74 },
+  { id: "franco-ecu-22", name: "Alan Franco", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "CM", altPositions: ["CDM"], overall: 71 },
+  { id: "dominguez-ecu-22", name: "Alexander Domínguez", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "GK", altPositions: [], overall: 70 },
+  { id: "caicedo-ecu-22", name: "Moisés Caicedo", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "CM", altPositions: ["CDM"], overall: 81 },
+  { id: "reasco-ecu-22", name: "Djorkaeff Reasco", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "ST", altPositions: ["CF"], overall: 68 },
+  { id: "porozo-ecu-22", name: "Jackson Porozo", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "CB", altPositions: [], overall: 72 },
+  { id: "rodriguez-ecu-22", name: "Kevin Rodríguez", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "ST", altPositions: ["RW"], overall: 67 },
+
+  // 2026
+
+  { id: "galindez-ecu-26", name: "Hernán Galíndez", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "GK", altPositions: [], overall: 72 },
+  { id: "torres-ecu-26", name: "Félix Torres", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "CB", altPositions: [], overall: 75 },
+  { id: "hincapie-ecu-26", name: "Piero Hincapié", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "CB", altPositions: ["LB"], overall: 81 },
+  { id: "ordonez-ecu-26", name: "Joel Ordóñez", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "CB", altPositions: [], overall: 73 },
+  { id: "alcivar-ecu-26", name: "Jordy Alcívar", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "CM", altPositions: ["CDM"], overall: 72 },
+  { id: "pacho-ecu-26", name: "Willian Pacho", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "CB", altPositions: [], overall: 79 },
+  { id: "estupinan-ecu-26", name: "Pervis Estupiñán", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "LB", altPositions: ["LWB"], overall: 81 },
+  { id: "valencia-a-ecu-26", name: "Anthony Valencia", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "LW", altPositions: ["RW"], overall: 71 },
+  { id: "yeboah-ecu-26", name: "John Yeboah", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "RW", altPositions: ["LW"], overall: 74 },
+  { id: "paez-ecu-26", name: "Kendry Páez", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "CAM", altPositions: ["CM", "RW"], overall: 78 },
+  { id: "rodriguez-ecu-26", name: "Kevin Rodríguez", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "ST", altPositions: ["RW"], overall: 73 },
+  { id: "ramirez-ecu-26", name: "Moisés Ramírez", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "GK", altPositions: [], overall: 73 },
+  { id: "valencia-e-ecu-26", name: "Enner Valencia", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "ST", altPositions: ["LW"], overall: 75 },
+  { id: "minda-ecu-26", name: "Alan Minda", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "LW", altPositions: ["ST"], overall: 75 },
+  { id: "vite-ecu-26", name: "Pedro Vite", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "CAM", altPositions: ["CM"], overall: 72 },
+  { id: "angulo-ecu-26", name: "Nilson Angulo", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "RW", altPositions: ["LW"], overall: 71 },
+  { id: "preciado-ecu-26", name: "Ángelo Preciado", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "RB", altPositions: ["RWB"], overall: 75 },
+  { id: "medina-ecu-26", name: "Yaimar Medina", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "LW", altPositions: ["LM"], overall: 69 },
+  { id: "plata-ecu-26", name: "Gonzalo Plata", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "RW", altPositions: ["RM"], overall: 76 },
+  { id: "castillo-ecu-26", name: "Denil Castillo", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "CDM", altPositions: ["CM"], overall: 70 },
+  { id: "franco-ecu-26", name: "Alan Franco", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "CM", altPositions: ["CDM"], overall: 74 },
+  { id: "valle-ecu-26", name: "Gonzalo Valle", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "GK", altPositions: [], overall: 68 },
+  { id: "caicedo-m-ecu-26", name: "Moisés Caicedo", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "CM", altPositions: ["CDM"], overall: 85 },
+  { id: "caicedo-j-ecu-26", name: "Jordy Caicedo", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "ST", altPositions: [], overall: 72 },
+  { id: "porozo-ecu-26", name: "Jackson Porozo", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "CB", altPositions: [], overall: 73 },
+  { id: "arevalo-ecu-26", name: "Jeremy Arévalo", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "LW", altPositions: ["RW"], overall: 68 },
+
+
+  // ===== EGY (Egito) =====
+  // 1990 
+
+  { id: "shobair-egy-90", name: "Ahmed Shobair", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "GK", altPositions: [], overall: 77 },
+  { id: "hassan-i-egy-90", name: "Ibrahim Hassan", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "RB", altPositions: ["RWB"], overall: 78 },
+  { id: "yassin-egy-90", name: "Rabie Yassin", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "LB", altPositions: ["LWB"], overall: 76 },
+  { id: "ramzy-egy-90", name: "Hany Ramzy", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "CB", altPositions: ["CDM"], overall: 79 },
+  { id: "yakan-egy-90", name: "Hesham Yakan", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "CB", altPositions: [], overall: 75 },
+  { id: "kasem-egy-90", name: "Ashraf Kasem", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "CB", altPositions: [], overall: 77 },
+  { id: "youssef-egy-90", name: "Ismail Youssef", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "CDM", altPositions: ["CM"], overall: 76 },
+  { id: "abdelghani-egy-90", name: "Magdi Abdelghani", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "CM", altPositions: ["CDM"], overall: 78 },
+  { id: "hassan-h-egy-90", name: "Hossam Hassan", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "ST", altPositions: ["CF"], overall: 81 },
+  { id: "abdelhamid-egy-90", name: "Gamal Abdelhamid", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "ST", altPositions: ["CF"], overall: 77 },
+  { id: "soliman-egy-90", name: "Tarek Soliman", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "RM", altPositions: ["LM"], overall: 73 },
+  { id: "abouzeid-egy-90", name: "Taher Abouzeid", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "CAM", altPositions: ["CM"], overall: 79 },
+  { id: "ramzy-a-egy-90", name: "Ahmed Ramzy", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "LB", altPositions: ["LM"], overall: 74 },
+  { id: "maihoub-egy-90", name: "Alaa Maihoub", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "CAM", altPositions: ["CM"], overall: 75 },
+  { id: "eid-egy-90", name: "Saber Eid", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "CB", altPositions: [], overall: 72 },
+  { id: "tolba-egy-90", name: "Magdy Tolba", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "LM", altPositions: ["RM"], overall: 74 },
+  { id: "shawky-egy-90", name: "Ayman Shawky", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "ST", altPositions: ["CF"], overall: 73 },
+  { id: "orabi-egy-90", name: "Osama Orabi", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "LB", altPositions: [], overall: 72 },
+  { id: "abdel-rahman-egy-90", name: "Adel Abdel Rahman", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "ST", altPositions: ["CF"], overall: 73 },
+  { id: "el-kass-egy-90", name: "Ahmed El-Kass", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "ST", altPositions: ["CF", "CAM"], overall: 76 },
+  { id: "taher-egy-90", name: "Ayman Taher", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "GK", altPositions: [], overall: 73 },
+  { id: "el-batal-egy-90", name: "Thabet El-Batal", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "GK", altPositions: [], overall: 72 },
+  
+  // 2018
+
+  { id: "el-hadary-egy-18", name: "Essam El-Hadary", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "GK", altPositions: [], overall: 74 },
+  { id: "gabr-egy-18", name: "Ali Gabr", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "CB", altPositions: [], overall: 74 },
+  { id: "elmohamady-egy-18", name: "Ahmed Elmohamady", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "RB", altPositions: ["RWB", "RM"], overall: 76 },
+  { id: "gaber-egy-18", name: "Omar Gaber", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "RB", altPositions: ["LB", "CDM"], overall: 73 },
+  { id: "morsy-egy-18", name: "Sam Morsy", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "CDM", altPositions: ["CM"], overall: 72 },
+  { id: "hegazi-egy-18", name: "Ahmed Hegazi", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "CB", altPositions: [], overall: 77 },
+  { id: "fathy-egy-18", name: "Ahmed Fathy", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "RB", altPositions: ["CDM", "CM"], overall: 75 },
+  { id: "hamed-egy-18", name: "Tarek Hamed", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "CDM", altPositions: ["CM"], overall: 76 },
+  { id: "mohsen-egy-18", name: "Marwan Mohsen", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "ST", altPositions: ["CF"], overall: 71 },
+  { id: "salah-egy-18", name: "Mohamed Salah", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "RW", altPositions: ["ST", "LW"], overall: 88 },
+  { id: "kahraba-egy-18", name: "Mahmoud Kahraba", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "LW", altPositions: ["RW", "CAM"], overall: 74 },
+  { id: "ashraf-egy-18", name: "Ayman Ashraf", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "LB", altPositions: ["CB"], overall: 73 },
+  { id: "abdel-shafy-egy-18", name: "Mohamed Abdel-Shafy", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "LB", altPositions: ["LWB"], overall: 72 },
+  { id: "sobhi-egy-18", name: "Ramadan Sobhi", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "LW", altPositions: ["LM"], overall: 73 },
+  { id: "hamdy-egy-18", name: "Mahmoud Hamdy", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "CB", altPositions: [], overall: 71 },
+  { id: "ekramy-egy-18", name: "Sherif Ekramy", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "GK", altPositions: [], overall: 73 },
+  { id: "elneny-egy-18", name: "Mohamed Elneny", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "CDM", altPositions: ["CM"], overall: 78 },
+  { id: "shikabala-egy-18", name: "Shikabala", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "RW", altPositions: ["CAM"], overall: 73 },
+  { id: "el-said-egy-18", name: "Abdallah El-Said", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "CAM", altPositions: ["CM"], overall: 75 },
+  { id: "samir-egy-18", name: "Saad Samir", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "CB", altPositions: [], overall: 71 },
+  { id: "trezeguet-egy-18", name: "Mahmoud Trezeguet", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "LW", altPositions: ["RW", "LM"], overall: 76 },
+  { id: "warda-egy-18", name: "Amr Warda", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "CAM", altPositions: ["LW", "RW"], overall: 73 },
+  { id: "el-shenawy-egy-18", name: "Mohamed El-Shenawy", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "GK", altPositions: [], overall: 76 },
+
+
+  // ===== ENG (Inglaterra) =====
+  // 1950
+
+
+  
+  // 1954
+  // 1958 
+  // 1962 
+  // 1966 
+  // 1970 
+  // 1982 
+  // 1986 
+  // 1990 
+  // 1998 
+  // 2006 
+  // 2010 
+  // 2018 
+  // 2026
 
 ESP (Espanha): 1950, 1962, 1966, 1978, 1986, 2002, 2010, 2018, 2026
 
