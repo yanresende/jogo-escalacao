@@ -108,11 +108,22 @@ function renderField() {
         }
       });
     } else {
+      const isDropTarget = _selectedPickPlayer && playerFitsSlot(_selectedPickPlayer, slot.pos);
       el.innerHTML = `
-        <div class="slot-circle ${isActive ? 'active' : ''}">${slot.pos}</div>
+        <div class="slot-circle ${isDropTarget ? 'drop-target' : (isActive ? 'active' : '')}">${slot.pos}</div>
         <div class="slot-name"></div>
       `;
-      if (_swapSourceIndex !== null) {
+      if (isDropTarget) {
+        el.className = 'field-slot clickable';
+        el.addEventListener('click', () => {
+          if (pickPlayerToSlot(_selectedPickPlayer.id, i)) {
+            hidePositionSelector();
+            hideDraftPick();
+            renderField();
+            updateRerollBtns();
+          }
+        });
+      } else if (_swapSourceIndex !== null) {
         el.className = 'field-slot clickable';
         el.addEventListener('click', () => handleSwapClick(i));
       }
@@ -172,7 +183,7 @@ function renderDraftPick(roll) {
       <div class="player-pos-badge">${allPos}</div>
     `;
     if (compatible) {
-      card.addEventListener('click', () => showPositionSelector(player));
+      card.addEventListener('click', () => selectPickPlayer(player, card));
     }
     list.appendChild(card);
   }
@@ -183,37 +194,22 @@ function renderDraftPick(roll) {
 // ── Position Selector ─────────────────────────────────────────
 let _selectedPickPlayer = null;
 
-function showPositionSelector(player) {
-  _selectedPickPlayer = player;
-  const openSlots = state.slots
-    .map((s, i) => ({ ...s, index: i }))
-    .filter(s => !s.player && playerFitsSlot(player, s.pos));
-
-  document.getElementById('pos-selector-name').textContent = player.name;
-  const slotsEl = document.getElementById('pos-selector-slots');
-  slotsEl.innerHTML = '';
-
-  for (const slot of openSlots) {
-    const btn = document.createElement('button');
-    btn.className = 'btn-pos-option';
-    btn.textContent = slot.pos;
-    btn.addEventListener('click', () => {
-      if (pickPlayerToSlot(player.id, slot.index)) {
-        hidePositionSelector();
-        hideDraftPick();
-        renderField();
-        updateRerollBtns();
-      }
-    });
-    slotsEl.appendChild(btn);
+function selectPickPlayer(player, cardEl) {
+  if (_selectedPickPlayer?.id === player.id) {
+    _selectedPickPlayer = null;
+    document.querySelectorAll('.player-card.pick-selected').forEach(c => c.classList.remove('pick-selected'));
+    renderField();
+    return;
   }
-
-  document.getElementById('players-list').classList.add('hidden');
-  document.getElementById('position-selector').classList.remove('hidden');
+  _selectedPickPlayer = player;
+  document.querySelectorAll('.player-card.pick-selected').forEach(c => c.classList.remove('pick-selected'));
+  cardEl.classList.add('pick-selected');
+  renderField();
 }
 
 function hidePositionSelector() {
   _selectedPickPlayer = null;
+  document.querySelectorAll('.player-card.pick-selected').forEach(c => c.classList.remove('pick-selected'));
   document.getElementById('position-selector').classList.add('hidden');
   document.getElementById('players-list').classList.remove('hidden');
 }
