@@ -253,3 +253,105 @@ async function onTournamentComplete(simResult) {
     showToast(`🔥 Você sobreviveu a ${score} rodada(s)!`);
   }
 }
+
+// ════════════════════════════════════════════════════════════
+//  TORNEIO SINGLE-PLAYER (você vs bots — grupos + mata-mata)
+// ════════════════════════════════════════════════════════════
+// Roda o torneio de 16 (você + 15 seleções reais) localmente, mostra o
+// chaveamento e aplica recompensas/conquistas reaproveitando onTournamentComplete.
+function runLocalTournament() {
+  const players = state.slots.map(s => s.player).filter(Boolean);
+  if (players.length < 11) { showToast('Monte o time completo primeiro!'); return; }
+
+  const prof = (typeof Profile !== 'undefined' && Profile.get) ? Profile.get() : {};
+  const human = {
+    id: 'you',
+    name: prof.name || 'Você',
+    isBot: false,
+    flag: '🎮',
+    team: {
+      players,
+      slots: state.slots.map(s => s.pos),
+      tactic: state.tactic,
+      captainId: state.captainId,
+      penaltyOrder: state.penaltyOrder || players.map(p => p.id),
+    },
+  };
+
+  const opts = { bracketSize: 16 };
+  if (state.gameMode === 'daily') {
+    // Mesmo torneio (bots + chave) para todos no mesmo dia → ranking justo.
+    opts.seed = hashStringToSeed(todayStr() + ':tour');
+  } else if (state.gameMode === 'career') {
+    const round = prof.careerRound || 1;
+    opts.minAvgOverall = Math.min(84, 70 + round * 1.8); // adversários mais fortes por rodada
+  }
+
+  const result = Tournament.runTournament([human], opts);
+  state.simResults = result;
+  renderTournamentResult({ ...result, youId: 'you' });
+  goTo('bracket');
+
+  if (typeof onTournamentComplete === 'function') {
+    onTournamentComplete(humanResultShape(result, 'you'));
+  }
+}
+
+// Converte o resultado do torneio na "forma" antiga (results[], champion, stats…)
+// para reaproveitar conquistas (evaluateAchievements), pontuação diária e moedas.
+function humanResultShape(result, pid) {
+  const part = result.participants.find(p => p.id === pid) || {};
+  const stats = part.stats || { overall: 0, attack: 0, defense: 0, chemistry: 0 };
+  const results = [];
+
+  // Fase de grupos do humano
+  let groupRow = null, groupName = null, groupObj = null;
+  for (const g of result.groups) {
+    const row = g.table.find(r => r.pid === pid);
+    if (row) { groupRow = row; groupName = g.name; groupObj = g; break; }
+  }
+  if (groupObj) {
+    let gi = 1;
+    for (const m of groupObj.matches) {
+      if (m.a !== pid && m.b !== pid) continue;
+      const gf = m.a === pid ? m.ga : m.gb;
+      const ga = m.a === pid ? m.gb : m.ga;
+      const win = gf > ga, draw = gf === ga;
+      results.push({
+        id: 'group' + gi, label: `Grupo ${groupName} — Jogo ${gi}`,
+        goalsFor: gf, goalsAgainst: ga, win, draw, advanced: win || draw,
+        status: win ? 'win' : (draw ? 'draw' : 'loss'),
+      });
+      gi++;
+    }
+  }
+  const advancedFromGroup = !!(groupRow && groupRow.rank <= 2);
+
+  // Mata-mata do humano (até perder)
+  if (advancedFromGroup) {
+    for (const round of result.knockout.rounds) {
+      const m = round.matches.find(x => x.a === pid || x.b === pid);
+      if (!m) continue;
+      const gf = m.a === pid ? m.ga : m.gb;
+      const ga = m.a === pid ? m.gb : m.ga;
+      const won = m.winner === pid;
+      results.push({
+        id: round.id, label: round.label,
+        goalsFor: gf, goalsAgainst: ga, win: won, draw: false, advanced: won,
+        status: won ? 'win' : 'loss', pens: m.pens || null,
+      });
+      if (!won) break;
+    }
+  }
+
+  return {
+    results,
+    stats,
+    champion: result.champion === pid,
+    stagesReached: results.length,
+    chemistry: stats.chemistry || 0,
+    tactic: part.tactic || state.tactic,
+    captainId: state.captainId,
+    seed: result.seed,
+  };
+}

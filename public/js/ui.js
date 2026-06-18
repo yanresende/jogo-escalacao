@@ -431,12 +431,22 @@ function renderTactics() {
 }
 
 function confirmTactics() {
-  renderSimulation();
-  if (state.isMultiplayer) {
+  if (state.isMultiplayer || isLocalTournamentMode()) {
     renderPenaltyOrder();
     goTo('penalties');
   } else {
+    renderSimulation(); // survival mantém a campanha animada
     goTo('simulation');
+  }
+}
+
+// Após confirmar a ordem dos pênaltis: multiplayer envia ao servidor;
+// modos single-player rodam o torneio localmente.
+function onPenaltiesConfirmed() {
+  if (state.isMultiplayer) {
+    if (typeof sendDraftComplete === 'function') sendDraftComplete();
+  } else if (typeof runLocalTournament === 'function') {
+    runLocalTournament();
   }
 }
 
@@ -451,6 +461,9 @@ function renderPenaltyOrder() {
     .sort((a, b) => penaltySkillOf(b) - penaltySkillOf(a));
   order = order.concat(rest);
   state.penaltyOrder = order.map(p => p.id);
+
+  const confirmBtn = document.getElementById('btn-confirm-penalties');
+  if (confirmBtn) confirmBtn.textContent = state.isMultiplayer ? '✓ Confirmar Time' : '✓ Confirmar e Disputar o Torneio';
 
   const list = document.getElementById('pen-order-list');
   if (!list) return;
@@ -580,9 +593,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const backPen = document.getElementById('back-from-penalties');
   if (backPen) backPen.addEventListener('click', () => goTo('tactics'));
   const confirmPen = document.getElementById('btn-confirm-penalties');
-  if (confirmPen) confirmPen.addEventListener('click', () => {
-    if (typeof sendDraftComplete === 'function') sendDraftComplete();
-  });
+  if (confirmPen) confirmPen.addEventListener('click', onPenaltiesConfirmed);
   const penAuto = document.getElementById('btn-pen-auto');
   if (penAuto) penAuto.addEventListener('click', () => { state.penaltyOrder = null; renderPenaltyOrder(); });
   const penList = document.getElementById('pen-order-list');

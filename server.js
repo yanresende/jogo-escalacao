@@ -4,7 +4,7 @@ const { Server } = require('socket.io');
 const path = require('path');
 const E = require('./public/js/engine.js'); // motor compartilhado client/server
 const db = require('./db.js');               // persistência (PostgreSQL / memória)
-const tournament = require('./tournament.js'); // motor de torneio multiplayer
+const tournament = require('./public/js/tournament.js'); // motor de torneio (UMD)
 
 const app = express();
 const server = http.createServer(app);

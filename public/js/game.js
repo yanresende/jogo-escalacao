@@ -146,6 +146,12 @@ function initDraft(formation) {
   state.dailyPtr = 0;
 }
 
+// Modos single-player que rodam o torneio de bots (grupos + mata-mata) localmente.
+// Survival mantém a campanha antiga (fases infinitas escalando).
+function isLocalTournamentMode() {
+  return !state.isMultiplayer && ['solo', 'daily', 'career', 'restrict'].includes(state.gameMode);
+}
+
 // ── Get open slots ────────────────────────────────────────────
 function getOpenSlots() {
   return state.slots.filter(s => !s.player);
