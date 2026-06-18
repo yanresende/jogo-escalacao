@@ -17,12 +17,52 @@
     </div>
     <p class="logo-sub">Sete a Zero</p>
     <p class="logo-desc">Monte seu time dos sonhos com craques históricos das Copas do Mundo</p>
-    <div class="menu-buttons">
-      <button class="btn btn-primary" id="btn-solo">⚽ Jogar Solo</button>
-      <button class="btn btn-secondary" id="btn-multi">🌐 Multiplayer</button>
+    <div class="hub-grid">
+      <button class="hub-card" id="btn-solo"><span class="hub-ico">⚽</span><span class="hub-t">Jogar Solo</span><span class="hub-d">Monte e dispute o torneio</span></button>
+      <button class="hub-card" id="btn-daily"><span class="hub-ico">📅</span><span class="hub-t">Desafio Diário</span><span class="hub-d">Mesmo dado p/ todos · ranking</span></button>
+      <button class="hub-card" id="btn-career"><span class="hub-ico">🏆</span><span class="hub-t">Carreira</span><span class="hub-d">Temporada, moedas e desbloqueios</span></button>
+      <button class="hub-card" id="btn-survival"><span class="hub-ico">🔥</span><span class="hub-t">Restrição</span><span class="hub-d">Regras especiais e Survival</span></button>
+      <button class="hub-card hub-wide" id="btn-multi"><span class="hub-ico">🌐</span><span class="hub-t">Multiplayer</span><span class="hub-d">Crie uma sala e desafie um amigo</span></button>
     </div>
     <p class="menu-hint">250 seleções · 1000+ jogadores · 18 Copas do Mundo</p>
   </div>
+</div>
+
+<!-- ========== CONQUISTAS ========== -->
+<div id="screen-achievements" class="screen">
+  <div class="screen-header">
+    <button class="btn-back" id="back-from-achievements">← Voltar</button>
+    <h2>🏅 Conquistas</h2>
+  </div>
+  <div class="achv-content" id="achv-content"></div>
+</div>
+
+<!-- ========== CARREIRA ========== -->
+<div id="screen-career" class="screen">
+  <div class="screen-header">
+    <button class="btn-back" id="back-from-career">← Voltar</button>
+    <h2>🏆 Carreira</h2>
+    <span class="coins-badge">🪙 <span id="career-coins">0</span></span>
+  </div>
+  <div class="career-content" id="career-content"></div>
+</div>
+
+<!-- ========== DESAFIO DIÁRIO ========== -->
+<div id="screen-daily" class="screen">
+  <div class="screen-header">
+    <button class="btn-back" id="back-from-daily">← Voltar</button>
+    <h2>📅 Desafio Diário</h2>
+  </div>
+  <div class="daily-content" id="daily-content"></div>
+</div>
+
+<!-- ========== RESTRIÇÃO / SURVIVAL ========== -->
+<div id="screen-restrict" class="screen">
+  <div class="screen-header">
+    <button class="btn-back" id="back-from-restrict">← Voltar</button>
+    <h2>🔥 Modos de Restrição</h2>
+  </div>
+  <div class="restrict-content" id="restrict-content"></div>
 </div>
 
 <!-- ========== MODO DE JOGO ========== -->
@@ -63,6 +103,7 @@
     <div class="draft-field-panel">
       <div class="draft-header">
         <span id="draft-formation-label" class="draft-formation-badge">4-3-3</span>
+        <span id="draft-chem" class="chem-badge" style="display:none">🔗 <span id="draft-chem-val">0</span></span>
         <div class="wildcards-container">
           <span class="wildcard-label">Re-rolls:</span>
           <div id="wildcards-display"></div>
@@ -111,6 +152,29 @@
   </div>
 </div>
 
+<!-- ========== CAPITÃO & TÁTICAS ========== -->
+<div id="screen-tactics" class="screen">
+  <div class="screen-header">
+    <button class="btn-back" id="back-from-tactics">← Voltar</button>
+    <h2>🎯 Tática & Capitão</h2>
+  </div>
+  <div class="tactics-content">
+    <section class="tactics-section">
+      <h3 class="tactics-h">Escolha a Tática</h3>
+      <p class="tactics-sub">A tática muda as fórmulas de gol e premia estilos de jogo específicos.</p>
+      <div class="tactic-grid" id="tactic-grid"></div>
+    </section>
+    <section class="tactics-section">
+      <h3 class="tactics-h">Escolha o Capitão</h3>
+      <p class="tactics-sub">O capitão dá bônus de moral e reforça os jogadores do mesmo estilo.</p>
+      <div class="captain-grid" id="captain-grid"></div>
+    </section>
+    <div class="tactics-actions">
+      <button class="btn btn-primary btn-large" id="btn-confirm-tactics">✓ Confirmar e Avançar</button>
+    </div>
+  </div>
+</div>
+
 <!-- ========== SIMULAÇÃO ========== -->
 <div id="screen-simulation" class="screen">
   <div class="screen-header">
@@ -132,6 +196,7 @@
     <div class="results-trophy" id="results-trophy"></div>
     <h2 id="results-title"></h2>
     <p id="results-subtitle"></p>
+    <div class="results-summary" id="results-summary"></div>
     <div class="results-stages" id="results-stages"></div>
     <div class="results-team" id="results-team"></div>
     <div class="results-actions">
@@ -206,9 +271,12 @@
 <div id="toast" class="toast hidden"></div>
 
 <!-- Scripts -->
+<script src="js/engine.js"></script>
 <script src="js/data.js"></script>
 <script src="js/simulation.js"></script>
 <script src="js/game.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/modes.js"></script>
 <script src="js/ui.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/multiplayer.js"></script>

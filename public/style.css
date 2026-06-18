@@ -1,27 +1,41 @@
 /* ============================================================
-   7a0 — Sete a Zero  |  Dark Theme
+   7a0 — Sete a Zero  |  Dark Theme + FUT Cards
    ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Rajdhani:wght@600;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0a0e1a;
+  --bg: #070b14;
   --bg2: #111827;
   --bg3: #1c2333;
   --border: #2a3550;
   --accent: #22c55e;
   --accent2: #16a34a;
   --gold: #f59e0b;
+  --gold2: #fbbf24;
   --red: #ef4444;
   --blue: #3b82f6;
+  --purple: #8b5cf6;
   --text: #f1f5f9;
   --text2: #94a3b8;
   --text3: #64748b;
-  --radius: 12px;
+  --radius: 14px;
   --shadow: 0 4px 24px rgba(0,0,0,.5);
+  --glass: rgba(17,24,39,.55);
+  /* Gradientes por tier */
+  --tier-s: linear-gradient(160deg, #fde68a 0%, #f59e0b 45%, #b45309 100%);
+  --tier-a: linear-gradient(160deg, #c4b5fd 0%, #8b5cf6 50%, #6d28d9 100%);
+  --tier-b: linear-gradient(160deg, #93c5fd 0%, #3b82f6 50%, #1d4ed8 100%);
+  --tier-c: linear-gradient(160deg, #475569 0%, #334155 50%, #1e293b 100%);
 }
 
-html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+html, body { height: 100%; font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+body { background:
+  radial-gradient(1200px 600px at 50% -10%, rgba(34,197,94,.10), transparent 60%),
+  radial-gradient(900px 500px at 100% 100%, rgba(59,130,246,.06), transparent 55%),
+  var(--bg);
+}
 
 /* ── Screens ─────────────────────────────────────────────── */
 .screen { display: none; min-height: 100vh; position: relative; animation: fadeIn .25s ease; }
@@ -190,14 +204,14 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .pick-slot-info { font-size: .85rem; color: var(--text2); }
 .pick-slot-info strong { color: var(--accent); }
 
-.players-list { display: flex; flex-direction: column; gap: 8px; }
+.players-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; }
 .player-card {
-  background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
-  padding: 12px 14px; cursor: pointer; transition: all .2s;
-  display: flex; align-items: center; gap: 12px;
+  cursor: pointer; transition: transform .15s ease; opacity: 0;
+  animation: cardReveal .4s ease forwards;
 }
-.player-card:hover { border-color: var(--accent); background: rgba(34,197,94,.06); }
-.player-card.pick-selected { border-color: var(--accent); background: rgba(34,197,94,.15); box-shadow: 0 0 0 2px rgba(34,197,94,.4); }
+.player-card:hover { transform: translateY(-4px); }
+.player-card.pick-selected .fut-card { outline: 3px solid var(--accent); outline-offset: 2px; }
+@keyframes cardReveal { from { opacity: 0; transform: translateY(14px) scale(.92); } to { opacity: 1; transform: none; } }
 .player-ovr {
   min-width: 40px; height: 40px; border-radius: 8px; background: var(--bg3);
   display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem;
@@ -217,14 +231,9 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 
 /* ── Jogador incompatível (sem posição aberta compatível) ── */
 .player-card.incompatible {
-  opacity: .38;
-  cursor: not-allowed;
+  animation: none; opacity: .35; cursor: not-allowed; filter: grayscale(.5);
 }
-.player-card.incompatible:hover {
-  border-color: var(--border);
-  background: var(--bg2);
-  transform: none;
-}
+.player-card.incompatible:hover { transform: none; }
 
 /* ── Swap mode: slot selecionado ── */
 .field-slot.clickable { cursor: pointer; }
@@ -281,7 +290,7 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .team-overall-badge strong { color: var(--accent); font-size: 1rem; }
 .sim-team-preview {
   background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 14px; display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px;
+  padding: 14px; display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 10px;
 }
 .sim-player-chip {
   display: flex; align-items: center; gap: 8px;
@@ -353,7 +362,7 @@ html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; backg
 .event-row.opp-event { flex-direction: row-reverse; }
 .event-row.opp-event .event-minute { text-align: left; }
 .event-row.opp-event .event-name { text-align: right; color: var(--text2); }
-.results-team { width: 100%; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+.results-team { width: 100%; display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 10px; }
 .results-actions { display: flex; flex-direction: column; gap: 10px; width: 100%; }
 
 /* ── Lobby ───────────────────────────────────────────────── */
@@ -445,3 +454,227 @@ input[type="text"]:focus { border-color: var(--accent); }
   .lobby-content { flex-direction: row; }
   .lobby-divider { writing-mode: vertical-lr; align-self: center; }
 }
+
+/* ============================================================
+   FUT CARDS
+   ============================================================ */
+.fut-card {
+  position: relative; border-radius: 14px; padding: 10px 8px 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  color: #1a1205; overflow: hidden; isolation: isolate;
+  box-shadow: 0 6px 18px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.35);
+  border: 1px solid rgba(255,255,255,.25);
+  text-align: center; min-height: 132px; justify-content: flex-start;
+}
+.fut-card.tier-S { background: var(--tier-s); }
+.fut-card.tier-A { background: var(--tier-a); color: #f8fafc; }
+.fut-card.tier-B { background: var(--tier-b); color: #f8fafc; }
+.fut-card.tier-C { background: var(--tier-c); color: #e2e8f0; }
+.fut-card.size-sm { min-height: 120px; padding: 8px 6px 10px; border-radius: 12px; }
+.fut-card.size-lg { min-height: 168px; }
+
+/* brilho diagonal */
+.fut-shine {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.35) 45%, transparent 60%);
+  transform: translateX(-120%); transition: transform .6s ease;
+}
+.fut-card:hover .fut-shine { transform: translateX(120%); }
+.fut-card.tier-S .fut-shine { background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.55) 45%, transparent 60%); }
+.fut-card > *:not(.fut-shine) { position: relative; z-index: 1; }
+
+.fut-top { display: flex; align-items: baseline; gap: 6px; width: 100%; justify-content: center; }
+.fut-ovr { font-family: 'Rajdhani', sans-serif; font-size: 1.9rem; font-weight: 700; line-height: 1; }
+.fut-card.size-sm .fut-ovr { font-size: 1.5rem; }
+.fut-pos {
+  font-size: .6rem; font-weight: 800; letter-spacing: .5px; padding: 2px 6px; border-radius: 6px;
+  background: rgba(0,0,0,.22); color: inherit;
+}
+.fut-flag { font-size: 1.9rem; line-height: 1; margin: 2px 0; filter: drop-shadow(0 2px 3px rgba(0,0,0,.3)); }
+.fut-card.size-sm .fut-flag { font-size: 1.5rem; }
+.fut-name {
+  font-weight: 800; font-size: .82rem; line-height: 1.05; width: 100%;
+  text-transform: uppercase; letter-spacing: .3px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.fut-card.size-sm .fut-name { font-size: .72rem; }
+.fut-meta { display: flex; flex-direction: column; gap: 1px; width: 100%; margin-top: 2px; }
+.fut-style { font-size: .58rem; font-weight: 700; opacity: .9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fut-wc { font-size: .56rem; font-weight: 600; opacity: .7; }
+
+.fut-card.captain { box-shadow: 0 0 0 2px var(--gold2), 0 6px 18px rgba(0,0,0,.5); }
+.fut-captain {
+  position: absolute; top: 6px; left: 6px; z-index: 2;
+  width: 18px; height: 18px; border-radius: 50%; background: var(--gold);
+  color: #1a1205; font-size: .65rem; font-weight: 900; display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(0,0,0,.25);
+}
+.fut-card.tier-S { animation: tierGlowS 2.6s ease-in-out infinite; }
+@keyframes tierGlowS {
+  0%,100% { box-shadow: 0 6px 18px rgba(0,0,0,.45), 0 0 0 0 rgba(245,158,11,.0), inset 0 1px 0 rgba(255,255,255,.4); }
+  50% { box-shadow: 0 6px 22px rgba(0,0,0,.5), 0 0 16px 2px rgba(251,191,36,.45), inset 0 1px 0 rgba(255,255,255,.5); }
+}
+
+/* ── Resumo de resultado ── */
+.results-summary {
+  width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); gap: 8px;
+}
+.summary-stat {
+  background: var(--glass); border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px 8px; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  backdrop-filter: blur(6px);
+}
+.summary-stat .ss-label { font-size: .62rem; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; }
+.summary-stat .ss-val { font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; font-weight: 700; line-height: 1; }
+.summary-stat .ss-val.sm { font-size: .85rem; font-family: 'Poppins', sans-serif; font-weight: 700; text-align: center; }
+.summary-stat.chem .ss-val { color: var(--accent); }
+.summary-stat.mvp { grid-column: span 2; }
+.summary-stat.mvp .ss-val { color: var(--gold2); }
+
+/* ── Confete ── */
+.confetti-layer { position: fixed; inset: 0; pointer-events: none; z-index: 2000; overflow: hidden; }
+.confetti-piece {
+  position: absolute; top: -16px; width: 9px; height: 14px; border-radius: 2px; opacity: .9;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  to { transform: translateY(105vh) rotate(720deg); opacity: 1; }
+}
+
+/* ── Campo melhorado ── */
+.field {
+  background:
+    repeating-linear-gradient(180deg, #1a7a3c 0 8%, #15692f 8% 16%);
+  box-shadow: inset 0 0 60px rgba(0,0,0,.35), var(--shadow);
+}
+.field::after { border-width: 2px; }
+
+/* overlay de química (SVG) */
+.chem-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.chem-line { stroke-linecap: round; opacity: 0; animation: chemFade .5s ease forwards; }
+.chem-line.strong { stroke: var(--accent); stroke-width: .7; filter: drop-shadow(0 0 1px rgba(34,197,94,.8)); }
+.chem-line.weak { stroke: rgba(34,197,94,.45); stroke-width: .4; stroke-dasharray: 2 2; }
+@keyframes chemFade { to { opacity: .9; } }
+.field-slot { z-index: 1; }
+
+/* chip de química no draft */
+.chem-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.4); color: var(--accent);
+  font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+}
+
+/* logo refinada */
+.logo { font-family: 'Poppins', sans-serif; text-shadow: 0 4px 30px rgba(34,197,94,.35); }
+
+/* botões com gradiente + brilho */
+.btn-primary {
+  background: linear-gradient(135deg, #34d36b, var(--accent2));
+  box-shadow: 0 6px 18px rgba(34,197,94,.3); position: relative; overflow: hidden;
+}
+.btn-primary:hover { box-shadow: 0 8px 24px rgba(34,197,94,.45); transform: translateY(-2px); }
+.btn-large { letter-spacing: .3px; }
+
+/* cabeçalhos translúcidos */
+.screen-header { background: var(--glass); backdrop-filter: blur(8px); }
+.screen-header h2 { font-weight: 800; }
+
+/* mode cards e formation polish */
+.mode-card, .formation-card, .lobby-card { background: var(--glass); backdrop-filter: blur(6px); }
+.mode-card { border-radius: 16px; }
+.mode-icon { filter: drop-shadow(0 4px 10px rgba(0,0,0,.4)); }
+.formation-name { font-family: 'Rajdhani', sans-serif; }
+
+/* dado mais vivo */
+.dice-btn { background: linear-gradient(135deg, #243049, #161d2e); box-shadow: var(--shadow); }
+.dice-btn:hover { box-shadow: 0 0 0 2px var(--accent), var(--shadow); }
+
+/* ── Tela Tática & Capitão ── */
+#screen-tactics { overflow-y: auto; }
+.tactics-content { padding: 18px 16px 32px; display: flex; flex-direction: column; gap: 22px; max-width: 760px; margin: 0 auto; width: 100%; }
+.tactics-section { display: flex; flex-direction: column; gap: 8px; }
+.tactics-h { font-size: 1.05rem; font-weight: 800; }
+.tactics-sub { font-size: .82rem; color: var(--text2); }
+.tactic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; margin-top: 4px; }
+.tactic-card {
+  background: var(--glass); border: 2px solid var(--border); border-radius: 12px;
+  padding: 14px 10px; text-align: center; cursor: pointer; transition: all .18s; backdrop-filter: blur(6px);
+}
+.tactic-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.tactic-card.selected { border-color: var(--accent); background: rgba(34,197,94,.12); box-shadow: 0 0 0 1px var(--accent); }
+.tactic-emoji { font-size: 1.8rem; }
+.tactic-name { font-weight: 800; font-size: .92rem; margin-top: 4px; }
+.tactic-favs { font-size: .66rem; color: var(--text2); margin-top: 4px; line-height: 1.3; }
+.tactic-card.selected .tactic-favs { color: var(--accent); }
+
+.captain-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 10px; margin-top: 4px; }
+.captain-pick { cursor: pointer; transition: transform .15s; }
+.captain-pick:hover { transform: translateY(-4px); }
+.captain-pick.selected .fut-card { outline: 3px solid var(--gold2); outline-offset: 2px; }
+.tactics-actions { display: flex; justify-content: center; padding-top: 6px; }
+
+/* ── Hub de modos ── */
+.hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+.hub-card {
+  background: var(--glass); border: 1px solid var(--border); border-radius: 14px;
+  padding: 16px 12px; cursor: pointer; transition: all .18s; backdrop-filter: blur(6px);
+  display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; color: var(--text);
+}
+.hub-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow); }
+.hub-card.hub-wide { grid-column: span 2; }
+.hub-ico { font-size: 2rem; }
+.hub-t { font-weight: 800; font-size: .98rem; }
+.hub-d { font-size: .68rem; color: var(--text2); line-height: 1.25; }
+
+.coins-badge { background: rgba(245,158,11,.12); border: 1px solid rgba(245,158,11,.4); color: var(--gold2); font-weight: 800; padding: 4px 12px; border-radius: 20px; font-size: .9rem; }
+
+/* ── Carreira ── */
+.career-content, .daily-content, .restrict-content { padding: 18px 16px 32px; display: flex; flex-direction: column; gap: 16px; max-width: 720px; margin: 0 auto; width: 100%; }
+.career-hero { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.career-stat { background: var(--glass); border: 1px solid var(--border); border-radius: 12px; padding: 14px 8px; text-align: center; backdrop-filter: blur(6px); }
+.cs-label { display: block; font-size: .64rem; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; }
+.cs-val { display: block; font-family: 'Rajdhani', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+.career-info, .restrict-info { font-size: .85rem; color: var(--text2); line-height: 1.5; }
+.career-shop h4, .daily-board h4 { font-size: .95rem; margin-bottom: 8px; }
+.shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.shop-item { background: var(--glass); border: 1px solid var(--border); border-radius: 12px; padding: 14px 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; color: var(--text); transition: all .18s; }
+.shop-item:hover:not(:disabled) { border-color: var(--gold); transform: translateY(-2px); }
+.shop-item:disabled { opacity: .4; cursor: not-allowed; }
+.shop-emoji { font-size: 1.6rem; }
+.shop-label { font-size: .8rem; font-weight: 700; text-align: center; }
+.shop-cost { font-size: .72rem; color: var(--gold2); font-weight: 700; }
+
+/* ── Diário ── */
+.daily-card, .daily-board { background: var(--glass); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; backdrop-filter: blur(6px); display: flex; flex-direction: column; gap: 10px; align-items: center; text-align: center; }
+.daily-board { align-items: stretch; text-align: left; }
+.daily-date { font-family: 'Rajdhani', sans-serif; font-weight: 700; color: var(--text2); letter-spacing: 2px; }
+.daily-theme { font-size: .95rem; }
+.daily-rule { font-size: .8rem; color: var(--text2); line-height: 1.5; }
+.daily-done { font-size: .78rem; color: var(--accent); }
+.leaderboard { display: flex; flex-direction: column; gap: 4px; }
+.lb-row { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 8px; background: var(--bg2); font-size: .85rem; }
+.lb-row.me { border: 1px solid var(--accent); background: rgba(34,197,94,.1); }
+.lb-pos { width: 22px; font-weight: 800; color: var(--text2); }
+.lb-name { flex: 1; font-weight: 600; }
+.lb-score { font-family: 'Rajdhani', sans-serif; font-weight: 700; color: var(--accent); }
+.lb-empty { font-size: .8rem; color: var(--text3); }
+
+/* ── Restrição ── */
+.restrict-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.restrict-card { background: var(--glass); border: 2px solid var(--border); border-radius: 14px; padding: 18px 12px; cursor: pointer; text-align: center; transition: all .18s; backdrop-filter: blur(6px); }
+.restrict-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+.restrict-emoji { font-size: 2.2rem; }
+.restrict-name { font-weight: 800; font-size: .95rem; margin-top: 6px; }
+.restrict-desc { font-size: .72rem; color: var(--text2); margin-top: 4px; line-height: 1.35; }
+
+/* ── Conquistas ── */
+.achv-content { padding: 18px 16px 32px; max-width: 720px; margin: 0 auto; width: 100%; }
+.achv-progress { text-align: center; color: var(--text2); font-size: .85rem; margin-bottom: 14px; }
+.achv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+.achv-card { background: var(--glass); border: 1px solid var(--border); border-radius: 14px; padding: 16px 12px; text-align: center; backdrop-filter: blur(6px); transition: all .18s; }
+.achv-card.got { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(245,158,11,.3); }
+.achv-card.locked { opacity: .5; filter: grayscale(.6); }
+.achv-emoji { font-size: 2rem; }
+.achv-name { font-weight: 800; font-size: .85rem; margin-top: 6px; }
+.achv-card.got .achv-name { color: var(--gold2); }
+.achv-desc { font-size: .68rem; color: var(--text2); margin-top: 4px; line-height: 1.35; }

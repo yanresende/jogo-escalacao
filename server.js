@@ -2,12 +2,47 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const path = require('path');
+const E = require('./public/js/engine.js'); // motor compartilhado client/server
+const db = require('./db.js');               // persistência (PostgreSQL / memória)
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// ── API REST: perfil + ranking diário ────────────────────────
+app.get('/api/profile/:uid', async (req, res) => {
+  try {
+    const profile = await db.getProfile(req.params.uid);
+    res.json({ profile });
+  } catch (e) { console.error('GET /api/profile', e); res.status(500).json({ error: 'db' }); }
+});
+
+app.put('/api/profile/:uid', async (req, res) => {
+  try {
+    const saved = await db.saveProfile(req.params.uid, req.body || {});
+    res.json({ ok: true, profile: saved });
+  } catch (e) { console.error('PUT /api/profile', e); res.status(500).json({ error: 'db' }); }
+});
+
+app.post('/api/daily', async (req, res) => {
+  try {
+    const { date, uid, name, score, detail } = req.body || {};
+    if (!date || !uid) return res.status(400).json({ error: 'date e uid obrigatórios' });
+    await db.submitDaily({ date, uid, name, score, detail });
+    const scores = await db.getLeaderboard(date, 50);
+    res.json({ ok: true, scores });
+  } catch (e) { console.error('POST /api/daily', e); res.status(500).json({ error: 'db' }); }
+});
+
+app.get('/api/daily/:date', async (req, res) => {
+  try {
+    const scores = await db.getLeaderboard(req.params.date, 50);
+    res.json({ scores });
+  } catch (e) { console.error('GET /api/daily', e); res.status(500).json({ error: 'db' }); }
+});
 
 // Map<roomCode, { players: [socketId], teams: [team|null, team|null], timeout: Timer|null }>
 const rooms = new Map();
@@ -21,114 +56,21 @@ function generateRoomCode() {
   return code;
 }
 
-function calcTeamStats(players) {
-  const weightMap = {
-    ST: { atk: 1.0, def: 0.0 },
-    LW: { atk: 0.85, def: 0.0 },
-    RW: { atk: 0.85, def: 0.0 },
-    CAM: { atk: 0.75, def: 0.1 },
-    CM: { atk: 0.5, def: 0.5 },
-    LM: { atk: 0.5, def: 0.5 },
-    RM: { atk: 0.5, def: 0.5 },
-    CDM: { atk: 0.2, def: 0.6 },
-    LWB: { atk: 0.3, def: 0.8 },
-    RWB: { atk: 0.3, def: 0.8 },
-    LB: { atk: 0.1, def: 0.8 },
-    RB: { atk: 0.1, def: 0.8 },
-    CB: { atk: 0.0, def: 0.95 },
-    GK: { atk: 0.0, def: 1.0 },
-  };
-  let atkSum = 0, atkWeight = 0, defSum = 0, defWeight = 0;
-  for (const p of players) {
-    const w = weightMap[p.position] || { atk: 0.5, def: 0.5 };
-    atkSum += p.overall * w.atk;
-    atkWeight += w.atk;
-    defSum += p.overall * w.def;
-    defWeight += w.def;
-  }
+// Normaliza o payload do draft (array antigo OU objeto novo { players, slots, tactic, captainId })
+function normalizeTeam(payload) {
+  if (Array.isArray(payload)) return { players: payload };
   return {
-    attack: atkWeight > 0 ? atkSum / atkWeight : 75,
-    defense: defWeight > 0 ? defSum / defWeight : 75,
+    players: payload.players || [],
+    slots: payload.slots || null,
+    tactic: payload.tactic || null,
+    captainId: payload.captainId || null,
   };
 }
 
-function mulberry32(seed) {
-  return () => {
-    seed |= 0;
-    seed = (seed + 0x6D2B79F5) | 0;
-    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function poisson(lambda, rng) {
-  const L = Math.exp(-lambda);
-  let k = 0, p = 1;
-  do { k++; p *= rng(); } while (p > L);
-  return k - 1;
-}
-
-const SCORER_WEIGHTS = {
-  ST:  1.0, RW: 1.0,  LW: 1.0,
-  CAM: 0.7,
-  CM:  0.45, LM: 0.45, RM: 0.45,
-  CDM: 0.22,
-  CB:  0.12, RB: 0.12, LB: 0.12, LWB: 0.12, RWB: 0.12,
-  GK:  0.01,
-};
-
-const SCORING_GK_EASTER_EGG = new Set([
-  "rogerio-ceni-bra-02",
-  "rogerio-ceni-bra-06",
-  "chilavert-par-98",
-  "higuita-col-90",
-]);
-
-function pickGoalScorer(players, rng) {
-  const weights = players.map(p => {
-    const base = SCORER_WEIGHTS[p.position] ?? 0.45;
-    const w = (p.position === 'GK' && SCORING_GK_EASTER_EGG.has(p.id)) ? 0.25 : base;
-    return p.overall * w;
-  });
-  const total = weights.reduce((s, w) => s + w, 0);
-  let r = rng() * total;
-  for (let i = 0; i < players.length; i++) {
-    r -= weights[i];
-    if (r <= 0) return players[i];
-  }
-  return players[players.length - 1];
-}
-
-function goalMinute(rng) {
-  return 1 + Math.floor(90 * Math.pow(rng(), 0.85));
-}
-
+// Simula o confronto direto usando o motor compartilhado (mesma matemática do client).
 function simulateMultiplayerMatch(teamA, teamB) {
-  const seed = (Date.now() ^ (Math.random() * 0xFFFFFFFF)) >>> 0;
-  const rng = mulberry32(seed);
-  const statsA = calcTeamStats(teamA);
-  const statsB = calcTeamStats(teamB);
-
-  const lambdaAFor = Math.min(5, Math.max(0.15, 1.4 + (statsA.attack - statsB.defense) * 0.08));
-  const lambdaBFor = Math.min(5, Math.max(0.15, 1.4 + (statsB.attack - statsA.defense) * 0.08));
-
-  const goalsA = poisson(lambdaAFor, rng);
-  const goalsB = poisson(lambdaBFor, rng);
-
-  const eventsA = [];
-  for (let i = 0; i < goalsA; i++) {
-    eventsA.push({ scorer: pickGoalScorer(teamA, rng), minute: goalMinute(rng) });
-  }
-  eventsA.sort((a, b) => a.minute - b.minute);
-
-  const eventsB = [];
-  for (let i = 0; i < goalsB; i++) {
-    eventsB.push({ scorer: pickGoalScorer(teamB, rng), minute: goalMinute(rng) });
-  }
-  eventsB.sort((a, b) => a.minute - b.minute);
-
-  return { goalsA, goalsB, statsA, statsB, eventsA, eventsB, seed };
+  const seed = E.generateSeed();
+  return E.simulateVersus(normalizeTeam(teamA), normalizeTeam(teamB), seed);
 }
 
 io.on('connection', (socket) => {
@@ -165,8 +107,8 @@ io.on('connection', (socket) => {
       const result = simulateMultiplayerMatch(room.teams[0], room.teams[1]);
       io.to(code).emit('match_result', {
         ...result,
-        teamA: room.teams[0],
-        teamB: room.teams[1],
+        teamA: normalizeTeam(room.teams[0]).players,
+        teamB: normalizeTeam(room.teams[1]).players,
       });
       // Clean up room after 5 min
       room.timeout = setTimeout(() => rooms.delete(code), 5 * 60 * 1000);
@@ -187,6 +129,10 @@ io.on('connection', (socket) => {
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`7a0 — Sete a Zero rodando em http://localhost:${PORT}`);
-});
+db.init()
+  .catch(err => console.error('[db] falha ao inicializar:', err.message))
+  .finally(() => {
+    server.listen(PORT, () => {
+      console.log(`7a0 — Sete a Zero rodando em http://localhost:${PORT}`);
+    });
+  });

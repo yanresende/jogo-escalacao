@@ -2,6 +2,37 @@
    7a0 — UI / Rendering
    ============================================================ */
 
+// ── Player Card (FUT) ─────────────────────────────────────────
+// Componente reutilizável de carta de jogador. size: 'sm' | 'md' | 'lg'.
+function renderPlayerCard(player, opts) {
+  opts = opts || {};
+  const size = opts.size || 'md';
+  const showRating = opts.mode ? opts.mode === 'classic' : (state.mode === 'classic');
+  const tier = getTier(player.overall);
+  const style = (typeof getStyle === 'function') ? getStyle(player) : null;
+  const styleInfo = (style && typeof PLAY_STYLES !== 'undefined') ? PLAY_STYLES[style] : null;
+  const ovr = showRating ? player.overall : '?';
+  const pos = player.position;
+  const shortName = player.name.length > 14 ? player.name.split(' ').pop() : player.name;
+  const isCaptain = opts.captain || (state.captainId && state.captainId === player.id);
+
+  return `
+    <div class="fut-card tier-${tier} size-${size}${opts.selected ? ' selected' : ''}${isCaptain ? ' captain' : ''}"${opts.dataId ? ` data-id="${player.id}"` : ''}>
+      <div class="fut-shine"></div>
+      ${isCaptain ? '<div class="fut-captain">C</div>' : ''}
+      <div class="fut-top">
+        <div class="fut-ovr">${ovr}</div>
+        <div class="fut-pos">${pos}</div>
+      </div>
+      <div class="fut-flag">${player.flag || '⚽'}</div>
+      <div class="fut-name">${shortName}</div>
+      <div class="fut-meta">
+        ${styleInfo ? `<span class="fut-style" title="${styleInfo.label}">${styleInfo.emoji} ${styleInfo.label}</span>` : ''}
+        <span class="fut-wc">Copa ${player.worldCup}</span>
+      </div>
+    </div>`;
+}
+
 // ── Toast ─────────────────────────────────────────────────────
 let toastTimer = null;
 function showToast(msg) {
@@ -131,20 +162,47 @@ function renderField() {
     field.appendChild(el);
   });
 
-  // Show simulation button when draft is complete
+  // Overlay de química (linhas entre estilos que sinergizam)
+  renderChemistryOverlay(field);
+
+  // Draft completo → escolher tática e capitão antes de simular/enviar
   if (isDraftComplete()) {
-    const stats = calcTeamStats(state.pickedPlayers);
-    showToast(`Time montado! OVR médio: ${stats.overall}`);
-    if (state.isMultiplayer) {
-      renderSimulation();
-      setTimeout(() => {
-        if (typeof sendDraftComplete === 'function') sendDraftComplete();
-      }, 800);
-    } else {
-      renderSimulation();
-      setTimeout(() => goTo('simulation'), 800);
-    }
+    const stats = calcTeamStats(state.pickedPlayers, currentSimOpts());
+    showToast(`Time montado! Química ${stats.chemistry}`);
+    setTimeout(() => { renderTactics(); goTo('tactics'); }, 600);
   }
+}
+
+// ── Overlay de química no campo ───────────────────────────────
+function renderChemistryOverlay(field) {
+  if (typeof calcChemistry !== 'function') return;
+  const positions = FIELD_POSITIONS[state.formation] || [];
+
+  // Jogadores escalados (mantém índice do slot p/ coordenadas)
+  const placed = [];
+  state.slots.forEach((s, i) => { if (s.player) placed.push({ player: s.player, slotIndex: i }); });
+
+  const badge = document.getElementById('draft-chem');
+  const badgeVal = document.getElementById('draft-chem-val');
+
+  if (placed.length < 2) { if (badge) badge.style.display = 'none'; return; }
+
+  const chem = calcChemistry(
+    placed.map(p => p.player),
+    { tactic: state.tactic, captainId: state.captainId, slots: placed.map(p => state.slots[p.slotIndex].pos) }
+  );
+
+  if (badge && badgeVal) { badge.style.display = ''; badgeVal.textContent = chem.chemistry; }
+
+  let svg = '<svg class="chem-svg" viewBox="0 0 100 100" preserveAspectRatio="none">';
+  for (const link of chem.links) {
+    const sa = placed[link.a].slotIndex, sb = placed[link.b].slotIndex;
+    const pa = positions[sa], pb = positions[sb];
+    if (!pa || !pb) continue;
+    svg += `<line x1="${pa[1]}" y1="${pa[0]}" x2="${pb[1]}" y2="${pb[0]}" class="chem-line ${link.type}" />`;
+  }
+  svg += '</svg>';
+  field.insertAdjacentHTML('afterbegin', svg);
 }
 
 // ── Draft Pick List ───────────────────────────────────────────
@@ -164,29 +222,17 @@ function renderDraftPick(roll) {
   list.innerHTML = '';
 
   const sorted = [...roll.players].sort((a, b) => b.overall - a.overall);
-  for (const player of sorted) {
-    const tier = getTier(player.overall);
-    const showRating = state.mode === 'classic';
+  sorted.forEach((player, idx) => {
     const compatible = openPositions.some(op => playerFitsSlot(player, op));
-
-    const allPos = [player.position, ...(player.altPositions || [])].join('/');
     const card = document.createElement('div');
     card.className = `player-card${compatible ? '' : ' incompatible'}`;
-    card.innerHTML = `
-      <div class="player-ovr ${showRating ? `tier-${tier}` : 'hidden-rating'}">
-        ${showRating ? player.overall : '?'}
-      </div>
-      <div class="player-info">
-        <div class="player-name">${player.name}</div>
-        <div class="player-meta">${player.country} · Copa ${player.worldCup}</div>
-      </div>
-      <div class="player-pos-badge">${allPos}</div>
-    `;
+    card.style.animationDelay = `${Math.min(idx * 40, 400)}ms`;
+    card.innerHTML = renderPlayerCard(player, { size: 'md' });
     if (compatible) {
       card.addEventListener('click', () => selectPickPlayer(player, card));
     }
     list.appendChild(card);
-  }
+  });
 
   updateRerollBtns();
 }
@@ -265,20 +311,9 @@ function renderSimulation() {
 
   document.getElementById('sim-overall').textContent = stats.overall;
 
-  // Team preview chips
+  // Team preview cards
   const preview = document.getElementById('sim-team-preview');
-  preview.innerHTML = players.map(p => {
-    const tier = getTier(p.overall);
-    return `
-      <div class="sim-player-chip">
-        <div class="chip-ovr tier-${tier}">${state.mode === 'classic' ? p.overall : '?'}</div>
-        <div class="chip-info">
-          <div class="chip-name">${p.name}</div>
-          <div class="chip-pos">${p.position}</div>
-        </div>
-      </div>
-    `;
-  }).join('');
+  preview.innerHTML = players.map(p => renderPlayerCard(p, { size: 'sm' })).join('');
 
   // Stage cards (pending)
   const stages = document.getElementById('sim-stages');
@@ -300,22 +335,26 @@ function renderResults(simResult, players) {
   const title  = document.getElementById('results-title');
   const sub    = document.getElementById('results-subtitle');
 
-  // Find furthest stage reached
-  const lastResult = [...results].reverse().find(r => r.status !== 'skipped');
-
   if (champion) {
     trophy.textContent = '🏆';
     title.textContent  = 'CAMPEÃO DO MUNDO!';
     sub.textContent    = `Time com OVR ${stats.overall} dominou o torneio!`;
-  } else if (lastResult) {
-    const stageNames = {
-      group1: 'Fase de Grupos', group2: 'Fase de Grupos', group3: 'Fase de Grupos',
-      r16: 'Oitavas de Final', qf: 'Quartas de Final', sf: 'Semifinal', final: 'Final'
-    };
-    trophy.textContent = '⚽';
-    title.textContent  = lastResult.advanced ? 'Bom resultado!' : 'Eliminado!';
-    sub.textContent    = `Seu time (OVR ${stats.overall}) chegou até: ${stageNames[lastResult.id] || lastResult.label}`;
+    launchConfetti();
+  } else {
+    const lastResult = [...results].reverse().find(r => r.status !== 'skipped');
+    if (lastResult) {
+      const stageNames = {
+        group1: 'Fase de Grupos', group2: 'Fase de Grupos', group3: 'Fase de Grupos',
+        r16: 'Oitavas de Final', qf: 'Quartas de Final', sf: 'Semifinal', final: 'Final'
+      };
+      trophy.textContent = '⚽';
+      title.textContent  = lastResult.advanced ? 'Bom resultado!' : 'Eliminado!';
+      sub.textContent    = `Seu time (OVR ${stats.overall}) chegou até: ${stageNames[lastResult.id] || lastResult.label}`;
+    }
   }
+
+  // Resumo: química, tática e MVP
+  renderResultSummary(simResult);
 
   // Stages
   document.getElementById('results-stages').innerHTML = results
@@ -345,18 +384,102 @@ function renderResults(simResult, players) {
     }).join('');
 
   // Team
-  document.getElementById('results-team').innerHTML = players.map(p => {
-    const tier = getTier(p.overall);
+  document.getElementById('results-team').innerHTML =
+    players.map(p => renderPlayerCard(p, { size: 'sm', mode: 'classic' })).join('');
+}
+
+// ── Tela de Capitão & Táticas ─────────────────────────────────
+function renderTactics() {
+  const players = state.slots.map(s => s.player).filter(Boolean);
+  if (!state.tactic) state.tactic = 'equilibrada';
+
+  // Grade de táticas
+  const tg = document.getElementById('tactic-grid');
+  tg.innerHTML = Object.entries(TACTICS).map(([key, t]) => {
+    const favs = t.favors.length
+      ? t.favors.map(f => (PLAY_STYLES[f] ? PLAY_STYLES[f].label : f)).join(', ')
+      : 'Sem ênfase';
     return `
-      <div class="sim-player-chip">
-        <div class="chip-ovr tier-${tier}">${p.overall}</div>
-        <div class="chip-info">
-          <div class="chip-name">${p.name}</div>
-          <div class="chip-pos">${p.flag || ''} ${p.worldCup}</div>
-        </div>
-      </div>
-    `;
+      <div class="tactic-card${state.tactic === key ? ' selected' : ''}" data-tactic="${key}">
+        <div class="tactic-emoji">${t.emoji}</div>
+        <div class="tactic-name">${t.label}</div>
+        <div class="tactic-favs">${favs}</div>
+      </div>`;
   }).join('');
+  tg.querySelectorAll('.tactic-card').forEach(c => {
+    c.addEventListener('click', () => { state.tactic = c.dataset.tactic; renderTactics(); });
+  });
+
+  // Grade de capitães (cards menores clicáveis)
+  const cg = document.getElementById('captain-grid');
+  cg.innerHTML = '';
+  players.forEach(p => {
+    const wrap = document.createElement('div');
+    wrap.className = 'captain-pick' + (state.captainId === p.id ? ' selected' : '');
+    wrap.innerHTML = renderPlayerCard(p, { size: 'sm', captain: state.captainId === p.id });
+    wrap.addEventListener('click', () => {
+      state.captainId = (state.captainId === p.id) ? null : p.id;
+      renderTactics();
+    });
+    cg.appendChild(wrap);
+  });
+
+  // Texto do botão conforme modo
+  const btn = document.getElementById('btn-confirm-tactics');
+  if (btn) btn.textContent = state.isMultiplayer ? '✓ Confirmar Time' : '✓ Confirmar e Simular';
+}
+
+function confirmTactics() {
+  renderSimulation();
+  if (state.isMultiplayer) {
+    if (typeof sendDraftComplete === 'function') sendDraftComplete();
+  } else {
+    goTo('simulation');
+  }
+}
+
+// ── Resumo de resultado (química, tática, MVP) ────────────────
+function renderResultSummary(simResult) {
+  const el = document.getElementById('results-summary');
+  if (!el) return;
+  const stats = simResult.stats || {};
+  const chem = simResult.chemistry ?? stats.chemistry ?? null;
+  const tac = (typeof TACTICS !== 'undefined' && simResult.tactic) ? TACTICS[simResult.tactic] : null;
+  const mvp = simResult.mvp && simResult.mvp.goals > 0 ? simResult.mvp : null;
+
+  const cards = [];
+  cards.push(`<div class="summary-stat"><span class="ss-label">OVR</span><span class="ss-val">${stats.overall ?? '—'}</span></div>`);
+  cards.push(`<div class="summary-stat"><span class="ss-label">Ataque</span><span class="ss-val">${stats.attack ?? '—'}</span></div>`);
+  cards.push(`<div class="summary-stat"><span class="ss-label">Defesa</span><span class="ss-val">${stats.defense ?? '—'}</span></div>`);
+  if (chem != null) cards.push(`<div class="summary-stat chem"><span class="ss-label">Química</span><span class="ss-val">${chem}</span></div>`);
+  if (tac) cards.push(`<div class="summary-stat"><span class="ss-label">Tática</span><span class="ss-val sm">${tac.emoji} ${tac.label}</span></div>`);
+  if (mvp) cards.push(`<div class="summary-stat mvp"><span class="ss-label">⭐ Craque</span><span class="ss-val sm">${mvp.name} (${mvp.goals})</span></div>`);
+
+  el.innerHTML = cards.join('');
+}
+
+// ── Confete (campeão) ─────────────────────────────────────────
+function launchConfetti() {
+  let layer = document.getElementById('confetti-layer');
+  if (!layer) {
+    layer = document.createElement('div');
+    layer.id = 'confetti-layer';
+    layer.className = 'confetti-layer';
+    document.body.appendChild(layer);
+  }
+  layer.innerHTML = '';
+  const colors = ['#22c55e', '#f59e0b', '#3b82f6', '#ef4444', '#ffffff'];
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement('span');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[i % colors.length];
+    c.style.animationDelay = (Math.random() * 0.6) + 's';
+    c.style.animationDuration = (1.8 + Math.random() * 1.4) + 's';
+    c.style.transform = `rotate(${Math.random() * 360}deg)`;
+    layer.appendChild(c);
+  }
+  setTimeout(() => { if (layer) layer.innerHTML = ''; }, 4200);
 }
 
 // ── Animate simulation stage by stage ────────────────────────
@@ -369,6 +492,7 @@ function animateSimulation(simResult) {
       setTimeout(() => {
         renderResults(simResult, state.slots.map(s => s.player).filter(Boolean));
         goTo('results');
+        if (typeof onTournamentComplete === 'function') onTournamentComplete(simResult);
       }, 600);
       return;
     }
@@ -403,11 +527,16 @@ function animateSimulation(simResult) {
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-cancel-pick').addEventListener('click', hidePositionSelector);
 
+  const confirmBtn = document.getElementById('btn-confirm-tactics');
+  if (confirmBtn) confirmBtn.addEventListener('click', confirmTactics);
+  const backTactics = document.getElementById('back-from-tactics');
+  if (backTactics) backTactics.addEventListener('click', () => goTo('draft'));
+
   document.getElementById('btn-simulate').addEventListener('click', () => {
     const players = state.slots.map(s => s.player).filter(Boolean);
     if (players.length < 11) { showToast('Monte o time completo primeiro!'); return; }
     const seed = generateSeed();
-    state.simResults = simulateTournament(players, seed);
+    state.simResults = simulateTournament(players, seed, currentSimOpts());
     animateSimulation(state.simResults);
   }, { once: false });
 });

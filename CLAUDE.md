@@ -6,11 +6,21 @@ Draft de jogadores históricos por dados + simulação de torneio por distribui�
 ## Como rodar
 
 ```bash
-npm install          # só na primeira vez
+npm install          # só na primeira vez (inclui pg)
 node server.js       # inicia em http://localhost:3000
 ```
 
 Sem build step. Sem bundler. Sem framework. HTML/CSS/JS puro no client, Node.js no server.
+
+**Banco de dados (opcional em dev):** se `DATABASE_URL` não estiver definido, o `db.js` usa um store
+**em memória** (com aviso no console) — o app roda normalmente, mas o progresso não persiste.
+
+## Deploy na Railway
+
+1. Suba o repositório na Railway (detecta Node e roda `npm start`).
+2. Adicione o plugin **PostgreSQL** — a Railway injeta `DATABASE_URL` automaticamente.
+3. No boot, `db.init()` cria as tabelas (`profiles`, `daily_scores`) se não existirem.
+4. Em produção a conexão usa SSL (`NODE_ENV=production`). A porta vem de `process.env.PORT`.
 
 ---
 
@@ -18,23 +28,58 @@ Sem build step. Sem bundler. Sem framework. HTML/CSS/JS puro no client, Node.js 
 
 ```
 jogo/
-├── server.js                  Node.js + Express + Socket.io
+├── server.js                  Node + Express + Socket.io + API REST (/api/*)
+├── db.js                      Persistência: PostgreSQL (pg) com fallback em memória
 ├── package.json
 └── public/                    Servido estaticamente pelo Express
     ├── index.html             SPA — todas as telas em um único arquivo
-    ├── style.css              Dark theme completo, mobile-first
+    ├── style.css              Dark theme + cards FUT, mobile-first
     └── js/
+        ├── engine.js          Motor compartilhado (UMD): Poisson, química, táticas, conquistas
         ├── data.js            Banco de dados de jogadores + helpers
-        ├── simulation.js      Motor Poisson + funções de torneio
-        ├── game.js            Estado global + lógica de draft
-        ├── ui.js              Renderização DOM + animações
+        ├── simulation.js      Shim legado (núcleo migrou para engine.js)
+        ├── game.js            Estado global + lógica de draft + restrições
+        ├── profile.js         Perfil anônimo (uid no localStorage) + sync com backend
+        ├── modes.js           Modos: Diário, Carreira, Restrição/Survival + conquistas UI
+        ├── ui.js              Renderização DOM + cards + animações
         └── multiplayer.js     Cliente Socket.io
 ```
 
 **Ordem de carregamento dos scripts** (declarada no `index.html`):
-`data.js` → `simulation.js` → `game.js` → `ui.js` → `socket.io.js` → `multiplayer.js`
+`engine.js` → `data.js` → `simulation.js` → `game.js` → `profile.js` → `modes.js` → `ui.js` → `socket.io.js` → `multiplayer.js`
 
-Isso importa: `game.js` depende de globais de `data.js` e `simulation.js`. `ui.js` depende de globais de `game.js`. `multiplayer.js` é carregado por último porque depende de tudo.
+Crítico: `engine.js` carrega **primeiro** (expõe globais via UMD). `server.js` faz
+`require('./public/js/engine.js')` para usar a **mesma** matemática do client. `game.js` depende de
+globais de `engine.js`/`data.js`; `modes.js` e `ui.js` dependem de `game.js`/`profile.js`;
+`multiplayer.js` por último. Se a ordem mudar, quebra com "X is not defined".
+
+## Motor compartilhado (`engine.js`)
+
+Núcleo de simulação em padrão UMD (Node `module.exports` + browser globais). Principais exports:
+`simulateTournament(players, seed, opts)`, `simulateVersus(teamA, teamB, seed)`, `calcChemistry`,
+`calcTeamStats`, `TACTICS`, `PLAY_STYLES`/`getStyle`, `evaluateAchievements`/`ACHIEVEMENTS`,
+`hashStringToSeed`, `encodeTeam`/`decodeTeam`. `opts = { tactic, captainId, slots, stages }`.
+
+**Química por estilo:** cada jogador tem um campo opcional `style` no `data.js` (ver Posições/Estilos);
+sem ele, `getStyle()` deriva por posição. Química = sinergia de estilos + alinhamento com a tática +
+capitão. Alimenta o OVR efetivo usado em `calcTeamStats`.
+
+## Modos de jogo (`modes.js`)
+
+`state.gameMode`: `'solo' | 'daily' | 'career' | 'survival'` (+ `'restrict'`). 
+- **Diário:** seed = `hashStringToSeed(YYYY-MM-DD)` gera `state.dailySeq` (mesma sequência de dados p/
+  todos); `rollDice()` consome dessa sequência. Pontuação enviada a `/api/daily`.
+- **Carreira:** `Profile` guarda `coins`/`careerRound`; dificuldade escala por rodada (`currentSimOpts`).
+- **Restrição/Survival:** `state.restrictions` (`budget`, `oneCountry`) é checado em `pickPlayer`/
+  `pickPlayerToSlot` via `canPickPlayer()`. Survival usa `buildSurvivalStages()` (fases infinitas).
+
+`onTournamentComplete(simResult)` (chamado no fim de `animateSimulation`) faz recompensas, conquistas
+e submissão do ranking diário.
+
+## API REST (`server.js` → `db.js`)
+
+- `GET /api/profile/:uid` · `PUT /api/profile/:uid`
+- `POST /api/daily` (upsert por `(date,uid)`, mantém o maior score) · `GET /api/daily/:date`
 
 ---
 

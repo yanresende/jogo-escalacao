@@ -86,7 +86,40 @@ const state = {
   seed:         null,
   isMultiplayer:false,
   simResults:   null,
+  tactic:       'equilibrada', // chave de TACTICS (engine.js)
+  captainId:    null,          // id do jogador capitão
+  gameMode:     'solo',        // 'solo' | 'daily' | 'career' | 'survival'
+  restrictions: null,          // { budget?, oneCountry?, label } | null
+  dailySeq:     null,          // sequência determinística de squads (modo diário)
+  dailyPtr:     0,
+  dailySeed:    null,
 };
+
+// Opções de simulação derivadas do estado atual (tática, capitão, slots, fases por modo).
+function currentSimOpts() {
+  const opts = {
+    tactic:    state.tactic,
+    captainId: state.captainId,
+    slots:     state.slots.map(s => s.pos),
+  };
+  if (state.gameMode === 'career') {
+    const round = (typeof Profile !== 'undefined') ? (Profile.get().careerRound || 1) : 1;
+    const bump = (round - 1) * 2;
+    opts.stages = STAGE_CONFIG.map(s => ({ ...s, strength: s.strength + bump }));
+  } else if (state.gameMode === 'survival') {
+    opts.stages = buildSurvivalStages();
+  }
+  return opts;
+}
+
+// Survival: fases infinitas (cresce a força até o jogador perder).
+function buildSurvivalStages() {
+  const stages = [];
+  for (let i = 0; i < 18; i++) {
+    stages.push({ id: 'sv' + i, label: `Rodada ${i + 1}`, strength: 66 + i * 2 });
+  }
+  return stages;
+}
 
 // ── Navigation helpers ────────────────────────────────────────
 function goTo(screen) {
@@ -100,10 +133,15 @@ function goTo(screen) {
 function initDraft(formation) {
   state.formation = formation;
   state.slots = FORMATIONS[formation].slots.map(pos => ({ pos, player: null }));
-  state.wildcards = 3;
+  const bonus = (typeof Profile !== 'undefined' && state.gameMode === 'career') ? (Profile.get().bonusWildcards || 0) : 0;
+  state.wildcards = 3 + bonus;
   state.currentRoll = null;
   state.pickedPlayers = [];
   state.seed = generateSeed();
+  state.tactic = 'equilibrada';
+  state.captainId = null;
+  state.dailySeq = null;
+  state.dailyPtr = 0;
 }
 
 // ── Get open slots ────────────────────────────────────────────
@@ -121,6 +159,14 @@ function isDraftComplete() {
 
 // ── Roll dice ─────────────────────────────────────────────────
 function rollDice() {
+  // Modo diário: sequência determinística de seleções (mesmo "dado" para todos)
+  if (state.gameMode === 'daily' && state.dailySeq && state.dailySeq.length) {
+    const squad = state.dailySeq[state.dailyPtr % state.dailySeq.length];
+    state.dailyPtr++;
+    state.currentRoll = { squad, players: squad.players };
+    return state.currentRoll;
+  }
+
   const openPositions = getOpenPositions();
   if (openPositions.length === 0) return null;
 
@@ -181,6 +227,22 @@ function rollSameCountry() {
   return state.currentRoll;
 }
 
+// ── Restrições (modos Restrição/Survival) ─────────────────────
+function canPickPlayer(player) {
+  const r = state.restrictions;
+  if (!r) return { ok: true };
+  if (r.oneCountry && state.slots.some(s => s.player && s.player.country === player.country)) {
+    return { ok: false, reason: `Regra: 1 jogador por país. Já há um de ${player.country}.` };
+  }
+  if (r.budget) {
+    const sum = state.slots.reduce((a, s) => a + (s.player ? s.player.overall : 0), 0);
+    if (sum + player.overall > r.budget) {
+      return { ok: false, reason: `Estouraria o orçamento de OVR (${r.budget}).` };
+    }
+  }
+  return { ok: true };
+}
+
 // ── Pick player em slot específico ────────────────────────────
 function pickPlayerToSlot(playerId, slotIndex) {
   const player = PLAYERS.find(p => p.id === playerId);
@@ -188,6 +250,8 @@ function pickPlayerToSlot(playerId, slotIndex) {
   const slot = state.slots[slotIndex];
   if (!slot || slot.player) return false;
   if (!playerFitsSlot(player, slot.pos)) return false;
+  const allowed = canPickPlayer(player);
+  if (!allowed.ok) { if (typeof showToast === 'function') showToast(allowed.reason); return false; }
 
   slot.player = player;
   state.pickedPlayers.push(player);
@@ -212,6 +276,8 @@ function movePlayer(fromIndex, toIndex) {
 function pickPlayer(playerId) {
   const player = PLAYERS.find(p => p.id === playerId);
   if (!player) return false;
+  const allowed = canPickPlayer(player);
+  if (!allowed.ok) { if (typeof showToast === 'function') showToast(allowed.reason); return false; }
 
   const openPositions = getOpenPositions();
   // Find best slot fit
@@ -283,13 +349,32 @@ window.addEventListener('DOMContentLoaded', () => {
   // Wire up buttons
   document.getElementById('btn-solo').addEventListener('click', () => {
     state.isMultiplayer = false;
+    state.gameMode = 'solo';
+    state.restrictions = null;
     goTo('mode');
   });
 
   document.getElementById('btn-multi').addEventListener('click', () => {
     state.isMultiplayer = true;
+    state.gameMode = 'solo';
+    state.restrictions = null;
     goTo('lobby');
   });
+
+  // Novos modos (lógica em modes.js)
+  const dailyBtn = document.getElementById('btn-daily');
+  if (dailyBtn) dailyBtn.addEventListener('click', () => { if (typeof startDaily === 'function') startDaily(); });
+  const careerBtn = document.getElementById('btn-career');
+  if (careerBtn) careerBtn.addEventListener('click', () => { if (typeof startCareer === 'function') startCareer(); });
+  const survivalBtn = document.getElementById('btn-survival');
+  if (survivalBtn) survivalBtn.addEventListener('click', () => { if (typeof startRestrict === 'function') startRestrict(); });
+
+  ['back-from-career', 'back-from-daily', 'back-from-restrict'].forEach(id => {
+    const b = document.getElementById(id);
+    if (b) b.addEventListener('click', () => goTo('menu'));
+  });
+  const backAchv = document.getElementById('back-from-achievements');
+  if (backAchv) backAchv.addEventListener('click', () => goTo('career'));
 
   document.getElementById('back-from-mode').addEventListener('click', () => goTo('menu'));
   document.getElementById('back-from-formation').addEventListener('click', () => goTo(state.isMultiplayer ? 'lobby' : 'mode'));
@@ -357,7 +442,7 @@ function onSimulate() {
   const players = state.slots.map(s => s.player).filter(Boolean);
   if (players.length < 11) { showToast('Monte o time completo primeiro!'); return; }
   const seed = generateSeed();
-  state.simResults = simulateTournament(players, seed);
+  state.simResults = simulateTournament(players, seed, currentSimOpts());
   renderResults(state.simResults, players);
   goTo('results');
 }
@@ -368,10 +453,29 @@ function onShare() {
 }
 
 function onPlayAgain() {
+  const prevMode = state.gameMode;
   state.formation = null;
   state.slots = [];
   state.currentRoll = null;
   state.pickedPlayers = [];
   state.simResults = null;
+  state.tactic = 'equilibrada';
+  state.captainId = null;
+  state.dailySeq = null;
+  state.dailyPtr = 0;
+
+  // Volta para o hub do modo, mantendo o contexto quando faz sentido
+  if (prevMode === 'career' && typeof renderCareerScreen === 'function') {
+    renderCareerScreen();
+    goTo('career');
+    return;
+  }
+  if (prevMode === 'daily' && typeof renderDailyScreen === 'function') {
+    renderDailyScreen();
+    goTo('daily');
+    return;
+  }
+  state.gameMode = 'solo';
+  state.restrictions = null;
   goTo('menu');
 }

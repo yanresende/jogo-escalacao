@@ -93,7 +93,12 @@ function showLobbyError(msg) {
 function sendDraftComplete() {
   if (!socket) return;
   const players = state.slots.map(s => s.player).filter(Boolean);
-  socket.emit('draft_complete', players);
+  socket.emit('draft_complete', {
+    players,
+    slots:     state.slots.map(s => s.pos),
+    tactic:    state.tactic,
+    captainId: state.captainId,
+  });
   goTo('waiting');
 }
 
