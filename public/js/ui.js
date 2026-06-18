@@ -608,7 +608,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (players.length < 11) { showToast('Monte o time completo primeiro!'); return; }
     const seed = generateSeed();
     state.simResults = simulateTournament(players, seed, currentSimOpts());
-    animateSimulation(state.simResults);
+    // Playback "ao vivo" fase a fase (mesmo motor de cena do torneio).
+    if (typeof playMatchSequence === 'function') {
+      document.getElementById('btn-simulate').style.display = 'none';
+      playMatchSequence(state.simResults, null, {
+        survival: true,
+        onComplete: () => {
+          renderResults(state.simResults, state.slots.map(s => s.player).filter(Boolean));
+          goTo('results');
+          if (typeof onTournamentComplete === 'function') onTournamentComplete(state.simResults);
+        },
+      });
+    } else {
+      animateSimulation(state.simResults); // fallback legado
+    }
   }, { once: false });
 });
 
@@ -644,15 +657,28 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
-// ── Resultado do torneio (multiplayer) ────────────────────────
-function renderTournamentResult(data) {
+// ── Resultado do torneio (multiplayer / single-player) ────────
+// Quebrado em helpers para permitir revelação progressiva (ver match.js).
+function tournamentById(data) {
   const byId = {};
   data.participants.forEach(p => { byId[p.id] = p; });
+  return byId;
+}
+
+function renderTournamentResult(data) {
+  const byId = tournamentById(data);
+  renderChampionAndPath(data, byId);
+  renderGroupsSection(data, byId);
+  const koWrap = document.getElementById('knockout-wrap');
+  if (koWrap) koWrap.innerHTML = data.knockout.rounds.map(r => renderKnockoutRound(r, data, byId)).join('');
+}
+
+// Campeão + "seu caminho"
+function renderChampionAndPath(data, byId) {
+  byId = byId || tournamentById(data);
   const you = data.youId ? byId[data.youId] : null;
   const champ = data.champion ? byId[data.champion] : null;
-  const pName = (id) => byId[id] ? `${byId[id].flag} ${byId[id].name}` : '—';
 
-  // Campeão
   const champEl = document.getElementById('bracket-champion');
   if (champEl) {
     const youWon = champ && you && champ.id === you.id;
@@ -663,7 +689,6 @@ function renderTournamentResult(data) {
       : '';
   }
 
-  // Seu caminho
   const pathEl = document.getElementById('bracket-yourpath');
   if (pathEl) {
     if (!you) {
@@ -677,48 +702,51 @@ function renderTournamentResult(data) {
         </div>`;
     }
   }
+}
 
-  // Grupos
+// Tabelas de todos os grupos
+function renderGroupsSection(data, byId) {
+  byId = byId || tournamentById(data);
   const groupsWrap = document.getElementById('groups-wrap');
-  if (groupsWrap) {
-    groupsWrap.innerHTML = data.groups.map(g => `
-      <div class="group-card">
-        <div class="group-name">Grupo ${g.name}</div>
-        <table class="group-table">
-          <thead><tr><th>#</th><th>Time</th><th>P</th><th>V</th><th>E</th><th>D</th><th>SG</th><th>Pts</th></tr></thead>
-          <tbody>
-            ${g.table.map(r => `
-              <tr class="${data.youId === r.pid ? 'is-you' : ''} ${r.rank <= 2 ? 'qualified' : ''}">
-                <td>${r.rank}</td>
-                <td class="gt-name">${byId[r.pid] ? byId[r.pid].flag : ''} ${escapeHtml(byId[r.pid] ? byId[r.pid].name : r.pid)}</td>
-                <td>${r.P}</td><td>${r.W}</td><td>${r.D}</td><td>${r.L}</td>
-                <td>${r.gd > 0 ? '+' : ''}${r.gd}</td><td><b>${r.pts}</b></td>
-              </tr>`).join('')}
-          </tbody>
-        </table>
-      </div>`).join('');
-  }
+  if (!groupsWrap) return;
+  groupsWrap.innerHTML = data.groups.map(g => `
+    <div class="group-card">
+      <div class="group-name">Grupo ${g.name}</div>
+      <table class="group-table">
+        <thead><tr><th>#</th><th>Time</th><th>P</th><th>V</th><th>E</th><th>D</th><th>SG</th><th>Pts</th></tr></thead>
+        <tbody>
+          ${g.table.map(r => `
+            <tr class="${data.youId === r.pid ? 'is-you' : ''} ${r.rank <= 2 ? 'qualified' : ''}">
+              <td>${r.rank}</td>
+              <td class="gt-name">${byId[r.pid] ? byId[r.pid].flag : ''} ${escapeHtml(byId[r.pid] ? byId[r.pid].name : r.pid)}</td>
+              <td>${r.P}</td><td>${r.W}</td><td>${r.D}</td><td>${r.L}</td>
+              <td>${r.gd > 0 ? '+' : ''}${r.gd}</td><td><b>${r.pts}</b></td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`).join('');
+}
 
-  // Mata-mata
-  const koWrap = document.getElementById('knockout-wrap');
-  if (koWrap) {
-    koWrap.innerHTML = data.knockout.rounds.map(round => `
-      <div class="ko-round">
-        <div class="ko-round-title">${round.label}</div>
-        ${round.matches.map(m => {
-          const winA = m.winner === m.a, winB = m.winner === m.b;
-          const youHere = data.youId && (m.a === data.youId || m.b === data.youId);
-          const pens = m.pens ? ` <span class="ko-pens">(${m.pens.a}-${m.pens.b} pên${m.pens.suddenDeath ? ', MS' : ''})</span>` : '';
-          return `
-            <div class="ko-match${youHere ? ' is-you' : ''}">
-              <div class="ko-team ${winA ? 'win' : 'lose'}">${pName(m.a)}<span class="ko-score">${m.ga}</span></div>
-              <div class="ko-team ${winB ? 'win' : 'lose'}">${pName(m.b)}<span class="ko-score">${m.gb}</span></div>
-              ${pens ? `<div class="ko-pens-row">${pens}</div>` : ''}
-              ${m.pens && m.pens.kicks ? renderShootout(m, byId) : ''}
-            </div>`;
-        }).join('')}
-      </div>`).join('');
-  }
+// HTML de UMA rodada do mata-mata (revelada uma de cada vez no playback)
+function renderKnockoutRound(round, data, byId) {
+  byId = byId || tournamentById(data);
+  const pName = (id) => byId[id] ? `${byId[id].flag} ${byId[id].name}` : '—';
+  return `
+    <div class="ko-round">
+      <div class="ko-round-title">${round.label}</div>
+      ${round.matches.map(m => {
+        const winA = m.winner === m.a, winB = m.winner === m.b;
+        const youHere = data.youId && (m.a === data.youId || m.b === data.youId);
+        const pens = m.pens ? ` <span class="ko-pens">(${m.pens.a}-${m.pens.b} pên${m.pens.suddenDeath ? ', MS' : ''})</span>` : '';
+        return `
+          <div class="ko-match${youHere ? ' is-you' : ''}">
+            <div class="ko-team ${winA ? 'win' : 'lose'}">${pName(m.a)}<span class="ko-score">${m.ga}</span></div>
+            <div class="ko-team ${winB ? 'win' : 'lose'}">${pName(m.b)}<span class="ko-score">${m.gb}</span></div>
+            ${pens ? `<div class="ko-pens-row">${pens}</div>` : ''}
+            ${m.pens && m.pens.kicks ? renderShootout(m, byId) : ''}
+          </div>`;
+      }).join('')}
+    </div>`;
 }
 
 // Detalhe da disputa de pênaltis (colapsável), cobrança a cobrança.

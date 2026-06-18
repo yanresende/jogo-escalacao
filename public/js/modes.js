@@ -289,11 +289,20 @@ function runLocalTournament() {
 
   const result = Tournament.runTournament([human], opts);
   state.simResults = result;
-  renderTournamentResult({ ...result, youId: 'you' });
   goTo('bracket');
 
-  if (typeof onTournamentComplete === 'function') {
-    onTournamentComplete(humanResultShape(result, 'you'));
+  // Playback "ao vivo": joga cada partida sua minuto a minuto e revela o
+  // restante do torneio aos poucos; recompensas/conquistas no fim.
+  const finish = () => {
+    if (typeof onTournamentComplete === 'function') {
+      onTournamentComplete(humanResultShape(result, 'you'));
+    }
+  };
+  if (typeof playMatchSequence === 'function') {
+    playMatchSequence(result, 'you', { onComplete: finish });
+  } else {
+    renderTournamentResult({ ...result, youId: 'you' }); // fallback
+    finish();
   }
 }
 

@@ -38,8 +38,13 @@ function initSocket() {
   });
 
   socket.on('tournament_result', (data) => {
-    renderTournamentResult(data);
     goTo('bracket');
+    // Playback "ao vivo" do caminho do jogador; espectador (sem youId) cai no bracket direto.
+    if (data && data.youId && typeof playMatchSequence === 'function') {
+      playMatchSequence(data, data.youId, {});
+    } else {
+      renderTournamentResult(data);
+    }
   });
 
   socket.on('disconnect', () => {
