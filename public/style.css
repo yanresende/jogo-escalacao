@@ -120,6 +120,33 @@ body { background:
 .fv-row { display: flex; gap: 6px; justify-content: center; }
 .fv-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); opacity: .6; }
 
+/* ── Mini-campo no card de formação ── */
+.formation-field {
+  position: relative; width: 100%; max-width: 156px; aspect-ratio: 3 / 4; margin: 0 auto;
+  border-radius: 10px; border: 1px solid rgba(255,255,255,.14); overflow: hidden;
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 150' preserveAspectRatio='none'><g fill='none' stroke='%23ffffff' stroke-opacity='0.30' stroke-width='0.7'><rect x='29' y='0' width='42' height='15'/><rect x='40' y='0' width='20' height='6'/><rect x='29' y='135' width='42' height='15'/><rect x='40' y='144' width='20' height='6'/></g></svg>") center / 100% 100% no-repeat,
+    repeating-linear-gradient(180deg, #1a7a3c 0 8%, #15692f 8% 16%);
+  box-shadow: inset 0 0 22px rgba(0,0,0,.35);
+}
+.formation-field::before { /* linha do meio */
+  content: ''; position: absolute; left: 6%; right: 6%; top: 50%; height: 1px;
+  background: rgba(255,255,255,.25);
+}
+.formation-field::after { /* círculo central */
+  content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 26%; aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(255,255,255,.22);
+}
+.ff-mark {
+  position: absolute; transform: translate(-50%,-50%);
+  width: 21px; height: 21px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .42rem; font-weight: 800; letter-spacing: .01em; line-height: 1; white-space: nowrap;
+  color: #fff; background: rgba(8,30,16,.5);
+  border: 1.5px dashed rgba(255,255,255,.6);
+  text-shadow: 0 1px 2px rgba(0,0,0,.6);
+}
+
 /* ── DRAFT ───────────────────────────────────────────────── */
 #screen-draft { flex-direction: row; overflow: hidden; }
 .draft-layout { display: flex; width: 100%; height: 100vh; overflow: hidden; }

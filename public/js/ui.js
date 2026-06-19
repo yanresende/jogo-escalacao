@@ -52,7 +52,7 @@ function renderFormationGrid() {
     card.className = 'formation-card';
     card.innerHTML = `
       <div class="formation-name">${name}</div>
-      <div class="formation-visual">${renderFormationDots(cfg.slots)}</div>
+      <div class="formation-visual">${renderFormationField(name)}</div>
       <div class="formation-desc">${cfg.desc}</div>
     `;
     card.addEventListener('click', () => {
@@ -89,6 +89,18 @@ function renderFormationDots(slots) {
   return sortedRows.map(r =>
     `<div class="fv-row">${Array(rows[r]).fill('<div class="fv-dot"></div>').join('')}</div>`
   ).join('');
+}
+
+// Mini-campo da formação: marcadores nas coordenadas reais (FIELD_POSITIONS),
+// com rótulo PT — mesma cara do campo do jogo, em miniatura.
+function renderFormationField(name) {
+  const slots = (FORMATIONS[name] && FORMATIONS[name].slots) || [];
+  const coords = FIELD_POSITIONS[name] || [];
+  const marks = slots.map((pos, i) => {
+    const [y, x] = coords[i] || [50, 50];
+    return `<span class="ff-mark" style="top:${y}%;left:${x}%">${posLabel(pos)}</span>`;
+  }).join('');
+  return `<div class="formation-field">${marks}</div>`;
 }
 
 // ── Draft Screen ──────────────────────────────────────────────
