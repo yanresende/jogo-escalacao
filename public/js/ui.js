@@ -546,37 +546,71 @@ function renderResults(simResult, players) {
 // ── Tela de Capitão & Táticas ─────────────────────────────────
 function renderTactics() {
   const players = state.slots.map(s => s.player).filter(Boolean);
+  const styleOf = (typeof getStyle === 'function') ? getStyle : (p => p.position);
 
-  // Grade de táticas
+  // Grade de táticas — cada card mostra quais jogadores do time se favorecem
   const tg = document.getElementById('tactic-grid');
   tg.innerHTML = Object.entries(TACTICS).map(([key, t]) => {
     const favs = t.favors.length
       ? t.favors.map(f => (PLAY_STYLES[f] ? PLAY_STYLES[f].label : f)).join(', ')
       : 'Sem ênfase';
+    // Jogadores escalados que jogam num estilo premiado por esta tática
+    const boosted = t.favors.length ? players.filter(p => t.favors.includes(styleOf(p))) : [];
+    let boostLine = '';
+    if (t.favors.length) {
+      boostLine = boosted.length
+        ? `<div class="tactic-boost on">⬆ ${boosted.length} reforçado${boosted.length > 1 ? 's' : ''}<span>${boosted.map(p => p.name).join(', ')}</span></div>`
+        : `<div class="tactic-boost off">Nenhum do seu time</div>`;
+    }
     return `
       <div class="tactic-card${state.tactic === key ? ' selected' : ''}" data-tactic="${key}">
         <div class="tactic-emoji">${t.emoji}</div>
         <div class="tactic-name">${t.label}</div>
         <div class="tactic-favs">${favs}</div>
+        ${boostLine}
       </div>`;
   }).join('');
   tg.querySelectorAll('.tactic-card').forEach(c => {
     c.addEventListener('click', () => { state.tactic = c.dataset.tactic; renderTactics(); });
   });
 
-  // Grade de capitães (cards menores clicáveis)
+  // Grade de capitães (cards menores clicáveis) — mostra o estilo de cada jogador
+  // e destaca quem ganha bônus por ter o mesmo estilo do capitão escolhido.
+  const captain = state.captainId ? players.find(p => p.id === state.captainId) : null;
+  const captainStyle = captain ? styleOf(captain) : null;
   const cg = document.getElementById('captain-grid');
   cg.innerHTML = '';
   players.forEach(p => {
+    const pStyle = styleOf(p);
+    const st = PLAY_STYLES[pStyle];
+    const isCap = state.captainId === p.id;
+    const boosted = !!captainStyle && !isCap && pStyle === captainStyle;
     const wrap = document.createElement('div');
-    wrap.className = 'captain-pick' + (state.captainId === p.id ? ' selected' : '');
-    wrap.innerHTML = renderPlayerCard(p, { size: 'sm', captain: state.captainId === p.id });
+    wrap.className = 'captain-pick' + (isCap ? ' selected' : '') + (boosted ? ' boosted' : '');
+    wrap.innerHTML = renderPlayerCard(p, { size: 'sm', captain: isCap })
+      + `<div class="captain-style${boosted ? ' boosted' : ''}${isCap ? ' is-cap' : ''}">`
+      + `${st ? st.emoji + ' ' + st.label : pStyle}${boosted ? ' ⬆' : ''}</div>`;
     wrap.addEventListener('click', () => {
       state.captainId = (state.captainId === p.id) ? null : p.id;
       renderTactics();
     });
     cg.appendChild(wrap);
   });
+
+  // Resumo do efeito do capitão escolhido
+  const capNote = document.getElementById('captain-note');
+  if (capNote) {
+    if (captain) {
+      const sameStyle = players.filter(p => p.id !== captain.id && styleOf(p) === captainStyle);
+      const stLabel = PLAY_STYLES[captainStyle] ? PLAY_STYLES[captainStyle].label : captainStyle;
+      capNote.innerHTML = sameStyle.length
+        ? `🧢 <b>${captain.name}</b> (${stLabel}) reforça ${sameStyle.length} companheiro${sameStyle.length > 1 ? 's' : ''} do mesmo estilo: <span>${sameStyle.map(p => p.name).join(', ')}</span>`
+        : `🧢 <b>${captain.name}</b> (${stLabel}) — nenhum companheiro do mesmo estilo no time.`;
+      capNote.style.display = '';
+    } else {
+      capNote.style.display = 'none';
+    }
+  }
 
   updateTacticsConfirmBtn();
 }
