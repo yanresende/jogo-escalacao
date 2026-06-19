@@ -155,12 +155,12 @@ function buildSurvivalQueue(simResult) {
 function _computeFieldPos(slots) {
   const ZONE_Y = { GK: 90, DEF: 74, CDM: 58, MID: 47, CAM: 34, ATT: 18 };
   const SLOT_ZONE = {
-    GK: 'GK', CB: 'DEF', LB: 'DEF', RB: 'DEF', LWB: 'DEF', RWB: 'DEF',
-    CDM: 'CDM', CM: 'MID', LM: 'MID', RM: 'MID', CAM: 'CAM',
-    LW: 'ATT', RW: 'ATT', ST: 'ATT',
+    gol: 'GK', zag: 'DEF', le: 'DEF', ld: 'DEF',
+    vol: 'CDM', mc: 'MID', me: 'MID', md: 'MID', mei: 'CAM',
+    pe: 'ATT', pd: 'ATT', ca: 'ATT',
   };
   // 0=esquerda, 1=centro, 2=direita
-  const LR = { LB: 0, LWB: 0, LM: 0, LW: 0, CB: 1, CDM: 1, CM: 1, CAM: 1, GK: 1, ST: 1, RB: 2, RWB: 2, RM: 2, RW: 2 };
+  const LR = { le: 0, me: 0, pe: 0, zag: 1, vol: 1, mc: 1, mei: 1, gol: 1, ca: 1, ld: 2, md: 2, pd: 2 };
 
   const byZone = {};
   slots.forEach((pos, i) => {

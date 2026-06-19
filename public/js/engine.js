@@ -55,14 +55,14 @@
 
   // Estilo padrão por posição quando o jogador não tem `style` anotado.
   const STYLE_BY_POSITION = {
-    GK: 'retranca',
-    CB: 'retranca', CDM: 'retranca',
-    LB: 'contra-ataque', RB: 'contra-ataque', LWB: 'contra-ataque', RWB: 'contra-ataque',
-    LM: 'contra-ataque', RM: 'contra-ataque',
-    CM: 'posse',
-    CAM: 'armador',
-    LW: 'drible', RW: 'drible',
-    ST: 'goleador',
+    gol: 'retranca',
+    zag: 'retranca', vol: 'retranca',
+    le: 'contra-ataque', ld: 'contra-ataque',
+    me: 'contra-ataque', md: 'contra-ataque',
+    mc: 'posse',
+    mei: 'armador',
+    pe: 'drible', pd: 'drible',
+    ca: 'goleador',
   };
 
   function getStyle(player) {
@@ -188,20 +188,18 @@
 
   // ── Pesos de ataque/defesa por posição ──────────────────────
   const WEIGHT_MAP = {
-    ST:  { atk: 1.0,  def: 0.0  },
-    LW:  { atk: 0.85, def: 0.0  },
-    RW:  { atk: 0.85, def: 0.0  },
-    CAM: { atk: 0.75, def: 0.1  },
-    LM:  { atk: 0.5,  def: 0.5  },
-    RM:  { atk: 0.5,  def: 0.5  },
-    CM:  { atk: 0.5,  def: 0.5  },
-    CDM: { atk: 0.2,  def: 0.6  },
-    LWB: { atk: 0.3,  def: 0.8  },
-    RWB: { atk: 0.3,  def: 0.8  },
-    LB:  { atk: 0.1,  def: 0.8  },
-    RB:  { atk: 0.1,  def: 0.8  },
-    CB:  { atk: 0.0,  def: 0.95 },
-    GK:  { atk: 0.0,  def: 1.0  },
+    ca:  { atk: 1.0,  def: 0.0  },
+    pe:  { atk: 0.85, def: 0.0  },
+    pd:  { atk: 0.85, def: 0.0  },
+    mei: { atk: 0.75, def: 0.1  },
+    me:  { atk: 0.5,  def: 0.5  },
+    md:  { atk: 0.5,  def: 0.5  },
+    mc:  { atk: 0.5,  def: 0.5  },
+    vol: { atk: 0.2,  def: 0.6  },
+    le:  { atk: 0.1,  def: 0.8  },
+    ld:  { atk: 0.1,  def: 0.8  },
+    zag: { atk: 0.0,  def: 0.95 },
+    gol: { atk: 0.0,  def: 1.0  },
   };
 
   // ── Stats do time (usa OVR efetivo via química) ─────────────
@@ -233,12 +231,12 @@
 
   // ── Artilheiro ponderado ────────────────────────────────────
   const SCORER_WEIGHTS = {
-    ST: 1.0, RW: 1.0, LW: 1.0,
-    CAM: 0.7,
-    CM: 0.45, LM: 0.45, RM: 0.45,
-    CDM: 0.22,
-    CB: 0.12, RB: 0.12, LB: 0.12, LWB: 0.12, RWB: 0.12,
-    GK: 0.01,
+    ca: 1.0, pd: 1.0, pe: 1.0,
+    mei: 0.7,
+    mc: 0.45, me: 0.45, md: 0.45,
+    vol: 0.22,
+    zag: 0.12, ld: 0.12, le: 0.12,
+    gol: 0.01,
   };
   const SCORING_GK_EASTER_EGG = new Set([
     'rogerio-ceni-bra-02', 'rogerio-ceni-bra-06', 'chilavert-par-98', 'higuita-col-90',
@@ -247,7 +245,7 @@
   function pickGoalScorer(players, rng) {
     const weights = players.map(p => {
       let base = SCORER_WEIGHTS[p.position] ?? 0.45;
-      if (p.position === 'GK' && SCORING_GK_EASTER_EGG.has(p.id)) base = 0.25;
+      if (p.position === 'gol' && SCORING_GK_EASTER_EGG.has(p.id)) base = 0.25;
       // Estilo goleador finaliza mais; armador um pouco menos.
       const style = getStyle(p);
       if (style === 'goleador') base *= 1.35;
@@ -428,9 +426,9 @@
   // ── Disputa de pênaltis (mata-mata) ─────────────────────────
   // Bônus de cobrança por posição: atacante converte mais fácil que zagueiro/goleiro.
   const PENALTY_POS_BONUS = {
-    ST: 10, CF: 10, SS: 9, LW: 8, RW: 8, CAM: 7,
-    CM: 3, LM: 4, RM: 4, CDM: 0,
-    LWB: -1, RWB: -1, LB: -3, RB: -3, CB: -7, GK: -14,
+    ca: 10, pe: 8, pd: 8, mei: 7,
+    mc: 3, me: 4, md: 4, vol: 0,
+    le: -3, ld: -3, zag: -7, gol: -14,
   };
   // "Habilidade de pênalti" do jogador = overall + ajuste de posição.
   function penaltySkill(p) {
@@ -439,7 +437,7 @@
   }
   function findGoalkeeper(team) {
     const players = team.players || [];
-    return players.find(p => p.position === 'GK')
+    return players.find(p => p.position === 'gol')
       || players.reduce((lo, p) => (!lo || p.overall < lo.overall ? p : lo), null);
   }
   // Ordem de batedores: usa a escolhida pelo usuário; completa o resto por habilidade.

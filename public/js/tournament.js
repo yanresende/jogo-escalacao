@@ -20,9 +20,9 @@
 
   // Templates de formação usados para montar o XI dos bots (seleções reais).
   const BOT_FORMATIONS = [
-    ['GK', 'RB', 'CB', 'CB', 'LB', 'CM', 'CM', 'CM', 'RW', 'ST', 'LW'], // 4-3-3
-    ['GK', 'RB', 'CB', 'CB', 'LB', 'RM', 'CM', 'CM', 'LM', 'ST', 'ST'], // 4-4-2
-    ['GK', 'CB', 'CB', 'CB', 'RWB', 'CM', 'CM', 'CM', 'LWB', 'ST', 'ST'], // 3-5-2
+    ['gol', 'ld', 'zag', 'zag', 'le', 'mc', 'mc', 'mc', 'pd', 'ca', 'pe'], // 4-3-3
+    ['gol', 'ld', 'zag', 'zag', 'le', 'md', 'mc', 'mc', 'me', 'ca', 'ca'], // 4-4-2
+    ['gol', 'zag', 'zag', 'zag', 'ld', 'mc', 'mc', 'mc', 'le', 'ca', 'ca'], // 3-5-2
   ];
 
   // Bots escolhem uma tática plausível conforme o estilo da escalação.

@@ -82,9 +82,9 @@ function renderFormationGrid() {
 function renderFormationDots(slots) {
   const rows = {};
   const posToRow = {
-    GK: 4, LB: 3, RB: 3, CB: 3, LWB: 3, RWB: 3,
-    CDM: 2.5, CM: 2, LM: 2, RM: 2, CAM: 1.5,
-    LW: 1, RW: 1, ST: 0.5
+    gol: 4, le: 3, ld: 3, zag: 3,
+    vol: 2.5, mc: 2, me: 2, md: 2, mei: 1.5,
+    pe: 1, pd: 1, ca: 0.5
   };
   for (const pos of slots) {
     const row = posToRow[pos] ?? 2;
@@ -641,7 +641,7 @@ function renderPenaltyOrder() {
       <span class="pen-num">${i + 1}</span>
       <span class="pen-info">
         <span class="pen-name">${escapeHtml(p.name)}</span>
-        <span class="pen-pos">${p.position} · OVR ${p.overall}</span>
+        <span class="pen-pos">${posLabel(p.position)} · OVR ${p.overall}</span>
       </span>
       <span class="pen-skill" title="Habilidade de cobrança">${penaltySkillOf(p)}</span>
       <span class="pen-move">

@@ -5,14 +5,14 @@
 // Formações fiéis às imagens em /public/formações (rótulos PT: GOL, ZAG, LE/LD,
 // VOL, MC, MEI, ME/MD, PE/PD, CA). slots[] e FIELD_POSITIONS[] são paralelos.
 const FORMATIONS = {
-  '4-3-3':   { slots: ['GK','LB','CB','CB','RB','CDM','CAM','CM','LW','ST','RW'],     desc: 'Balanceada e versátil' },
-  '4-4-2':   { slots: ['GK','LB','CB','CB','RB','LM','CM','CDM','RM','ST','ST'],      desc: 'Clássica com dois atacantes' },
-  '4-2-3-1': { slots: ['GK','LB','CB','CB','RB','CDM','CM','LW','CAM','RW','ST'],     desc: 'Sólida no meio-campo' },
-  '4-2-4':   { slots: ['GK','LB','CB','CB','RB','CDM','CM','LW','ST','ST','RW'],      desc: 'Ofensiva com 4 na frente' },
-  '3-5-2':   { slots: ['GK','CB','CB','CB','LM','CM','CDM','CM','RM','ST','ST'],      desc: 'Defensiva com alas ofensivos' },
-  '5-3-2':   { slots: ['GK','LB','CB','CB','CB','RB','CDM','CM','CAM','ST','ST'],     desc: 'Muito sólida atrás' },
-  '4-5-1':   { slots: ['GK','LB','CB','CB','RB','LM','CAM','CDM','CM','RM','ST'],     desc: 'Ultra defensiva' },
-  '3-4-3':   { slots: ['GK','CB','CB','CB','LM','CM','CM','RM','LW','ST','RW'],       desc: 'Ataque total' },
+  '4-3-3':   { slots: ['gol','le','zag','zag','ld','vol','mei','mc','pe','ca','pd'],     desc: 'Balanceada e versátil' },
+  '4-4-2':   { slots: ['gol','le','zag','zag','ld','me','mc','vol','md','ca','ca'],      desc: 'Clássica com dois atacantes' },
+  '4-2-3-1': { slots: ['gol','le','zag','zag','ld','vol','mc','pe','mei','pd','ca'],     desc: 'Sólida no meio-campo' },
+  '4-2-4':   { slots: ['gol','le','zag','zag','ld','vol','mc','pe','ca','ca','pd'],      desc: 'Ofensiva com 4 na frente' },
+  '3-5-2':   { slots: ['gol','zag','zag','zag','me','mc','vol','mc','md','ca','ca'],      desc: 'Defensiva com alas ofensivos' },
+  '5-3-2':   { slots: ['gol','le','zag','zag','zag','ld','vol','mc','mei','ca','ca'],     desc: 'Muito sólida atrás' },
+  '4-5-1':   { slots: ['gol','le','zag','zag','ld','me','mei','vol','mc','md','ca'],     desc: 'Ultra defensiva' },
+  '3-4-3':   { slots: ['gol','zag','zag','zag','me','mc','mc','md','pe','ca','pd'],       desc: 'Ataque total' },
 };
 
 // Posições no campo [y% (0=ataque/topo, 100=goleiro/base), x% (0=esquerda)].
@@ -71,9 +71,9 @@ const FIELD_POSITIONS = {
 
 // Rótulos das posições em português (como nas imagens das formações).
 const POS_LABELS = {
-  GK: 'GOL', CB: 'ZAG', LB: 'LE', RB: 'LD', LWB: 'ALE', RWB: 'ALD',
-  CDM: 'VOL', CM: 'MC', CAM: 'MEI', LM: 'ME', RM: 'MD',
-  LW: 'PE', RW: 'PD', ST: 'CA', CF: 'CA', SS: 'SA',
+  gol: 'GOL', zag: 'ZAG', le: 'LE', ld: 'LD',
+  vol: 'VOL', mc: 'MC', mei: 'MEI', me: 'ME', md: 'MD',
+  pe: 'PE', pd: 'PD', ca: 'CA',
 };
 function posLabel(pos) { return POS_LABELS[pos] || pos; }
 
