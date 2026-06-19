@@ -142,7 +142,7 @@ function initDraft(formation) {
   state.currentRoll = null;
   state.pickedPlayers = [];
   state.seed = generateSeed();
-  state.tactic = 'equilibrada';
+  state.tactic = null;
   state.captainId = null;
   state.penaltyOrder = null;
   state.dailySeq = null;
@@ -271,11 +271,22 @@ function pickPlayerToSlot(playerId, slotIndex) {
   return true;
 }
 
+// ── Remover jogador de um slot ────────────────────────────────
+function removePlayerFromSlot(slotIndex) {
+  const slot = state.slots[slotIndex];
+  if (!slot || !slot.player) return false;
+  slot.player = null;
+  state.pickedPlayers = state.slots.filter(s => s.player).map(s => s.player);
+  return true;
+}
+
 // ── Trocar posição de jogadores já escalados ──────────────────
 function movePlayer(fromIndex, toIndex) {
   const from = state.slots[fromIndex];
   const to = state.slots[toIndex];
   if (!from || !to) return false;
+  if (from.player && !playerFitsSlot(from.player, to.pos)) return false;
+  if (to.player && !playerFitsSlot(to.player, from.pos)) return false;
 
   const temp = from.player;
   from.player = to.player;

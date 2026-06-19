@@ -58,6 +58,12 @@ function _normalizeTournamentMatch(m, youId, byId, meta) {
     meName: me.name, meFlag: me.flag || '🎮',
     oppName: opp.name, oppFlag: opp.flag || '🏳️',
     result: myGoals > oppGoals ? 'win' : (myGoals < oppGoals ? 'loss' : 'draw'),
+    myTeam: me.teamPlayers || null,
+    oppTeam: opp.teamPlayers || null,
+    myStats: me.stats || null,
+    oppStats: opp.stats || null,
+    myTactic: me.tactic || null,
+    oppTactic: opp.tactic || null,
   }, meta);
 }
 
@@ -99,6 +105,17 @@ function buildMatchQueue(data, youId) {
 
 // Survival: cada fase não-pulada vira uma "partida".
 function buildSurvivalQueue(simResult) {
+  // Captura o time do jogador no momento da chamada (disponível via state global).
+  const myPlayers = (typeof state !== 'undefined' && state.slots)
+    ? state.slots.map(s => s.player).filter(Boolean).map(p => ({
+        id: p.id, name: p.name, position: p.position, overall: p.overall, flag: p.flag,
+      }))
+    : null;
+  const myStats = (typeof state !== 'undefined' && state.simResults)
+    ? (state.simResults.stats || null)
+    : null;
+  const myTactic = (typeof state !== 'undefined') ? state.tactic : null;
+
   return simResult.results.filter(r => r.status !== 'skipped').map(r => ({
     phaseId: r.id, phaseLabel: r.label,
     myGoals: r.goalsFor, oppGoals: r.goalsAgainst,
@@ -107,7 +124,37 @@ function buildSurvivalQueue(simResult) {
     meName: 'Seu time', meFlag: '🎮',
     oppName: 'Adversário', oppFlag: '🏳️',
     result: r.goalsFor > r.goalsAgainst ? 'win' : (r.goalsFor < r.goalsAgainst ? 'loss' : 'draw'),
+    myTeam: myPlayers,
+    oppTeam: null,
+    myStats: myStats,
+    oppStats: r.strength != null ? { overall: r.strength } : null,
+    myTactic: myTactic,
+    oppTactic: null,
   }));
+}
+
+// ── Escalação de uma equipe (lista de jogadores por zona) ────
+const _POS_ZONE = { GK: 0, CB: 1, LB: 1, RB: 1, LWB: 1, RWB: 1, CDM: 2, CM: 2, LM: 2, RM: 2, CAM: 3, LW: 3, RW: 3, ST: 4 };
+
+function renderLineupList(players, tactic, stats) {
+  if (!players || !players.length) return '<div class="sb-lineup-empty">—</div>';
+  const sorted = [...players].sort((a, b) => (_POS_ZONE[a.position] ?? 2) - (_POS_ZONE[b.position] ?? 2) || b.overall - a.overall);
+  const tacticInfo = (typeof TACTICS !== 'undefined' && tactic) ? TACTICS[tactic] : null;
+  const ovr = stats ? stats.overall : null;
+  let header = '';
+  if (tacticInfo || ovr != null) {
+    header = `<div class="sb-lineup-meta">${tacticInfo ? `<span class="sb-lineup-tactic">${tacticInfo.emoji} ${tacticInfo.label}</span>` : ''}${ovr != null ? `<span class="sb-lineup-ovr">OVR ${ovr}</span>` : ''}</div>`;
+  }
+  const rows = sorted.map(p => {
+    const tier = typeof getTier === 'function' ? getTier(p.overall) : 'B';
+    const shortName = p.name ? (p.name.length > 13 ? p.name.split(' ').pop() : p.name) : '?';
+    return `<div class="sb-lineup-player">
+      <span class="sb-lp-pos">${p.position}</span>
+      <span class="sb-lp-name">${escapeHtml(shortName)}</span>
+      <span class="sb-lp-ovr sb-lp-tier-${tier}">${p.overall}</span>
+    </div>`;
+  }).join('');
+  return header + rows;
 }
 
 // ════════════════════════════════════════════════════════════
@@ -148,6 +195,19 @@ function scoreboardMarkup() {
       <button class="sb-btn ghost" id="sb-skipall">⏏ Pular tudo</button>
       <button class="sb-next hidden" id="sb-next">Próxima ▶</button>
     </div>
+    <details class="sb-lineups-wrap" open>
+      <summary class="sb-lineups-toggle">⚽ Escalações</summary>
+      <div class="sb-lineups">
+        <div class="sb-lineup-col me">
+          <div class="sb-lineup-title" id="sb-lineup-me-title"></div>
+          <div class="sb-lineup-players" id="sb-lineup-me"></div>
+        </div>
+        <div class="sb-lineup-col opp">
+          <div class="sb-lineup-title" id="sb-lineup-opp-title"></div>
+          <div class="sb-lineup-players" id="sb-lineup-opp"></div>
+        </div>
+      </div>
+    </details>
   </div>`;
 }
 
@@ -212,6 +272,16 @@ function setTeams(m) {
   const s = _sb(); if (!s) return;
   s.meFlag.textContent = m.meFlag; s.meName.textContent = m.meName;
   s.oppFlag.textContent = m.oppFlag; s.oppName.textContent = m.oppName;
+
+  // Painel de escalação
+  const meTitle = s.root.querySelector('#sb-lineup-me-title');
+  const oppTitle = s.root.querySelector('#sb-lineup-opp-title');
+  const meList = s.root.querySelector('#sb-lineup-me');
+  const oppList = s.root.querySelector('#sb-lineup-opp');
+  if (meTitle) meTitle.textContent = `${m.meFlag} ${m.meName}`;
+  if (oppTitle) oppTitle.textContent = `${m.oppFlag} ${m.oppName}`;
+  if (meList) meList.innerHTML = renderLineupList(m.myTeam, m.myTactic, m.myStats);
+  if (oppList) oppList.innerHTML = renderLineupList(m.oppTeam, m.oppTactic, m.oppStats);
 }
 function clearFeed() { const s = _sb(); if (s) s.feed.innerHTML = ''; }
 function addGoalToFeed(ev, m) {

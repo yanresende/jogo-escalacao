@@ -17,7 +17,7 @@ function renderPlayerCard(player, opts) {
   const isCaptain = opts.captain || (state.captainId && state.captainId === player.id);
 
   return `
-    <div class="fut-card tier-${tier} size-${size}${opts.selected ? ' selected' : ''}${isCaptain ? ' captain' : ''}"${opts.dataId ? ` data-id="${player.id}"` : ''}>
+    <div class="fut-card tier-${tier} size-${size}${opts.extraClass ? ' ' + opts.extraClass : ''}${opts.selected ? ' selected' : ''}${isCaptain ? ' captain' : ''}"${opts.dataId ? ` data-id="${player.id}"` : ''}>
       <div class="fut-shine"></div>
       ${isCaptain ? '<div class="fut-captain">C</div>' : ''}
       <div class="fut-top">
@@ -31,6 +31,12 @@ function renderPlayerCard(player, opts) {
         <span class="fut-wc">Copa ${player.worldCup}</span>
       </div>
     </div>`;
+}
+
+function renderEmptyFieldCard(posStr, extraClass) {
+  return `<div class="fut-card-empty size-xs${extraClass ? ' ' + extraClass : ''}">
+    <div class="fut-empty-pos">${posStr}</div>
+  </div>`;
 }
 
 // ── Toast ─────────────────────────────────────────────────────
@@ -131,19 +137,36 @@ function renderField() {
     const openPositions = getOpenPositions();
     const isActive = !slot.player && openPositions.length > 0 && openPositions[0] === slot.pos;
 
+    const srcSlot = _swapSourceIndex !== null ? state.slots[_swapSourceIndex] : null;
+
     if (slot.player) {
       const tier = getTier(slot.player.overall);
       const isSwapSource = _swapSourceIndex === i;
+      let chemClass = '';
+      if (_selectedPickPlayer) {
+        const syn = styleSynergy(getStyle(_selectedPickPlayer), getStyle(slot.player));
+        if (syn === 2) chemClass = 'chem-sync-strong';
+        else if (syn === 1) chemClass = 'chem-sync-same';
+        else chemClass = 'chem-no-sync';
+      }
+      let swapClass = '';
+      if (srcSlot && !isSwapSource) {
+        const canSwap = srcSlot.player
+          && playerFitsSlot(srcSlot.player, slot.pos)
+          && playerFitsSlot(slot.player, srcSlot.pos);
+        swapClass = canSwap ? 'swap-valid-target' : 'swap-invalid-target';
+      }
+      const extraClass = [isSwapSource ? 'swap-source' : swapClass, chemClass].filter(Boolean).join(' ');
       el.className = 'field-slot clickable';
-      el.innerHTML = `
-        <div class="slot-circle filled tier-${tier}${isSwapSource ? ' swap-source' : ''}">
-          ${state.mode === 'classic' ? slot.player.overall : '?'}
-        </div>
-        <div class="slot-name">${slot.player.name.split(' ').pop()}</div>
-        <div class="slot-ovr">${posLabel(slot.pos)}</div>
-      `;
+      el.innerHTML = renderPlayerCard(slot.player, { size: 'xs', extraClass: extraClass || undefined });
       el.addEventListener('click', () => {
-        if (state.currentRoll) return;
+        if (state.currentRoll) {
+          if (removePlayerFromSlot(i)) {
+            renderField();
+            renderDraftPick(state.currentRoll);
+          }
+          return;
+        }
         if (_swapSourceIndex !== null) {
           handleSwapClick(i);
         } else {
@@ -152,10 +175,9 @@ function renderField() {
       });
     } else {
       const isDropTarget = _selectedPickPlayer && playerFitsSlot(_selectedPickPlayer, slot.pos);
-      el.innerHTML = `
-        <div class="slot-circle ${isDropTarget ? 'drop-target' : (isActive ? 'active' : '')}">${posLabel(slot.pos)}</div>
-        <div class="slot-name"></div>
-      `;
+      const isValidSwapTarget = srcSlot?.player && playerFitsSlot(srcSlot.player, slot.pos);
+      const emptyClass = isDropTarget ? 'drop-target' : (isValidSwapTarget ? 'swap-target' : (isActive ? 'active' : ''));
+      el.innerHTML = renderEmptyFieldCard(posLabel(slot.pos), emptyClass);
       if (isDropTarget) {
         el.className = 'field-slot clickable';
         el.addEventListener('click', () => {
@@ -166,11 +188,58 @@ function renderField() {
             updateRerollBtns();
           }
         });
-      } else if (_swapSourceIndex !== null) {
+      } else if (isValidSwapTarget) {
         el.className = 'field-slot clickable';
         el.addEventListener('click', () => handleSwapClick(i));
       }
     }
+
+    // Drag-and-drop para trocar posições (sem roll ativo)
+    if (!state.currentRoll) {
+      if (slot.player) {
+        el.draggable = true;
+        el.addEventListener('dragstart', (e) => {
+          _dragSourceIndex = i;
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', String(i));
+          requestAnimationFrame(() => el.classList.add('dragging'));
+        });
+        el.addEventListener('dragend', () => {
+          _dragSourceIndex = null;
+          el.classList.remove('dragging');
+          document.querySelectorAll('.field-slot.drag-over').forEach(d => d.classList.remove('drag-over'));
+        });
+      }
+      el.addEventListener('dragover', (e) => {
+        if (_dragSourceIndex === null || _dragSourceIndex === i) return;
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+      });
+      el.addEventListener('dragenter', (e) => {
+        if (_dragSourceIndex === null || _dragSourceIndex === i) return;
+        const src = state.slots[_dragSourceIndex];
+        const dst = state.slots[i];
+        const valid = (!src?.player || playerFitsSlot(src.player, dst.pos))
+                   && (!dst?.player || playerFitsSlot(dst.player, src.pos));
+        if (!valid) return;
+        e.preventDefault();
+        el.classList.add('drag-over');
+      });
+      el.addEventListener('dragleave', (e) => {
+        if (!el.contains(e.relatedTarget)) el.classList.remove('drag-over');
+      });
+      el.addEventListener('drop', (e) => {
+        e.preventDefault();
+        el.classList.remove('drag-over');
+        if (_dragSourceIndex === null || _dragSourceIndex === i) return;
+        const moved = movePlayer(_dragSourceIndex, i);
+        _dragSourceIndex = null;
+        renderField();
+        if (moved) showToast('Posições trocadas!');
+        else showToast('Posição incompatível para este jogador.');
+      });
+    }
+
     field.appendChild(el);
   });
 
@@ -281,6 +350,7 @@ function hideDraftPick() {
 
 // ── Swap mode (mover jogadores já escalados) ──────────────────
 let _swapSourceIndex = null;
+let _dragSourceIndex = null;
 
 function startSwapMode(slotIndex) {
   _swapSourceIndex = slotIndex;
@@ -294,10 +364,10 @@ function handleSwapClick(slotIndex) {
     renderField();
     return;
   }
-  movePlayer(_swapSourceIndex, slotIndex);
+  const moved = movePlayer(_swapSourceIndex, slotIndex);
   _swapSourceIndex = null;
   renderField();
-  showToast('Posições trocadas!');
+  showToast(moved ? 'Posições trocadas!' : 'Posição incompatível para este jogador.');
 }
 
 function cancelSwapMode() {
@@ -320,15 +390,38 @@ function renderWildcards() {
 // ── Simulation Screen ─────────────────────────────────────────
 function renderSimulation() {
   const players = state.slots.map(s => s.player).filter(Boolean);
-  const stats = calcTeamStats(players);
+  const tacticOpts = { tactic: state.tactic, captainId: state.captainId, slots: state.slots.map(s => s.pos) };
+  const stats = calcTeamStats(players, tacticOpts);
 
   document.getElementById('sim-overall').textContent = stats.overall;
 
-  // Team preview cards
-  const preview = document.getElementById('sim-team-preview');
-  preview.innerHTML = players.map(p => renderPlayerCard(p, { size: 'sm' })).join('');
+  const tactic = (typeof TACTICS !== 'undefined' && state.tactic) ? TACTICS[state.tactic] : null;
+  let chemVal = null;
+  if (typeof calcChemistry === 'function' && players.length >= 2) {
+    chemVal = calcChemistry(players, tacticOpts).chemistry;
+  }
 
-  // Stage cards (pending)
+  // Campo com jogadores + barra de stats (painel esquerdo, espelho do draft)
+  const preview = document.getElementById('sim-team-preview');
+  preview.innerHTML = `
+    <div class="sim-field-header">
+      <span class="sim-formation-badge">${state.formation || ''}</span>
+      ${tactic ? `<span class="sim-tactic-badge">${tactic.emoji} ${tactic.label}</span>` : ''}
+    </div>
+    <div class="sim-field-container">
+      <div class="field sim-field" id="sim-field-visual"></div>
+    </div>
+    <div class="sim-info-row">
+      <div class="sim-stat-chip"><span class="ssc-label">ATK</span><span class="ssc-val">${stats.attack}</span></div>
+      <div class="sim-stat-chip"><span class="ssc-label">DEF</span><span class="ssc-val">${stats.defense}</span></div>
+      <div class="sim-stat-chip ovr"><span class="ssc-label">OVR</span><span class="ssc-val">${stats.overall}</span></div>
+      ${chemVal != null ? `<div class="sim-stat-chip chem"><span class="ssc-label">Quím</span><span class="ssc-val">${chemVal}</span></div>` : ''}
+    </div>
+  `;
+
+  renderSimField();
+
+  // Stage cards (pending) — modo Survival
   const stages = document.getElementById('sim-stages');
   stages.innerHTML = STAGE_CONFIG.map(s => `
     <div class="stage-card" id="stage-${s.id}">
@@ -339,6 +432,27 @@ function renderSimulation() {
       <div class="stage-events"></div>
     </div>
   `).join('');
+}
+
+// Campo read-only para a tela de simulação (Survival).
+function renderSimField() {
+  const field = document.getElementById('sim-field-visual');
+  if (!field || !state.formation) return;
+  const positions = FIELD_POSITIONS[state.formation] || [];
+  field.innerHTML = '';
+  state.slots.forEach((slot, i) => {
+    const [y, x] = positions[i] || [50, 50];
+    const el = document.createElement('div');
+    el.className = 'field-slot';
+    el.style.left = `${x}%`;
+    el.style.top = `${y}%`;
+    if (slot.player) {
+      el.innerHTML = renderPlayerCard(slot.player, { size: 'xs' });
+    } else {
+      el.innerHTML = renderEmptyFieldCard(posLabel(slot.pos));
+    }
+    field.appendChild(el);
+  });
 }
 
 // ── Results Screen ────────────────────────────────────────────
@@ -404,7 +518,6 @@ function renderResults(simResult, players) {
 // ── Tela de Capitão & Táticas ─────────────────────────────────
 function renderTactics() {
   const players = state.slots.map(s => s.player).filter(Boolean);
-  if (!state.tactic) state.tactic = 'equilibrada';
 
   // Grade de táticas
   const tg = document.getElementById('tactic-grid');
@@ -437,12 +550,28 @@ function renderTactics() {
     cg.appendChild(wrap);
   });
 
-  // Texto do botão conforme modo
+  updateTacticsConfirmBtn();
+}
+
+function updateTacticsConfirmBtn() {
   const btn = document.getElementById('btn-confirm-tactics');
-  if (btn) btn.textContent = state.isMultiplayer ? '✓ Confirmar Time' : '✓ Confirmar e Simular';
+  if (!btn) return;
+  const tacticOk = !!state.tactic;
+  const captainOk = !!state.captainId;
+  btn.disabled = !tacticOk || !captainOk;
+  const hints = [];
+  if (!tacticOk) hints.push('a tática');
+  if (!captainOk) hints.push('o capitão');
+  if (hints.length) {
+    btn.textContent = `Selecione ${hints.join(' e ')}`;
+  } else {
+    btn.textContent = state.isMultiplayer ? '✓ Confirmar Time' : '✓ Confirmar e Avançar';
+  }
 }
 
 function confirmTactics() {
+  if (!state.tactic) { showToast('Escolha uma tática antes de continuar.'); return; }
+  if (!state.captainId) { showToast('Escolha o capitão antes de continuar.'); return; }
   if (state.isMultiplayer || isLocalTournamentMode()) {
     renderPenaltyOrder();
     goTo('penalties');

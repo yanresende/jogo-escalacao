@@ -198,17 +198,27 @@
 
 <!-- ========== SIMULAÇÃO ========== -->
 <div id="screen-simulation" class="screen">
-  <div class="screen-header">
-    <h2>🏆 Torneio</h2>
-    <div class="team-overall-badge">
-      Time: <strong id="sim-overall"></strong> OVR
+  <div class="sim-layout">
+    <!-- Painel esquerdo: campo com jogadores (espelho do draft) -->
+    <div class="sim-field-panel">
+      <div id="sim-team-preview" class="sim-team-preview"></div>
     </div>
-  </div>
-  <div class="sim-team-preview" id="sim-team-preview"></div>
-  <div id="match-stage-sim" class="match-stage"></div>
-  <div class="sim-stages" id="sim-stages"></div>
-  <div class="sim-actions">
-    <button class="btn btn-primary btn-large" id="btn-simulate">▶ Simular Torneio</button>
+    <!-- Painel direito: header, fases, botão -->
+    <div class="sim-right-panel">
+      <div class="sim-right-header screen-header">
+        <h2>🏆 Torneio</h2>
+        <div class="team-overall-badge">
+          Time: <strong id="sim-overall"></strong> OVR
+        </div>
+      </div>
+      <div class="sim-right-content">
+        <div id="match-stage-sim" class="match-stage"></div>
+        <div class="sim-stages" id="sim-stages"></div>
+        <div class="sim-actions">
+          <button class="btn btn-primary btn-large" id="btn-simulate">▶ Simular Torneio</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
