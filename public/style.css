@@ -1014,37 +1014,59 @@ input[type="text"]:focus { border-color: var(--accent); }
 .sb-lineups-toggle::-webkit-details-marker { display: none; }
 .sb-lineups-toggle:hover { color: var(--accent); }
 .sb-lineups {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
 }
-.sb-lineup-col { display: flex; flex-direction: column; gap: 4px; }
-.sb-lineup-col.me { border-right: 1px solid var(--border); padding-right: 8px; }
-.sb-lineup-col.opp { padding-left: 4px; }
+.sb-lineup-col { display: flex; flex-direction: column; gap: 5px; }
 .sb-lineup-title {
-  font-size: .72rem; font-weight: 800; color: var(--text2);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px;
+  font-size: .7rem; font-weight: 800; color: var(--text2);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .sb-lineup-col.me .sb-lineup-title { color: var(--accent); }
-.sb-lineup-meta {
-  display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 4px;
+/* ── Mini-campo de escalação no scoreboard (absoluto = draft) ── */
+.mf-root {
+  border-radius: 8px; overflow: hidden;
+  border: 1px solid rgba(34,197,94,.18);
+  display: flex; flex-direction: column;
 }
-.sb-lineup-tactic { font-size: .64rem; color: var(--text2); font-weight: 600; }
-.sb-lineup-ovr {
-  font-family: 'Rajdhani', sans-serif; font-size: .8rem; font-weight: 800;
-  color: var(--accent); background: rgba(34,197,94,.1); padding: 1px 6px; border-radius: 8px;
+.mf-header {
+  display: flex; align-items: center; justify-content: space-between; gap: 6px;
+  padding: 4px 7px; background: rgba(0,0,0,.55);
+  border-bottom: 1px solid rgba(34,197,94,.12); flex-shrink: 0;
 }
-.sb-lineup-player {
-  display: grid; grid-template-columns: 30px 1fr auto;
-  align-items: center; gap: 4px; font-size: .68rem; padding: 2px 0;
-  border-bottom: 1px solid rgba(255,255,255,.04);
+.mf-tactic { font-size: .58rem; font-weight: 700; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mf-ovr-badge {
+  font-family: 'Rajdhani', sans-serif; font-size: .7rem; font-weight: 800;
+  color: var(--accent); background: rgba(34,197,94,.15); padding: 1px 5px; border-radius: 6px;
+  white-space: nowrap; flex-shrink: 0;
 }
-.sb-lineup-player:last-child { border-bottom: none; }
-.sb-lp-pos {
-  font-size: .58rem; font-weight: 800; color: var(--text3); letter-spacing: .03em;
+/* Campo com posicionamento absoluto — mesmo visual do draft */
+.mf-field-abs {
+  position: relative; width: 100%; aspect-ratio: 2/3;
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 150' preserveAspectRatio='none'><g fill='none' stroke='%23ffffff' stroke-opacity='0.30' stroke-width='0.6'><rect x='29' y='0' width='42' height='16'/><rect x='40' y='0' width='20' height='6.5'/><rect x='29' y='134' width='42' height='16'/><rect x='40' y='143.5' width='20' height='6.5'/></g><g fill='%23ffffff' fill-opacity='0.45'><circle cx='50' cy='11' r='0.8'/><circle cx='50' cy='139' r='0.8'/></g></svg>") center / 100% 100% no-repeat,
+    repeating-linear-gradient(180deg, #1a7a3c 0 8%, #15692f 8% 16%);
+  border: 2px solid rgba(255,255,255,.15); border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 0 60px rgba(0,0,0,.35), var(--shadow);
 }
-.sb-lp-name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sb-lp-ovr { font-weight: 800; font-variant-numeric: tabular-nums; font-size: .66rem; }
-.sb-lp-tier-S { color: var(--gold); }
-.sb-lp-tier-A { color: var(--purple); }
-.sb-lp-tier-B { color: var(--blue); }
-.sb-lp-tier-C { color: var(--text3); }
-.sb-lineup-empty { font-size: .72rem; color: var(--text3); padding: 6px 0; }
+.mf-field-abs::before {
+  content: ''; position: absolute; top: 50%; left: 10%; right: 10%; height: 1px;
+  background: rgba(255,255,255,.2); pointer-events: none;
+}
+.mf-field-abs::after {
+  content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 30%; padding-bottom: 30%; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.15); pointer-events: none;
+}
+/* Cards FUT miniaturizados para o mini-campo do scoreboard */
+.fut-card.size-mini {
+  min-height: 60px; width: 40px; padding: 4px 3px 4px; border-radius: 7px; gap: 1px;
+}
+.fut-card.size-mini .fut-ovr   { font-size: 1.05rem; }
+.fut-card.size-mini .fut-pos   { font-size: .4rem; padding: 1px 4px; }
+.fut-card.size-mini .fut-flag  { font-size: 1.05rem; margin: 1px 0; }
+.fut-card.size-mini .fut-name  { font-size: .42rem; }
+.fut-card.size-mini .fut-meta  { display: none; }
+.fut-card.size-mini .fut-captain { width: 11px; height: 11px; font-size: .45rem; top: 2px; left: 2px; }
+.fut-card.size-mini .fut-shine { display: none; }
+.mf-empty { font-size: .72rem; color: var(--text3); padding: 10px; text-align: center; }

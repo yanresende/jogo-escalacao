@@ -30,7 +30,10 @@ loadPlaybackPrefs();
 // Estado interno do playback corrente
 let _pb = null;
 
-function speedFactor() { return (SPEED_DURATIONS[playbackPrefs.speed] || 9000) / 9000; }
+function speedFactor() {
+  if (_pb && _pb.multiplayer) return 1;
+  return (SPEED_DURATIONS[playbackPrefs.speed] || 9000) / 9000;
+}
 
 // ════════════════════════════════════════════════════════════
 //  FILA DE PARTIDAS DO JOGADOR
@@ -64,6 +67,12 @@ function _normalizeTournamentMatch(m, youId, byId, meta) {
     oppStats: opp.stats || null,
     myTactic: me.tactic || null,
     oppTactic: opp.tactic || null,
+    myCaptainId: me.captainId || null,
+    oppCaptainId: opp.captainId || null,
+    mySlots: me.slots || [],
+    oppSlots: opp.slots || [],
+    myFormation: me.formation || null,
+    oppFormation: opp.formation || null,
   }, meta);
 }
 
@@ -130,31 +139,87 @@ function buildSurvivalQueue(simResult) {
     oppStats: r.strength != null ? { overall: r.strength } : null,
     myTactic: myTactic,
     oppTactic: null,
+    myCaptainId: (typeof state !== 'undefined') ? state.captainId : null,
+    oppCaptainId: null,
+    mySlots: (typeof state !== 'undefined' && state.slots) ? state.slots.map(s => s.pos) : [],
+    oppSlots: [],
+    myFormation: (typeof state !== 'undefined') ? state.formation : null,
+    oppFormation: null,
   }));
 }
 
-// ── Escalação de uma equipe (lista de jogadores por zona) ────
-const _POS_ZONE = { GK: 0, CB: 1, LB: 1, RB: 1, LWB: 1, RWB: 1, CDM: 2, CM: 2, LM: 2, RM: 2, CAM: 3, LW: 3, RW: 3, ST: 4 };
+// ── Campo visual de escalação (posicionamento absoluto = draft) ────────────
 
-function renderLineupList(players, tactic, stats) {
-  if (!players || !players.length) return '<div class="sb-lineup-empty">—</div>';
-  const sorted = [...players].sort((a, b) => (_POS_ZONE[a.position] ?? 2) - (_POS_ZONE[b.position] ?? 2) || b.overall - a.overall);
+// Calcula [y%, x%] para um array de slots sem formation nomeada (bots).
+// Agrupa por zona e espalha horizontalmente respeitando lado (L/C/R) de cada posição.
+function _computeFieldPos(slots) {
+  const ZONE_Y = { GK: 90, DEF: 74, CDM: 58, MID: 47, CAM: 34, ATT: 18 };
+  const SLOT_ZONE = {
+    GK: 'GK', CB: 'DEF', LB: 'DEF', RB: 'DEF', LWB: 'DEF', RWB: 'DEF',
+    CDM: 'CDM', CM: 'MID', LM: 'MID', RM: 'MID', CAM: 'CAM',
+    LW: 'ATT', RW: 'ATT', ST: 'ATT',
+  };
+  // 0=esquerda, 1=centro, 2=direita
+  const LR = { LB: 0, LWB: 0, LM: 0, LW: 0, CB: 1, CDM: 1, CM: 1, CAM: 1, GK: 1, ST: 1, RB: 2, RWB: 2, RM: 2, RW: 2 };
+
+  const byZone = {};
+  slots.forEach((pos, i) => {
+    const z = SLOT_ZONE[pos] || 'MID';
+    if (!byZone[z]) byZone[z] = [];
+    byZone[z].push({ i, pos, lr: LR[pos] ?? 1 });
+  });
+  Object.values(byZone).forEach(g => g.sort((a, b) => a.lr - b.lr));
+
+  const result = new Array(slots.length).fill(null);
+  Object.entries(byZone).forEach(([zone, group]) => {
+    const y = ZONE_Y[zone] || 50;
+    const n = group.length;
+    const spread = Math.min(80, (n - 1) * 26);
+    const x0 = 50 - spread / 2;
+    group.forEach(({ i }, idx) => {
+      const x = n === 1 ? 50 : Math.round(x0 + (idx / (n - 1)) * spread);
+      result[i] = [y, x];
+    });
+  });
+  return result;
+}
+
+function renderMatchField(players, tactic, stats, captainId, slots, formation) {
+  if (!players || !players.length) return '<div class="mf-empty">—</div>';
+
+  // Coordenadas: formação exata (FIELD_POSITIONS) ou computed (bots)
+  let fieldPos = null;
+  if (formation && typeof FIELD_POSITIONS !== 'undefined' && FIELD_POSITIONS[formation]) {
+    fieldPos = FIELD_POSITIONS[formation];
+  } else if (slots && slots.length >= players.length) {
+    fieldPos = _computeFieldPos(slots);
+  }
+
   const tacticInfo = (typeof TACTICS !== 'undefined' && tactic) ? TACTICS[tactic] : null;
   const ovr = stats ? stats.overall : null;
-  let header = '';
+
+  let html = '<div class="mf-root">';
+
+  // Cabeçalho: tática + OVR
   if (tacticInfo || ovr != null) {
-    header = `<div class="sb-lineup-meta">${tacticInfo ? `<span class="sb-lineup-tactic">${tacticInfo.emoji} ${tacticInfo.label}</span>` : ''}${ovr != null ? `<span class="sb-lineup-ovr">OVR ${ovr}</span>` : ''}</div>`;
+    html += '<div class="mf-header">';
+    if (tacticInfo) html += `<span class="mf-tactic">${tacticInfo.emoji} ${tacticInfo.label}</span>`;
+    if (ovr != null) html += `<span class="mf-ovr-badge">OVR ${ovr}</span>`;
+    html += '</div>';
   }
-  const rows = sorted.map(p => {
-    const tier = typeof getTier === 'function' ? getTier(p.overall) : 'B';
-    const shortName = p.name ? (p.name.length > 13 ? p.name.split(' ').pop() : p.name) : '?';
-    return `<div class="sb-lineup-player">
-      <span class="sb-lp-pos">${p.position}</span>
-      <span class="sb-lp-name">${escapeHtml(shortName)}</span>
-      <span class="sb-lp-ovr sb-lp-tier-${tier}">${p.overall}</span>
-    </div>`;
-  }).join('');
-  return header + rows;
+
+  // Campo com posicionamento absoluto — mesmo visual do draft
+  html += '<div class="mf-field-abs">';
+  players.forEach((p, i) => {
+    const [y, x] = (fieldPos && fieldPos[i]) ? fieldPos[i] : [50, 50];
+    const isCpt = captainId && p.id === captainId;
+    const card = (typeof renderPlayerCard === 'function')
+      ? renderPlayerCard(p, { size: 'mini', mode: 'classic', captain: isCpt })
+      : `<div class="mf-fallback">${p.overall}</div>`;
+    html += `<div class="field-slot" style="left:${x}%;top:${y}%">${card}</div>`;
+  });
+  html += '</div></div>'; // mf-field-abs + mf-root
+  return html;
 }
 
 // ════════════════════════════════════════════════════════════
@@ -243,6 +308,10 @@ function hideScoreboard(containerId) {
 
 function wireScoreboard(root) {
   root.addEventListener('click', (e) => {
+    if (_pb && _pb.multiplayer) {
+      if (e.target.closest('#sb-next')) { if (_pb && _pb.resolveNext) _pb.resolveNext(); }
+      return;
+    }
     const spd = e.target.closest('[data-speed]');
     if (spd) { setSpeed(spd.dataset.speed); return; }
     if (e.target.closest('#sb-auto')) { toggleAuto(); return; }
@@ -280,8 +349,8 @@ function setTeams(m) {
   const oppList = s.root.querySelector('#sb-lineup-opp');
   if (meTitle) meTitle.textContent = `${m.meFlag} ${m.meName}`;
   if (oppTitle) oppTitle.textContent = `${m.oppFlag} ${m.oppName}`;
-  if (meList) meList.innerHTML = renderLineupList(m.myTeam, m.myTactic, m.myStats);
-  if (oppList) oppList.innerHTML = renderLineupList(m.oppTeam, m.oppTactic, m.oppStats);
+  if (meList) meList.innerHTML = renderMatchField(m.myTeam, m.myTactic, m.myStats, m.myCaptainId, m.mySlots, m.myFormation);
+  if (oppList) oppList.innerHTML = renderMatchField(m.oppTeam, m.oppTactic, m.oppStats, m.oppCaptainId, m.oppSlots, m.oppFormation);
 }
 function clearFeed() { const s = _sb(); if (s) s.feed.innerHTML = ''; }
 function addGoalToFeed(ev, m) {
@@ -404,7 +473,7 @@ function playOneMatch(m) {
     }
     function startTimer() {
       stop();
-      const dur = SPEED_DURATIONS[playbackPrefs.speed] || 9000;
+      const dur = (_pb && _pb.multiplayer) ? SPEED_DURATIONS.normal : (SPEED_DURATIONS[playbackPrefs.speed] || 9000);
       timer = setInterval(tick, Math.max(16, dur / 90));
     }
     _pb.restartTimer = startTimer; // chamado ao trocar a velocidade
@@ -445,7 +514,7 @@ function waitForNext() {
     _pb.resolveNext = finish;
     _pb.applyWaitMode = function () {
       clearTimeout(_pb.nextTimer);
-      if (playbackPrefs.auto) {
+      if (playbackPrefs.auto || (_pb && _pb.multiplayer)) {
         showNextBtn(false);
         _pb.nextTimer = setTimeout(finish, 1300);
       } else {
@@ -472,7 +541,7 @@ async function playMatchSequence(data, youId, opts) {
   const survival = !!opts.survival;
   const D = survival ? data : Object.assign({}, data, { youId });
 
-  _pb = { aborted: false, skipMatch: false };
+  _pb = { aborted: false, skipMatch: false, multiplayer: !!opts.multiplayer };
 
   if (survival) {
     const stages = document.getElementById('sim-stages'); if (stages) stages.style.display = 'none';
@@ -482,6 +551,12 @@ async function playMatchSequence(data, youId, opts) {
       const el = document.getElementById(id); if (el) el.innerHTML = '';
     });
     mountScoreboard('match-stage');
+  }
+
+  if (_pb.multiplayer && _pb.sb) {
+    ['.sb-speed-group', '#sb-auto', '#sb-skip', '#sb-skipall'].forEach(sel => {
+      const el = _pb.sb.root.querySelector(sel); if (el) el.style.display = 'none';
+    });
   }
 
   const queue = survival ? buildSurvivalQueue(D) : buildMatchQueue(D, youId);

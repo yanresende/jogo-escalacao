@@ -69,10 +69,11 @@ function generateRoomCode() {
 
 // Normaliza o payload do draft (array antigo OU objeto { players, slots, tactic, captainId })
 function normalizeTeam(payload) {
-  if (Array.isArray(payload)) return { players: payload, slots: null, tactic: null, captainId: null, penaltyOrder: null };
+  if (Array.isArray(payload)) return { players: payload, slots: null, formation: null, tactic: null, captainId: null, penaltyOrder: null };
   return {
     players: payload.players || [],
     slots: payload.slots || null,
+    formation: payload.formation || null,
     tactic: payload.tactic || null,
     captainId: payload.captainId || null,
     penaltyOrder: payload.penaltyOrder || null,

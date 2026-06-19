@@ -44,7 +44,7 @@ function initSocket() {
     goTo('bracket');
     // Playback "ao vivo" do caminho do jogador; espectador (sem youId) cai no bracket direto.
     if (data && data.youId && typeof playMatchSequence === 'function') {
-      playMatchSequence(data, data.youId, {});
+      playMatchSequence(data, data.youId, { multiplayer: true });
     } else {
       renderTournamentResult(data);
     }
@@ -108,9 +108,10 @@ function sendDraftComplete() {
   const players = state.slots.map(s => s.player).filter(Boolean);
   socket.emit('draft_complete', {
     players,
-    slots:       state.slots.map(s => s.pos),
-    tactic:      state.tactic,
-    captainId:   state.captainId,
+    slots:        state.slots.map(s => s.pos),
+    formation:    state.formation,
+    tactic:       state.tactic,
+    captainId:    state.captainId,
     penaltyOrder: state.penaltyOrder || players.map(p => p.id),
   });
   goTo('waiting');

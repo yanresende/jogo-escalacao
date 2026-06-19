@@ -211,6 +211,9 @@
     const slimParticipants = participants.map(p => ({
       id: p.id, name: p.name, isBot: p.isBot, flag: p.flag || '🏳️',
       tactic: p.team.tactic || null,
+      captainId: p.team.captainId || null,
+      slots: p.team.slots || [],
+      formation: p.team.formation || null,
       stats: p.stats,
       teamPlayers: p.team.players.map(pl => ({
         id: pl.id, name: pl.name, position: pl.position, overall: pl.overall, flag: pl.flag, country: pl.country,

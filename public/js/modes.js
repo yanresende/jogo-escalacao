@@ -272,6 +272,7 @@ function runLocalTournament() {
     team: {
       players,
       slots: state.slots.map(s => s.pos),
+      formation: state.formation,
       tactic: state.tactic,
       captainId: state.captainId,
       penaltyOrder: state.penaltyOrder || players.map(p => p.id),
