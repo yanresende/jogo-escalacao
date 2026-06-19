@@ -119,14 +119,6 @@ body { background:
 .formation-visual { display: flex; flex-direction: column; gap: 4px; margin: 10px 0; align-items: center; }
 .fv-row { display: flex; gap: 6px; justify-content: center; }
 .fv-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); opacity: .6; }
-.formation-img {
-  width: 100%; max-width: 150px; aspect-ratio: 3 / 4; object-fit: cover;
-  border-radius: 10px; border: 1px solid var(--border); display: block;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
-}
-.formation-img.img-failed { display: none; }
-.formation-dots-fallback { display: none; }
-.formation-img.img-failed + .formation-dots-fallback { display: block; }
 
 /* ── DRAFT ───────────────────────────────────────────────── */
 #screen-draft { flex-direction: row; overflow: hidden; }

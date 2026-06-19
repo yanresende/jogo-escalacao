@@ -52,11 +52,7 @@ function renderFormationGrid() {
     card.className = 'formation-card';
     card.innerHTML = `
       <div class="formation-name">${name}</div>
-      <div class="formation-visual">
-        <img class="formation-img" src="${encodeURI('formações/' + name + '.png')}" alt="${name}"
-             loading="lazy" onerror="this.classList.add('img-failed')">
-        <div class="formation-dots-fallback">${renderFormationDots(cfg.slots)}</div>
-      </div>
+      <div class="formation-visual">${renderFormationDots(cfg.slots)}</div>
       <div class="formation-desc">${cfg.desc}</div>
     `;
     card.addEventListener('click', () => {
