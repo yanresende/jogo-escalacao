@@ -157,6 +157,9 @@ body { background:
 }
 .draft-pick-panel { flex: 1; display: flex; flex-direction: column; overflow-y: auto; padding: 16px; }
 
+/* Toggle campo/jogadores — só aparece no mobile durante a escolha (regras no @media) */
+.draft-view-toggle { display: none; }
+
 .draft-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-shrink: 0; }
 .draft-formation-badge {
   background: var(--accent); color: #000; font-weight: 800; font-size: .9rem;
@@ -611,6 +614,43 @@ input[type="text"]:focus { border-color: var(--accent); }
   .pick-header { padding: 10px 12px; }
   .pick-flag { font-size: 1.6rem; }
   .players-list { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
+
+  /* ── Toggle campo/jogadores (mobile) ──────────────────────
+     Durante a escolha (`.picking`) só um painel ocupa a tela inteira.
+     Default = lista de jogadores; `.field-view` mostra o campo grande. */
+  .draft-layout.picking .draft-field-panel { display: none; }
+  .draft-layout.picking .draft-pick-panel { padding-bottom: 68px; }
+
+  .draft-layout.picking.field-view .draft-field-panel {
+    display: flex; width: 100%; height: 100%; flex-shrink: 1;
+    padding: 8px 8px 68px; border-bottom: none;
+  }
+  .draft-layout.picking.field-view .draft-pick-panel { display: none; }
+
+  /* Slots maiores quando o campo ocupa a tela toda */
+  .draft-layout.field-view .field-slot .fut-card-empty,
+  .draft-layout.field-view .field-slot .fut-card {
+    min-height: 46px; width: 32px; border-radius: 6px;
+  }
+  .draft-layout.field-view .field-slot .fut-card-empty .fut-empty-pos { font-size: .55rem; }
+  .draft-layout.field-view .field-slot .fut-card .fut-ovr { font-size: 1rem; }
+  .draft-layout.field-view .field-slot .fut-card .fut-flag { font-size: 1rem; }
+
+  /* Botão flutuante — visível só enquanto há rolagem ativa */
+  .draft-layout.picking .draft-view-toggle {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%);
+    z-index: 50; padding: 12px 26px; border-radius: 24px;
+    background: var(--accent); color: #062a14; font-weight: 800; font-size: .95rem;
+    border: none; box-shadow: 0 6px 18px rgba(0,0,0,.45); cursor: pointer;
+  }
+  .draft-layout.picking .draft-view-toggle.attention {
+    animation: toggle-pulse 1.1s ease-in-out infinite;
+  }
+  @keyframes toggle-pulse {
+    0%, 100% { box-shadow: 0 6px 18px rgba(0,0,0,.45); }
+    50% { box-shadow: 0 0 0 6px rgba(34,197,94,.35), 0 6px 18px rgba(0,0,0,.45); }
+  }
   /* Demais telas */
   .logo { font-size: 3.5rem; }
   .formation-grid { grid-template-columns: 1fr 1fr; }

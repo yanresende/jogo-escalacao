@@ -287,10 +287,29 @@ function renderChemistryOverlay(field) {
 }
 
 // ── Draft Pick List ───────────────────────────────────────────
+// ── Toggle mobile: campo x lista de jogadores ─────────────────
+// No celular só cabe um painel por vez. Enquanto há uma rolagem ativa,
+// `.picking` esconde o campo e mostra a lista; o botão alterna p/ `.field-view`.
+function setDraftView(view) {
+  const layout = document.querySelector('.draft-layout');
+  if (!layout) return;
+  const btn = document.getElementById('draft-view-toggle');
+  if (view === 'field') {
+    layout.classList.add('field-view');
+    if (btn) btn.textContent = '👥 Ver jogadores';
+  } else {
+    layout.classList.remove('field-view');
+    if (btn) btn.textContent = '🏟️ Ver campo';
+  }
+}
+
 function renderDraftPick(roll) {
   document.getElementById('draft-waiting').style.display = 'none';
   const pickList = document.getElementById('draft-pick-list');
   pickList.classList.remove('hidden');
+  const layout = document.querySelector('.draft-layout');
+  if (layout) layout.classList.add('picking');
+  setDraftView('pick');
 
   document.getElementById('pick-flag').textContent = roll.squad.flag;
   document.getElementById('pick-country').textContent = roll.squad.country;
@@ -326,18 +345,25 @@ function selectPickPlayer(player, cardEl) {
   if (_selectedPickPlayer?.id === player.id) {
     _selectedPickPlayer = null;
     document.querySelectorAll('.player-card.pick-selected').forEach(c => c.classList.remove('pick-selected'));
+    const btn = document.getElementById('draft-view-toggle');
+    if (btn) btn.classList.remove('attention');
     renderField();
     return;
   }
   _selectedPickPlayer = player;
   document.querySelectorAll('.player-card.pick-selected').forEach(c => c.classList.remove('pick-selected'));
   cardEl.classList.add('pick-selected');
+  // No mobile, sinaliza que é hora de ir ao campo para escalar o selecionado.
+  const btn = document.getElementById('draft-view-toggle');
+  if (btn) btn.classList.add('attention');
   renderField();
 }
 
 function hidePositionSelector() {
   _selectedPickPlayer = null;
   document.querySelectorAll('.player-card.pick-selected').forEach(c => c.classList.remove('pick-selected'));
+  const viewToggleBtn = document.getElementById('draft-view-toggle');
+  if (viewToggleBtn) viewToggleBtn.classList.remove('attention');
   document.getElementById('position-selector').classList.add('hidden');
   document.getElementById('players-list').classList.remove('hidden');
 }
@@ -345,6 +371,8 @@ function hidePositionSelector() {
 function hideDraftPick() {
   document.getElementById('draft-waiting').style.display = '';
   document.getElementById('draft-pick-list').classList.add('hidden');
+  const layout = document.querySelector('.draft-layout');
+  if (layout) layout.classList.remove('picking', 'field-view');
   hidePositionSelector();
 }
 
@@ -724,6 +752,12 @@ function animateSimulation(simResult) {
 // Override the simulate button to animate
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-cancel-pick').addEventListener('click', hidePositionSelector);
+
+  const viewToggle = document.getElementById('draft-view-toggle');
+  if (viewToggle) viewToggle.addEventListener('click', () => {
+    const layout = document.querySelector('.draft-layout');
+    setDraftView(layout && layout.classList.contains('field-view') ? 'pick' : 'field');
+  });
 
   const confirmBtn = document.getElementById('btn-confirm-tactics');
   if (confirmBtn) confirmBtn.addEventListener('click', confirmTactics);
