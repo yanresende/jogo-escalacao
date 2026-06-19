@@ -578,9 +578,20 @@ input[type="text"]:focus { border-color: var(--accent); }
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 640px) {
-  .draft-layout { flex-direction: column; height: auto; }
-  .draft-field-panel { width: 100%; height: 280px; border-right: none; border-bottom: 1px solid var(--border); }
-  .field { max-height: 220px; }
+  /* Draft: preenche o viewport, sem scroll de página */
+  #screen-draft { height: 100vh; min-height: unset; overflow: hidden; }
+  .draft-layout { flex-direction: column; height: 100%; overflow: hidden; }
+  .draft-field-panel {
+    width: 100%; height: 210px; flex-shrink: 0;
+    border-right: none; border-bottom: 1px solid var(--border);
+    padding: 8px 10px;
+  }
+  .draft-pick-panel { padding: 10px 12px; min-height: 0; }
+  .draft-header { margin-bottom: 6px; }
+  .field { max-height: 160px; }
+  .pick-header { padding: 10px 12px; }
+  .pick-flag { font-size: 1.6rem; }
+  .players-list { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
   .logo { font-size: 3.5rem; }
   .formation-grid { grid-template-columns: 1fr 1fr; }
 }
