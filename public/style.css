@@ -834,13 +834,10 @@ input[type="text"]:focus { border-color: var(--accent); }
 .captain-note b { color: var(--gold2); }
 .captain-note span { color: var(--text); }
 .captain-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 10px; margin-top: 4px; }
-.captain-pick { cursor: pointer; transition: transform .15s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.captain-pick { cursor: pointer; transition: transform .15s; }
 .captain-pick:hover { transform: translateY(-4px); }
 .captain-pick.selected .fut-card { outline: 3px solid var(--gold2); outline-offset: 2px; }
 .captain-pick.boosted .fut-card { outline: 2px solid var(--accent); outline-offset: 2px; }
-.captain-style { font-size: .6rem; color: var(--text3); text-align: center; line-height: 1.2; }
-.captain-style.boosted { color: var(--accent); font-weight: 700; }
-.captain-style.is-cap { color: var(--gold2); font-weight: 700; }
 .tactics-actions { display: flex; justify-content: center; padding-top: 6px; }
 
 /* ── Hub de modos ── */

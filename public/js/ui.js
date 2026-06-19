@@ -587,9 +587,7 @@ function renderTactics() {
     const boosted = !!captainStyle && !isCap && pStyle === captainStyle;
     const wrap = document.createElement('div');
     wrap.className = 'captain-pick' + (isCap ? ' selected' : '') + (boosted ? ' boosted' : '');
-    wrap.innerHTML = renderPlayerCard(p, { size: 'sm', captain: isCap })
-      + `<div class="captain-style${boosted ? ' boosted' : ''}${isCap ? ' is-cap' : ''}">`
-      + `${st ? st.emoji + ' ' + st.label : pStyle}${boosted ? ' ⬆' : ''}</div>`;
+    wrap.innerHTML = renderPlayerCard(p, { size: 'sm', captain: isCap });
     wrap.addEventListener('click', () => {
       state.captainId = (state.captainId === p.id) ? null : p.id;
       renderTactics();
