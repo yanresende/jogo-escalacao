@@ -53,7 +53,10 @@ app.get('/api/daily/:date', async (req, res) => {
 // }>
 const rooms = new Map();
 const MAX_PLAYERS = 16;
-const DRAFT_DEADLINE_MS = 90_000;
+// Rede de segurança: o torneio só começa quando TODOS os conectados terminam o draft
+// (ver maybeFinish). Este deadline só existe para não travar a sala caso alguém fique
+// AFK e nunca envie o time. Por isso é generoso — não é o caminho normal.
+const DRAFT_DEADLINE_MS = 5 * 60_000;
 
 function generateRoomCode() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -170,7 +173,10 @@ io.on('connection', (socket) => {
     const member = room.members.find(m => m.id === socket.id);
     if (!member) return;
     member.team = normalizeTeam(team);
-    socket.to(room.code).emit('opponent_ready', { name: member.name });
+    const connected = room.members.filter(m => m.connected);
+    const ready = connected.filter(m => m.team).length;
+    // Broadcast para a sala toda (inclui quem acabou de enviar) com o progresso.
+    io.to(room.code).emit('opponent_ready', { name: member.name, ready, total: connected.length });
     maybeFinish(room);
   });
 

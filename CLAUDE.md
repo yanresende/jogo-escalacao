@@ -476,8 +476,10 @@ membros (`tournament.bracketSizeFor`).
 
 `finishTournament(room)` monta os participantes humanos (times com 11 jogadores) e chama
 `tournament.runTournament(humans)` (que completa com bots). O payload é emitido **por socket** com
-`youId` próprio de cada um, para o cliente destacar o caminho do jogador. Há um **deadline de draft**
-(`DRAFT_DEADLINE_MS`, 90s): quem não enviar o time a tempo perde a vaga (vira bot).
+`youId` próprio de cada um, para o cliente destacar o caminho do jogador. O torneio só inicia quando
+**todos os conectados** enviam o time (`maybeFinish`). Há um **deadline de segurança**
+(`DRAFT_DEADLINE_MS`, 5 min) só para não travar a sala se alguém ficar AFK: ao estourar, quem não
+enviou o time perde a vaga (vira bot).
 
 ### Cliente
 

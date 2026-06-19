@@ -33,7 +33,10 @@ function initSocket() {
   socket.on('opponent_ready', (d) => {
     if (state.screen === 'waiting') {
       const msg = document.getElementById('waiting-msg');
-      if (msg) msg.innerHTML = `${(d && d.name) || 'Um jogador'} terminou. Aguardando os demais<span class="dots"></span>`;
+      if (msg) {
+        const counter = (d && typeof d.ready === 'number') ? ` (${d.ready}/${d.total} prontos)` : '';
+        msg.innerHTML = `${(d && d.name) || 'Um jogador'} terminou. Aguardando os demais${counter}<span class="dots"></span>`;
+      }
     }
   });
 
