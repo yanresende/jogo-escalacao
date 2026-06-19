@@ -37,6 +37,11 @@ body { background:
   var(--bg);
 }
 
+/* Utilitário global: qualquer elemento com .hidden fica oculto.
+   (Antes só existiam regras .hidden escopadas, então .lobby-entry/.lobby-room,
+   o botão de iniciar e dicas com .hidden continuavam aparecendo — causando sobreposição.) */
+.hidden { display: none !important; }
+
 /* ── Screens ─────────────────────────────────────────────── */
 .screen { display: none; min-height: 100vh; position: relative; animation: fadeIn .25s ease; }
 .screen.active { display: flex; flex-direction: column; }
@@ -522,7 +527,10 @@ body { background:
 }
 .waiting-text { color: var(--text2); font-size: .85rem; }
 .room-code-display.hidden { display: none; }
-.join-input-group { display: flex; gap: 8px; }
+.join-input-group { display: flex; gap: 8px; align-items: stretch; }
+/* input precisa de min-width:0 para encolher; sem isso o botão "Entrar" estoura o card */
+.join-input-group input[type="text"] { min-width: 0; }
+.join-input-group .btn { flex-shrink: 0; white-space: nowrap; }
 input[type="text"] {
   flex: 1; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
   padding: 10px 14px; color: var(--text); font-size: 1.1rem; font-weight: 700; letter-spacing: 4px;
@@ -899,8 +907,13 @@ input[type="text"]:focus { border-color: var(--accent); }
   text-align: center; background: var(--glass); border: 1px solid var(--border);
   border-radius: 14px; padding: 14px;
 }
-.room-code-banner .rc-label { display: block; font-size: .75rem; color: var(--text3); text-transform: uppercase; letter-spacing: .1em; }
-.room-code-banner .room-code { font-size: 2rem; font-weight: 900; letter-spacing: .25em; color: var(--accent); }
+.room-code-banner .rc-label { display: block; font-size: .75rem; color: var(--text3); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 4px; }
+/* O banner já é a "caixa": zera o box herdado de .room-code (span inline com padding
+   vertical sobrepunha o rótulo acima). */
+.room-code-banner .room-code {
+  display: block; background: none; border: none; padding: 0; border-radius: 0;
+  font-size: 2rem; font-weight: 900; letter-spacing: .25em; color: var(--accent);
+}
 .roster-head { display: flex; align-items: baseline; justify-content: space-between; }
 .roster-head h3 { font-size: 1.05rem; }
 .roster-count { color: var(--text2); font-weight: 700; }

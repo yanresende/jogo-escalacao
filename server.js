@@ -128,6 +128,12 @@ function maybeFinish(room) {
 io.on('connection', (socket) => {
   socket.on('create_room', (name, cb) => {
     if (typeof name === 'function') { cb = name; name = ''; }
+    // Clique duplo: se já está numa sala, devolve a existente em vez de criar órfã.
+    const current = rooms.get(socket.data.roomCode);
+    if (current && !current.started) {
+      if (typeof cb === 'function') cb({ roomCode: current.code });
+      return broadcastLobby(current);
+    }
     const code = generateRoomCode();
     const room = {
       code, hostId: socket.id, started: false, finished: false,
@@ -146,6 +152,17 @@ io.on('connection', (socket) => {
     const room = rooms.get(code);
     if (!room) return typeof cb === 'function' && cb({ error: 'Sala não encontrada.' });
     if (room.started) return typeof cb === 'function' && cb({ error: 'O torneio já começou.' });
+    // Clique duplo / re-emit: já é membro → idempotente, não duplica no roster.
+    if (room.members.some(m => m.id === socket.id)) {
+      socket.join(code);
+      socket.data.roomCode = code;
+      if (typeof cb === 'function') cb({ ok: true });
+      return broadcastLobby(room);
+    }
+    // Já está em outra sala → não permite entrar em duas ao mesmo tempo.
+    if (socket.data.roomCode && socket.data.roomCode !== code && rooms.has(socket.data.roomCode)) {
+      return typeof cb === 'function' && cb({ error: 'Você já está em outra sala.' });
+    }
     if (room.members.length >= MAX_PLAYERS) return typeof cb === 'function' && cb({ error: 'Sala cheia (16).' });
     room.members.push({ id: socket.id, name: sanitizeName(name, `Jogador ${room.members.length + 1}`), team: null, connected: true });
     socket.join(code);

@@ -65,20 +65,36 @@ function showLobbyEntry() {
   document.getElementById('lobby-room').classList.add('hidden');
 }
 
+// Evita cliques repetidos em "Criar"/"Entrar" enquanto a sala não responde
+// (sem isso, a mesma pessoa entrava várias vezes na sala, duplicando o roster).
+let lobbyPending = false;
+function setLobbyBusy(busy) {
+  lobbyPending = busy;
+  ['btn-create-room', 'btn-join-room'].forEach(id => {
+    const b = document.getElementById(id);
+    if (b) b.disabled = busy;
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-create-room').addEventListener('click', () => {
+    if (lobbyPending) return;
+    setLobbyBusy(true);
     initSocket();
     socket.emit('create_room', getNickname(), ({ roomCode }) => {
       document.getElementById('room-code-value').textContent = roomCode;
+      // segue para a sala via lobby_update; mantém travado até lá
     });
   });
 
   document.getElementById('btn-join-room').addEventListener('click', () => {
+    if (lobbyPending) return;
     const code = document.getElementById('room-code-input').value.trim().toUpperCase();
     if (code.length < 4) { showLobbyError('Código inválido.'); return; }
+    setLobbyBusy(true);
     initSocket();
     socket.emit('join_room', code, getNickname(), ({ ok, error }) => {
-      if (error) { showLobbyError(error); return; }
+      if (error) { setLobbyBusy(false); showLobbyError(error); return; }
       document.getElementById('room-code-value').textContent = code;
     });
   });
@@ -122,5 +138,6 @@ function resetMultiplayer() {
   if (socket) { socket.disconnect(); socket = null; }
   lobby = null;
   state.isMultiplayer = false;
+  setLobbyBusy(false);
   showLobbyEntry();
 }
