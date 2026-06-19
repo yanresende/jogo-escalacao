@@ -52,7 +52,11 @@ function renderFormationGrid() {
     card.className = 'formation-card';
     card.innerHTML = `
       <div class="formation-name">${name}</div>
-      <div class="formation-visual">${renderFormationDots(cfg.slots)}</div>
+      <div class="formation-visual">
+        <img class="formation-img" src="${encodeURI('formações/' + name + '.png')}" alt="${name}"
+             loading="lazy" onerror="this.classList.add('img-failed')">
+        <div class="formation-dots-fallback">${renderFormationDots(cfg.slots)}</div>
+      </div>
       <div class="formation-desc">${cfg.desc}</div>
     `;
     card.addEventListener('click', () => {
@@ -128,7 +132,7 @@ function renderField() {
           ${state.mode === 'classic' ? slot.player.overall : '?'}
         </div>
         <div class="slot-name">${slot.player.name.split(' ').pop()}</div>
-        <div class="slot-ovr">${slot.pos}</div>
+        <div class="slot-ovr">${posLabel(slot.pos)}</div>
       `;
       el.addEventListener('click', () => {
         if (state.currentRoll) return;
@@ -141,7 +145,7 @@ function renderField() {
     } else {
       const isDropTarget = _selectedPickPlayer && playerFitsSlot(_selectedPickPlayer, slot.pos);
       el.innerHTML = `
-        <div class="slot-circle ${isDropTarget ? 'drop-target' : (isActive ? 'active' : '')}">${slot.pos}</div>
+        <div class="slot-circle ${isDropTarget ? 'drop-target' : (isActive ? 'active' : '')}">${posLabel(slot.pos)}</div>
         <div class="slot-name"></div>
       `;
       if (isDropTarget) {

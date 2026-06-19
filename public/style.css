@@ -119,6 +119,14 @@ body { background:
 .formation-visual { display: flex; flex-direction: column; gap: 4px; margin: 10px 0; align-items: center; }
 .fv-row { display: flex; gap: 6px; justify-content: center; }
 .fv-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); opacity: .6; }
+.formation-img {
+  width: 100%; max-width: 150px; aspect-ratio: 3 / 4; object-fit: cover;
+  border-radius: 10px; border: 1px solid var(--border); display: block;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+}
+.formation-img.img-failed { display: none; }
+.formation-dots-fallback { display: none; }
+.formation-img.img-failed + .formation-dots-fallback { display: block; }
 
 /* ── DRAFT ───────────────────────────────────────────────── */
 #screen-draft { flex-direction: row; overflow: hidden; }
@@ -541,13 +549,18 @@ input[type="text"]:focus { border-color: var(--accent); }
   to { transform: translateY(105vh) rotate(720deg); opacity: 1; }
 }
 
-/* ── Campo melhorado ── */
+/* ── Campo melhorado (gramado listrado + marcações: áreas, círculo, marcas) ── */
 .field {
   background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 150' preserveAspectRatio='none'><g fill='none' stroke='%23ffffff' stroke-opacity='0.30' stroke-width='0.6'><rect x='29' y='0' width='42' height='16'/><rect x='40' y='0' width='20' height='6.5'/><rect x='29' y='134' width='42' height='16'/><rect x='40' y='143.5' width='20' height='6.5'/></g><g fill='%23ffffff' fill-opacity='0.45'><circle cx='50' cy='11' r='0.8'/><circle cx='50' cy='139' r='0.8'/></g></svg>") center / 100% 100% no-repeat,
     repeating-linear-gradient(180deg, #1a7a3c 0 8%, #15692f 8% 16%);
   box-shadow: inset 0 0 60px rgba(0,0,0,.35), var(--shadow);
 }
 .field::after { border-width: 2px; }
+/* Marcadores no estilo das imagens: círculo tracejado + rótulo PT em destaque */
+.slot-circle { font-size: .58rem; letter-spacing: .02em; backdrop-filter: blur(1px); }
+.slot-circle:not(.filled) { border-width: 2px; color: rgba(255,255,255,.78); background: rgba(8,30,16,.28); }
+.slot-ovr { letter-spacing: .03em; }
 
 /* overlay de química (SVG) */
 .chem-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }

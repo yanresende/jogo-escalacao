@@ -2,77 +2,80 @@
    7a0 — Game Logic (State Machine + Draft)
    ============================================================ */
 
+// Formações fiéis às imagens em /public/formações (rótulos PT: GOL, ZAG, LE/LD,
+// VOL, MC, MEI, ME/MD, PE/PD, CA). slots[] e FIELD_POSITIONS[] são paralelos.
 const FORMATIONS = {
-  '4-3-3':   { slots: ['GK','RB','CB','CB','LB','CM','CM','CM','RW','ST','LW'],       desc: 'Balanceada e versátil' },
-  '4-4-2':   { slots: ['GK','RB','CB','CB','LB','RM','CM','CM','LM','ST','ST'],       desc: 'Clássica com dois atacantes' },
-  '4-2-3-1': { slots: ['GK','RB','CB','CB','LB','CDM','CDM','CAM','CAM','CAM','ST'],  desc: 'Sólida no meio-campo' },
-  '4-2-4':   { slots: ['GK','RB','CB','CB','LB','CM','CM','RW','ST','ST','LW'],       desc: 'Ofensiva com 4 na frente' },
-  '3-5-2':   { slots: ['GK','CB','CB','CB','RWB','CM','CM','CM','LWB','ST','ST'],     desc: 'Defensiva com alas ofensivos' },
-  '5-3-2':   { slots: ['GK','RWB','CB','CB','CB','LWB','CM','CM','CM','ST','ST'],     desc: 'Muito sólida atrás' },
-  '4-5-1':   { slots: ['GK','RB','CB','CB','LB','RM','CM','CM','CM','LM','ST'],       desc: 'Ultra defensiva' },
-  '3-4-3':   { slots: ['GK','CB','CB','CB','RM','CM','CM','LM','RW','ST','LW'],       desc: 'Ataque total' },
+  '4-3-3':   { slots: ['GK','LB','CB','CB','RB','CDM','CAM','CM','LW','ST','RW'],     desc: 'Balanceada e versátil' },
+  '4-4-2':   { slots: ['GK','LB','CB','CB','RB','LM','CM','CDM','RM','ST','ST'],      desc: 'Clássica com dois atacantes' },
+  '4-2-3-1': { slots: ['GK','LB','CB','CB','RB','CDM','CM','LW','CAM','RW','ST'],     desc: 'Sólida no meio-campo' },
+  '4-2-4':   { slots: ['GK','LB','CB','CB','RB','CDM','CM','LW','ST','ST','RW'],      desc: 'Ofensiva com 4 na frente' },
+  '3-5-2':   { slots: ['GK','CB','CB','CB','LM','CM','CDM','CM','RM','ST','ST'],      desc: 'Defensiva com alas ofensivos' },
+  '5-3-2':   { slots: ['GK','LB','CB','CB','CB','RB','CDM','CM','CAM','ST','ST'],     desc: 'Muito sólida atrás' },
+  '4-5-1':   { slots: ['GK','LB','CB','CB','RB','LM','CAM','CDM','CM','RM','ST'],     desc: 'Ultra defensiva' },
+  '3-4-3':   { slots: ['GK','CB','CB','CB','LM','CM','CM','RM','LW','ST','RW'],       desc: 'Ataque total' },
 };
 
-// Positions layout on field [top% (0=attack, 100=defense), left%]
-// Each formation: 11 positions with [y, x] in percentage
+// Posições no campo [y% (0=ataque/topo, 100=goleiro/base), x% (0=esquerda)].
+// Cada formação: 11 pares [y, x] — mesma ordem dos slots acima.
 const FIELD_POSITIONS = {
   '4-3-3': [
-    [92, 50],   // GK
-    [72, 80],   // RB
-    [72, 60],   // CB
-    [72, 40],   // CB
-    [72, 20],   // LB
-    [48, 70],   // CM
-    [48, 50],   // CM
-    [48, 30],   // CM
-    [22, 80],   // RW
-    [22, 50],   // ST
-    [22, 20],   // LW
+    [90, 50],                                   // GOL
+    [73, 18], [74, 39], [74, 61], [73, 82],     // LE ZAG ZAG LD
+    [60, 50], [48, 37], [48, 63],               // VOL  MEI MC
+    [27, 20], [18, 50], [27, 80],               // PE CA PD
   ],
   '4-4-2': [
-    [92, 50],
-    [72, 80], [72, 60], [72, 40], [72, 20],
-    [48, 80], [48, 60], [48, 40], [48, 20],
-    [22, 65], [22, 35],
+    [90, 50],
+    [73, 18], [74, 39], [74, 61], [73, 82],     // LE ZAG ZAG LD
+    [52, 16], [49, 40], [49, 60], [52, 84],     // ME MC VOL MD
+    [20, 38], [20, 62],                         // CA CA
   ],
   '4-2-3-1': [
-    [92, 50],
-    [72, 80], [72, 60], [72, 40], [72, 20],
-    [58, 65], [58, 35],
-    [35, 70], [35, 50], [35, 30],
-    [15, 50],
+    [90, 50],
+    [73, 18], [74, 39], [74, 61], [73, 82],     // LE ZAG ZAG LD
+    [60, 40], [60, 60],                         // VOL MC
+    [40, 18], [38, 50], [40, 82],               // PE MEI PD
+    [18, 50],                                   // CA
   ],
   '4-2-4': [
-    [92, 50],
-    [72, 80], [72, 60], [72, 40], [72, 20],
-    [50, 65], [50, 35],
-    [22, 80], [22, 60], [22, 40], [22, 20],
+    [90, 50],
+    [73, 18], [74, 39], [74, 61], [73, 82],     // LE ZAG ZAG LD
+    [55, 40], [55, 60],                         // VOL MC
+    [26, 15], [22, 40], [22, 60], [26, 85],     // PE CA CA PD
   ],
   '3-5-2': [
-    [92, 50],
-    [72, 70], [72, 50], [72, 30],
-    [50, 85], [50, 65], [50, 50], [50, 35], [50, 15],
-    [22, 60], [22, 40],
+    [90, 50],
+    [74, 30], [75, 50], [74, 70],               // ZAG ZAG ZAG
+    [50, 12], [55, 35], [46, 50], [55, 65], [50, 88], // ME MC VOL MC MD
+    [20, 38], [20, 62],                         // CA CA
   ],
   '5-3-2': [
-    [92, 50],
-    [75, 85], [75, 68], [75, 50], [75, 32], [75, 15],
-    [50, 65], [50, 50], [50, 35],
-    [22, 60], [22, 40],
+    [90, 50],
+    [72, 12], [75, 32], [76, 50], [75, 68], [72, 88], // LE ZAG ZAG ZAG LD
+    [52, 33], [49, 50], [52, 67],               // VOL MC MEI
+    [22, 38], [22, 62],                         // CA CA
   ],
   '4-5-1': [
-    [92, 50],
-    [72, 80], [72, 60], [72, 40], [72, 20],
-    [48, 85], [48, 65], [48, 50], [48, 35], [48, 15],
-    [15, 50],
+    [90, 50],
+    [73, 18], [74, 39], [74, 61], [73, 82],     // LE ZAG ZAG LD
+    [50, 12], [48, 37], [58, 50], [48, 63], [50, 88], // ME MEI VOL MC MD
+    [20, 50],                                   // CA
   ],
   '3-4-3': [
-    [92, 50],
-    [72, 70], [72, 50], [72, 30],
-    [52, 80], [52, 57], [52, 43], [52, 20],
-    [22, 75], [22, 50], [22, 25],
+    [90, 50],
+    [74, 30], [75, 50], [74, 70],               // ZAG ZAG ZAG
+    [52, 15], [52, 40], [52, 60], [52, 85],     // ME MC MC MD
+    [25, 20], [20, 50], [25, 80],               // PE CA PD
   ],
 };
+
+// Rótulos das posições em português (como nas imagens das formações).
+const POS_LABELS = {
+  GK: 'GOL', CB: 'ZAG', LB: 'LE', RB: 'LD', LWB: 'ALE', RWB: 'ALD',
+  CDM: 'VOL', CM: 'MC', CAM: 'MEI', LM: 'ME', RM: 'MD',
+  LW: 'PE', RW: 'PD', ST: 'CA', CF: 'CA', SS: 'SA',
+};
+function posLabel(pos) { return POS_LABELS[pos] || pos; }
 
 // ── Game State ────────────────────────────────────────────────
 const state = {
