@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7a0 — Painel Admin</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Admin (reusa as variáveis de cor do style.css) ── */
+    .admin-wrap { max-width: 1200px; margin: 0 auto; padding: 16px; }
+    .admin-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .admin-head h1 { font-size: 20px; margin: 0; }
+    .admin-head .tag { font-size: 11px; color: var(--text3); border: 1px solid var(--border); padding: 2px 8px; border-radius: 999px; }
+    .admin-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .admin-tabs button { background: var(--bg2); color: var(--text2); border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    .admin-tabs button.active { background: var(--accent); color: #052e16; border-color: var(--accent); }
+    .admin-section { display: none; }
+    .admin-section.active { display: block; }
+
+    /* Toolbar de filtros */
+    .toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+    .toolbar .fld { display: flex; flex-direction: column; gap: 4px; }
+    .toolbar label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: .04em; }
+    .toolbar input, .toolbar select { background: var(--bg3); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; font-size: 13px; }
+    .toolbar input[type="number"] { width: 70px; }
+    .toolbar input[type="text"] { width: 180px; }
+
+    .actionbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+    .actionbar .count { color: var(--text3); font-size: 13px; }
+    .actionbar .count b { color: var(--text); }
+    .actionbar .dirty { color: var(--gold); }
+    .btn { background: var(--bg2); color: var(--text); border: 1px solid var(--border); padding: 8px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; }
+    .btn.primary { background: var(--accent); color: #052e16; border-color: var(--accent); }
+    .btn.primary:disabled { opacity: .45; cursor: default; }
+
+    /* Tabela de jogadores */
+    .tbl-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
+    table.players { width: 100%; border-collapse: collapse; font-size: 13px; }
+    table.players th { position: sticky; top: 0; background: var(--bg3); color: var(--text3); text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; padding: 8px; border-bottom: 1px solid var(--border); z-index: 1; }
+    table.players td { padding: 4px 8px; border-bottom: 1px solid var(--border); }
+    table.players tr.row-dirty td { background: rgba(245, 158, 11, .07); }
+    table.players input, table.players select { background: var(--bg3); color: var(--text); border: 1px solid var(--border); border-radius: 5px; padding: 4px 6px; font-size: 13px; width: 100%; box-sizing: border-box; }
+    table.players input.id { font-family: monospace; font-size: 12px; }
+    .w-id { width: 180px; } .w-name { width: 170px; } .w-country { width: 130px; }
+    .w-flag { width: 48px; } .w-wc { width: 70px; } .w-pos { width: 80px; }
+    .w-alt { width: 130px; } .w-ovr { width: 64px; } .w-del { width: 40px; }
+    .tier-badge { display: inline-block; min-width: 18px; text-align: center; font-weight: 700; border-radius: 4px; padding: 1px 4px; font-size: 11px; margin-left: 4px; }
+    .del-btn { background: transparent; border: none; color: var(--red); cursor: pointer; font-size: 16px; }
+    .empty { padding: 24px; text-align: center; color: var(--text3); }
+
+    /* Documentação */
+    .docs { max-width: 820px; line-height: 1.6; color: var(--text2); }
+    .docs h2 { color: var(--text); font-size: 18px; margin: 28px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+    .docs h3 { color: var(--accent); font-size: 15px; margin: 20px 0 6px; }
+    .docs p { margin: 8px 0; }
+    .docs code { background: var(--bg3); padding: 1px 5px; border-radius: 4px; font-size: 12.5px; color: var(--gold); }
+    .docs .formula { display: block; background: var(--bg2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 10px 12px; margin: 10px 0; font-family: monospace; font-size: 12.5px; color: var(--text); white-space: pre-wrap; overflow-x: auto; }
+    .docs table { border-collapse: collapse; margin: 12px 0; font-size: 13px; width: 100%; }
+    .docs th, .docs td { border: 1px solid var(--border); padding: 5px 9px; text-align: left; }
+    .docs th { background: var(--bg3); color: var(--text3); }
+    .docs ul { margin: 8px 0; padding-left: 22px; }
+    .docs .note { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; color: var(--text3); font-size: 13px; }
+    .toc { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 8px 0 4px; font-size: 13px; }
+    .toc a { color: var(--blue); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="admin-wrap">
+    <div class="admin-head">
+      <h1>⚙️ 7a0 — Painel Admin</h1>
+      <span class="tag">ferramenta local de dev</span>
+      <a href="/" class="tag" style="text-decoration:none;color:var(--blue)">← voltar ao jogo</a>
+    </div>
+
+    <div class="admin-tabs">
+      <button data-tab="editor" class="active">👥 Editor de Jogadores</button>
+      <button data-tab="docs">📐 Documentação da Lógica</button>
+    </div>
+
+    <!-- ════════════ EDITOR ════════════ -->
+    <section id="tab-editor" class="admin-section active">
+      <div class="toolbar">
+        <div class="fld"><label>Buscar nome / id</label><input type="text" id="f-search" placeholder="ex: pelé" /></div>
+        <div class="fld"><label>País</label><select id="f-country"></select></div>
+        <div class="fld"><label>Copa</label><select id="f-wc"></select></div>
+        <div class="fld"><label>Posição</label><select id="f-pos"></select></div>
+        <div class="fld"><label>OVR mín</label><input type="number" id="f-min" min="1" max="99" placeholder="1" /></div>
+        <div class="fld"><label>OVR máx</label><input type="number" id="f-max" min="1" max="99" placeholder="99" /></div>
+        <button class="btn" id="f-clear">Limpar</button>
+      </div>
+
+      <div class="actionbar">
+        <span class="count" id="count"></span>
+        <span style="flex:1"></span>
+        <button class="btn" id="btn-add">➕ Adicionar jogador</button>
+        <button class="btn primary" id="btn-save" disabled>💾 Salvar no data.js</button>
+      </div>
+
+      <div class="tbl-wrap">
+        <table class="players">
+          <thead>
+            <tr>
+              <th class="w-id">ID</th><th class="w-name">Nome</th><th class="w-country">País</th>
+              <th class="w-flag">Band.</th><th class="w-wc">Copa</th><th class="w-pos">Pos</th>
+              <th class="w-alt">Alt (vírgula)</th><th class="w-ovr">OVR</th><th class="w-del"></th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="empty" id="empty" style="display:none">Nenhum jogador com esses filtros.</div>
+      </div>
+    </section>
+
+    <!-- ════════════ DOCUMENTAÇÃO ════════════ -->
+    <section id="tab-docs" class="admin-section">
+      <div class="docs" id="docs"></div>
+    </section>
+  </div>
+
+  <script src="js/engine.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

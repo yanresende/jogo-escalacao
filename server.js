@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const path = require('path');
+const fs = require('fs');
 const E = require('./public/js/engine.js'); // motor compartilhado client/server
 const db = require('./db.js');               // persistência (PostgreSQL / memória)
 const tournament = require('./public/js/tournament.js'); // motor de torneio (UMD)
@@ -11,7 +12,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-app.use(express.json());
+app.use(express.json({ limit: '8mb' })); // payload do editor admin manda o banco inteiro de jogadores
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ── API REST: perfil + ranking diário ────────────────────────
@@ -44,6 +45,106 @@ app.get('/api/daily/:date', async (req, res) => {
     const scores = await db.getLeaderboard(req.params.date, 50);
     res.json({ scores });
   } catch (e) { console.error('GET /api/daily', e); res.status(500).json({ error: 'db' }); }
+});
+
+// ── Painel admin (ferramenta de DEV — desabilitada em produção) ──────────────
+// Edita o banco de jogadores reescrevendo o bloco `const PLAYERS = [...]` no
+// data.js, sem tocar no resto do arquivo (índices derivados, helpers, exports).
+const ADMIN_ENABLED = process.env.NODE_ENV !== 'production';
+const DATA_FILE = path.join(__dirname, 'public', 'js', 'data.js');
+const VALID_POS = new Set(['gol', 'zag', 'le', 'ld', 'vol', 'mc', 'mei', 'me', 'md', 'pe', 'pd', 'ca']);
+
+// Serializa UM jogador em uma linha no mesmo formato do data.js.
+function serializePlayer(p) {
+  const parts = [
+    `id: ${JSON.stringify(String(p.id))}`,
+    `name: ${JSON.stringify(String(p.name))}`,
+    `country: ${JSON.stringify(String(p.country))}`,
+    `flag: ${JSON.stringify(String(p.flag))}`,
+    `worldCup: ${Number(p.worldCup)}`,
+    `position: ${JSON.stringify(String(p.position))}`,
+    `altPositions: [${(Array.isArray(p.altPositions) ? p.altPositions : []).map(a => JSON.stringify(String(a))).join(', ')}]`,
+  ];
+  if (p.style != null && p.style !== '') parts.push(`style: ${JSON.stringify(String(p.style))}`);
+  parts.push(`overall: ${Number(p.overall)}`);
+  return `  { ${parts.join(', ')} },`;
+}
+
+// Monta o corpo do array com comentários de País / Copa (igual à organização atual).
+function serializePlayers(players) {
+  const lines = [];
+  let lastCountry = null, lastWC = null;
+  for (const p of players) {
+    if (p.country !== lastCountry) {
+      if (lastCountry !== null) lines.push('');
+      lines.push(`  // ===== ${p.country} =====`);
+      lastCountry = p.country; lastWC = null;
+    }
+    if (p.worldCup !== lastWC) { lines.push(`  // ${p.worldCup}`); lastWC = p.worldCup; }
+    lines.push(serializePlayer(p));
+  }
+  return lines.join('\n');
+}
+
+// Valida o payload; devolve { error } ou { players } normalizado.
+function validatePlayers(input) {
+  if (!Array.isArray(input)) return { error: 'payload deve ser um array de jogadores' };
+  const seen = new Set();
+  const players = [];
+  for (let i = 0; i < input.length; i++) {
+    const p = input[i] || {};
+    const id = String(p.id || '').trim();
+    const name = String(p.name || '').trim();
+    if (!id) return { error: `jogador #${i + 1}: id vazio` };
+    if (!name) return { error: `jogador "${id}": nome vazio` };
+    if (seen.has(id)) return { error: `id duplicado: "${id}"` };
+    seen.add(id);
+    if (!VALID_POS.has(p.position)) return { error: `jogador "${id}": posição inválida "${p.position}"` };
+    const wc = Number(p.worldCup);
+    if (!Number.isFinite(wc)) return { error: `jogador "${id}": copa inválida` };
+    const ov = Number(p.overall);
+    if (!Number.isFinite(ov) || ov < 1 || ov > 99) return { error: `jogador "${id}": overall fora de 1–99` };
+    const alts = Array.isArray(p.altPositions) ? p.altPositions.filter(a => VALID_POS.has(a)) : [];
+    players.push({
+      id, name,
+      country: String(p.country || '').trim(),
+      flag: String(p.flag || '').trim(),
+      worldCup: wc,
+      position: p.position,
+      altPositions: alts,
+      ...(p.style ? { style: String(p.style) } : {}),
+      overall: ov,
+    });
+  }
+  if (!players.length) return { error: 'nenhum jogador no payload' };
+  return { players };
+}
+
+app.post('/api/admin/players', (req, res) => {
+  if (!ADMIN_ENABLED) return res.status(403).json({ error: 'Painel admin desabilitado em produção.' });
+  try {
+    const { error, players } = validatePlayers(req.body && req.body.players);
+    if (error) return res.status(400).json({ error });
+
+    const src = fs.readFileSync(DATA_FILE, 'utf8');
+    const startMarker = 'const PLAYERS = [';
+    const startIdx = src.indexOf(startMarker);
+    if (startIdx < 0) return res.status(500).json({ error: 'array PLAYERS não encontrado no data.js' });
+    const afterStart = startIdx + startMarker.length;
+    const closeIdx = src.indexOf('\n];', afterStart);   // primeiro "];" em início de linha
+    if (closeIdx < 0) return res.status(500).json({ error: 'fim do array PLAYERS não encontrado' });
+
+    const before = src.slice(0, afterStart);            // "...const PLAYERS = ["
+    const after = src.slice(closeIdx + 1);              // "];\n..." em diante
+    const newSrc = before + '\n' + serializePlayers(players) + '\n' + after;
+
+    fs.writeFileSync(DATA_FILE + '.bak', src);           // backup do estado anterior
+    fs.writeFileSync(DATA_FILE, newSrc);
+    res.json({ ok: true, count: players.length });
+  } catch (e) {
+    console.error('POST /api/admin/players', e);
+    res.status(500).json({ error: e.message || 'falha ao gravar' });
+  }
 });
 
 // ── Multiplayer: salas de torneio (até 16 jogadores) ─────────

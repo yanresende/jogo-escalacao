@@ -5,7 +5,7 @@
    ============================================================ */
 
 const PLAYERS = [
-  // ===== ALG (Argélia) =====
+  // ===== Argélia =====
   // 1982
   { id: "cerbah-alg-82", name: "Mehdi Cerbah", country: "Argélia", flag: "🇩🇿", worldCup: 1982, position: "gol", altPositions: [], overall: 78 },
   { id: "guendouz-alg-82", name: "Mahmoud Guendouz", country: "Argélia", flag: "🇩🇿", worldCup: 1982, position: "zag", altPositions: ["ld"], overall: 80 },
@@ -29,9 +29,7 @@ const PLAYERS = [
   { id: "bourebbou-alg-82", name: "Abdelmajid Bourebbou", country: "Argélia", flag: "🇩🇿", worldCup: 1982, position: "ca", altPositions: [], overall: 75 },
   { id: "amara-alg-82", name: "Mourad Amara", country: "Argélia", flag: "🇩🇿", worldCup: 1982, position: "gol", altPositions: [], overall: 74 },
   { id: "bentalaa-alg-82", name: "Yacine Bentalaa", country: "Argélia", flag: "🇩🇿", worldCup: 1982, position: "gol", altPositions: [], overall: 73 },
-
   // 2014
-
   { id: "si-mohamed-alg-14", name: "Cédric Si Mohamed", country: "Argélia", flag: "🇩🇿", worldCup: 2014, position: "gol", altPositions: [], overall: 72 },
   { id: "bougherra-alg-14", name: "Madjid Bougherra", country: "Argélia", flag: "🇩🇿", worldCup: 2014, position: "zag", altPositions: ["ld"], overall: 78 },
   { id: "ghoulam-alg-14", name: "Faouzi Ghoulam", country: "Argélia", flag: "🇩🇿", worldCup: 2014, position: "le", altPositions: ["le"], overall: 80 },
@@ -56,8 +54,7 @@ const PLAYERS = [
   { id: "mostefa-alg-14", name: "Mehdi Mostefa", country: "Argélia", flag: "🇩🇿", worldCup: 2014, position: "vol", altPositions: ["ld"], overall: 73 },
   { id: "mbolhi-alg-14", name: "Raïs M'Bolhi", country: "Argélia", flag: "🇩🇿", worldCup: 2014, position: "gol", altPositions: [], overall: 77 },
 
-
-  // ===== ARG (Argentina) =====
+  // ===== Argentina =====
   // 1958
   { id: "carrizo-arg-58", name: "Amadeo Carrizo", country: "Argentina", flag: "🇦🇷", worldCup: 1958, position: "gol", altPositions: [], overall: 84 },
   { id: "dellacha-arg-58", name: "Pedro Dellacha", country: "Argentina", flag: "🇦🇷", worldCup: 1958, position: "zag", altPositions: [], overall: 80 },
@@ -81,9 +78,7 @@ const PLAYERS = [
   { id: "infante-arg-58", name: "Ricardo Infante", country: "Argentina", flag: "🇦🇷", worldCup: 1958, position: "ca", altPositions: ["mei"], overall: 78 },
   { id: "sanfilippo-arg-58", name: "José Sanfilippo", country: "Argentina", flag: "🇦🇷", worldCup: 1958, position: "ca", altPositions: [], overall: 81 },
   { id: "cruz-arg-58", name: "Osvaldo Cruz", country: "Argentina", flag: "🇦🇷", worldCup: 1958, position: "pe", altPositions: ["me"], overall: 78 },
-
   // 1962
-  
   { id: "roma-arg-62", name: "Antonio Roma", country: "Argentina", flag: "🇦🇷", worldCup: 1962, position: "gol", altPositions: [], overall: 82 },
   { id: "ramos-delgado-arg-62", name: "José Ramos Delgado", country: "Argentina", flag: "🇦🇷", worldCup: 1962, position: "zag", altPositions: [], overall: 81 },
   { id: "marzolini-arg-62", name: "Silvio Marzolini", country: "Argentina", flag: "🇦🇷", worldCup: 1962, position: "le", altPositions: ["le"], overall: 83 },
@@ -106,9 +101,7 @@ const PLAYERS = [
   { id: "oleniak-arg-62", name: "Juan Carlos Oleniak", country: "Argentina", flag: "🇦🇷", worldCup: 1962, position: "ca", altPositions: ["mei"], overall: 76 },
   { id: "abeledo-arg-62", name: "Ramón Abeledo", country: "Argentina", flag: "🇦🇷", worldCup: 1962, position: "mc", altPositions: [], overall: 75 },
   { id: "gonzalez-arg-62", name: "Alberto González", country: "Argentina", flag: "🇦🇷", worldCup: 1962, position: "me", altPositions: ["pe"], overall: 77 },
-  
   // 1966
-  
   { id: "roma-arg-66", name: "Antonio Roma", country: "Argentina", flag: "🇦🇷", worldCup: 1966, position: "gol", altPositions: [], overall: 81 },
   { id: "irusta-arg-66", name: "Rolando Irusta", country: "Argentina", flag: "🇦🇷", worldCup: 1966, position: "gol", altPositions: [], overall: 73 },
   { id: "gatti-arg-66", name: "Hugo Gatti", country: "Argentina", flag: "🇦🇷", worldCup: 1966, position: "gol", altPositions: [], overall: 78 },
@@ -131,9 +124,7 @@ const PLAYERS = [
   { id: "onega-arg-66", name: "Ermindo Onega", country: "Argentina", flag: "🇦🇷", worldCup: 1966, position: "mei", altPositions: ["pe"], overall: 80 },
   { id: "mas-arg-66", name: "Oscar Mas", country: "Argentina", flag: "🇦🇷", worldCup: 1966, position: "pe", altPositions: ["me"], overall: 79 },
   { id: "tarabini-arg-66", name: "Aníbal Tarabini", country: "Argentina", flag: "🇦🇷", worldCup: 1966, position: "ca", altPositions: ["pe"], overall: 76 },
-
   // 1974
-  
   { id: "carnevali-arg-74", name: "Daniel Carnevali", country: "Argentina", flag: "🇦🇷", worldCup: 1974, position: "gol", altPositions: [], overall: 77 },
   { id: "ayala-arg-74", name: "Rubén Ayala", country: "Argentina", flag: "🇦🇷", worldCup: 1974, position: "ca", altPositions: ["pd"], overall: 80 },
   { id: "babington-arg-74", name: "Carlos Babington", country: "Argentina", flag: "🇦🇷", worldCup: 1974, position: "mei", altPositions: ["mc"], overall: 79 },
@@ -156,9 +147,7 @@ const PLAYERS = [
   { id: "wolff-arg-74", name: "Enrique Wolff", country: "Argentina", flag: "🇦🇷", worldCup: 1974, position: "ld", altPositions: ["zag"], overall: 79 },
   { id: "santoro-arg-74", name: "Miguel Ángel Santoro", country: "Argentina", flag: "🇦🇷", worldCup: 1974, position: "gol", altPositions: [], overall: 78 },
   { id: "yazalde-arg-74", name: "Héctor Yazalde", country: "Argentina", flag: "🇦🇷", worldCup: 1974, position: "ca", altPositions: [], overall: 80 },
-
   // 1978
-
   { id: "alonso-arg-78", name: "Norberto Alonso", country: "Argentina", flag: "🇦🇷", worldCup: 1978, position: "mei", altPositions: ["mc"], overall: 83 },
   { id: "ardiles-arg-78", name: "Osvaldo Ardiles", country: "Argentina", flag: "🇦🇷", worldCup: 1978, position: "mc", altPositions: ["mei"], overall: 85 },
   { id: "baley-arg-78", name: "Héctor Baley", country: "Argentina", flag: "🇦🇷", worldCup: 1978, position: "gol", altPositions: [], overall: 76 },
@@ -181,10 +170,7 @@ const PLAYERS = [
   { id: "tarantini-arg-78", name: "Alberto Tarantini", country: "Argentina", flag: "🇦🇷", worldCup: 1978, position: "le", altPositions: ["zag"], overall: 81 },
   { id: "valencia-arg-78", name: "José Daniel Valencia", country: "Argentina", flag: "🇦🇷", worldCup: 1978, position: "mei", altPositions: ["mc"], overall: 80 },
   { id: "villa-arg-78", name: "Ricardo Villa", country: "Argentina", flag: "🇦🇷", worldCup: 1978, position: "mc", altPositions: ["md"], overall: 78 },
-
   // 1982
-
-  
   { id: "fillol-arg-82", name: "Ubaldo Fillol", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "gol", altPositions: [], overall: 87 },
   { id: "baley-arg-82", name: "Héctor Baley", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "gol", altPositions: [], overall: 75 },
   { id: "pumpido-arg-82", name: "Nery Pumpido", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "gol", altPositions: [], overall: 76 },
@@ -196,7 +182,7 @@ const PLAYERS = [
   { id: "trossero-arg-82", name: "Enzo Trossero", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "zag", altPositions: [], overall: 78 },
   { id: "van-tuyne-arg-82", name: "José Van Tuyne", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "zag", altPositions: [], overall: 76 },
   { id: "ardiles-arg-82", name: "Osvaldo Ardiles", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "mc", altPositions: ["mei"], overall: 83 },
-  { id: "maradona-arg-82", name: "Diego Maradona", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "mei", altPositions: ["ca", "pe"], overall: 92 },
+  { id: "maradona-arg-82", name: "Diego Maradona", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "mei", altPositions: ["ca", "pe"], overall: 94 },
   { id: "gallego-arg-82", name: "Américo Gallego", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "vol", altPositions: ["mc"], overall: 81 },
   { id: "hernandez-arg-82", name: "Patricio Hernández", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "mc", altPositions: ["mei"], overall: 77 },
   { id: "valencia-arg-82", name: "José Daniel Valencia", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "mei", altPositions: ["mc"], overall: 79 },
@@ -207,9 +193,7 @@ const PLAYERS = [
   { id: "valdano-arg-82", name: "Jorge Valdano", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "ca", altPositions: ["pe"], overall: 81 },
   { id: "bertoni-arg-82", name: "Daniel Bertoni", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "pd", altPositions: ["ca"], overall: 82 },
   { id: "santamaria-arg-82", name: "Santiago Santamaría", country: "Argentina", flag: "🇦🇷", worldCup: 1982, position: "pd", altPositions: ["md"], overall: 77 },
-
   // 1986
-
   { id: "almiron-arg-86", name: "Sergio Almirón", country: "Argentina", flag: "🇦🇷", worldCup: 1986, position: "ca", altPositions: [], overall: 76 },
   { id: "batista-arg-86", name: "Sergio Batista", country: "Argentina", flag: "🇦🇷", worldCup: 1986, position: "vol", altPositions: ["mc"], overall: 81 },
   { id: "bochini-arg-86", name: "Ricardo Bochini", country: "Argentina", flag: "🇦🇷", worldCup: 1986, position: "mei", altPositions: ["mc"], overall: 81 },
@@ -232,9 +216,7 @@ const PLAYERS = [
   { id: "tapia-arg-86", name: "Carlos Tapia", country: "Argentina", flag: "🇦🇷", worldCup: 1986, position: "mei", altPositions: ["mc"], overall: 76 },
   { id: "trobbiani-arg-86", name: "Marcelo Trobbiani", country: "Argentina", flag: "🇦🇷", worldCup: 1986, position: "mc", altPositions: ["mei"], overall: 76 },
   { id: "zelada-arg-86", name: "Héctor Zelada", country: "Argentina", flag: "🇦🇷", worldCup: 1986, position: "gol", altPositions: [], overall: 74 },
-  
   // 1990
-
   { id: "pumpido-arg-90", name: "Nery Pumpido", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "gol", altPositions: [], overall: 80 },
   { id: "batista-arg-90", name: "Sergio Batista", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "vol", altPositions: ["mc"], overall: 79 },
   { id: "balbo-arg-90", name: "Abel Balbo", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "ca", altPositions: [], overall: 78 },
@@ -244,7 +226,7 @@ const PLAYERS = [
   { id: "burruchaga-arg-90", name: "Jorge Burruchaga", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "mei", altPositions: ["pd"], overall: 82 },
   { id: "caniggia-arg-90", name: "Claudio Caniggia", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "ca", altPositions: ["pe"], overall: 85 },
   { id: "dezotti-arg-90", name: "Gustavo Dezotti", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "ca", altPositions: ["pd"], overall: 76 },
-  { id: "maradona-arg-90", name: "Diego Maradona", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "mei", altPositions: ["mc"], overall: 91 },
+  { id: "maradona-arg-90", name: "Diego Maradona", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "mei", altPositions: ["mc"], overall: 93 },
   { id: "fabbri-arg-90", name: "Néstor Fabbri", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "zag", altPositions: [], overall: 77 },
   { id: "goycochea-arg-90", name: "Sergio Goycochea", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "gol", altPositions: [], overall: 84 },
   { id: "lorenzo-arg-90", name: "Néstor Lorenzo", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "zag", altPositions: ["ld"], overall: 75 },
@@ -257,9 +239,7 @@ const PLAYERS = [
   { id: "simon-arg-90", name: "Juan Simón", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "zag", altPositions: [], overall: 80 },
   { id: "troglio-arg-90", name: "Pedro Troglio", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "mc", altPositions: ["me"], overall: 78 },
   { id: "cancelarich-arg-90", name: "Fabián Cancelarich", country: "Argentina", flag: "🇦🇷", worldCup: 1990, position: "gol", altPositions: [], overall: 73 },
-
   // 1994
-
   { id: "goycochea-arg-94", name: "Sergio Goycochea", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "gol", altPositions: [], overall: 81 },
   { id: "vazquez-arg-94", name: "Sergio Vázquez", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "zag", altPositions: [], overall: 75 },
   { id: "chamot-arg-94", name: "José Chamot", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "le", altPositions: ["zag"], overall: 79 },
@@ -269,7 +249,7 @@ const PLAYERS = [
   { id: "caniggia-arg-94", name: "Claudio Caniggia", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "ca", altPositions: ["pe"], overall: 84 },
   { id: "basualdo-arg-94", name: "José Basualdo", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "md", altPositions: ["mc"], overall: 78 },
   { id: "batistuta-arg-94", name: "Gabriel Batistuta", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "ca", altPositions: [], overall: 90 },
-  { id: "maradona-arg-94", name: "Diego Maradona", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "mei", altPositions: ["mc"], overall: 86 },
+  { id: "maradona-arg-94", name: "Diego Maradona", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "mei", altPositions: ["mc"], overall: 88 },
   { id: "medina-bello-arg-94", name: "Ramón Medina Bello", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "ca", altPositions: ["pe"], overall: 77 },
   { id: "islas-arg-94", name: "Luis Islas", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "gol", altPositions: [], overall: 79 },
   { id: "caceres-arg-94", name: "Fernando Cáceres", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "zag", altPositions: [], overall: 81 },
@@ -282,9 +262,7 @@ const PLAYERS = [
   { id: "rodriguez-arg-94", name: "Leonardo Rodríguez", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "mei", altPositions: ["me"], overall: 77 },
   { id: "mancuso-arg-94", name: "Alejandro Mancuso", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "vol", altPositions: ["mc"], overall: 75 },
   { id: "scoponi-arg-94", name: "Norberto Scoponi", country: "Argentina", flag: "🇦🇷", worldCup: 1994, position: "gol", altPositions: [], overall: 72 },
-
   // 1998
-
   { id: "roa-arg-98", name: "Carlos Roa", country: "Argentina", flag: "🇦🇷", worldCup: 1998, position: "gol", altPositions: [], overall: 81 },
   { id: "ayala-arg-98", name: "Roberto Ayala", country: "Argentina", flag: "🇦🇷", worldCup: 1998, position: "zag", altPositions: [], overall: 84 },
   { id: "chamot-arg-98", name: "José Chamot", country: "Argentina", flag: "🇦🇷", worldCup: 1998, position: "le", altPositions: ["zag"], overall: 78 },
@@ -307,9 +285,7 @@ const PLAYERS = [
   { id: "gallardo-arg-98", name: "Marcelo Gallardo", country: "Argentina", flag: "🇦🇷", worldCup: 1998, position: "mei", altPositions: ["mc"], overall: 80 },
   { id: "delgado-arg-98", name: "Marcelo Delgado", country: "Argentina", flag: "🇦🇷", worldCup: 1998, position: "ca", altPositions: ["pe", "pd"], overall: 77 },
   { id: "zanetti-arg-98", name: "Javier Zanetti", country: "Argentina", flag: "🇦🇷", worldCup: 1998, position: "ld", altPositions: ["ld", "md", "le"], overall: 85 },
-
   // 2002
-
   { id: "burgos-arg-02", name: "Germán Burgos", country: "Argentina", flag: "🇦🇷", worldCup: 2002, position: "gol", altPositions: [], overall: 78 },
   { id: "ayala-arg-02", name: "Roberto Ayala", country: "Argentina", flag: "🇦🇷", worldCup: 2002, position: "zag", altPositions: [], overall: 85 },
   { id: "sorin-arg-02", name: "Juan Pablo Sorín", country: "Argentina", flag: "🇦🇷", worldCup: 2002, position: "le", altPositions: ["le", "me"], overall: 83 },
@@ -333,9 +309,7 @@ const PLAYERS = [
   { id: "caniggia-arg-02", name: "Claudio Caniggia", country: "Argentina", flag: "🇦🇷", worldCup: 2002, position: "ca", altPositions: ["pd", "pe"], overall: 79 },
   { id: "chamot-arg-02", name: "José Chamot", country: "Argentina", flag: "🇦🇷", worldCup: 2002, position: "le", altPositions: ["zag"], overall: 77 },
   { id: "bonano-arg-02", name: "Roberto Bonano", country: "Argentina", flag: "🇦🇷", worldCup: 2002, position: "gol", altPositions: [], overall: 77 },
-
   // 2006
-
   { id: "abbondanzieri-arg-06", name: "Roberto Abbondanzieri", country: "Argentina", flag: "🇦🇷", worldCup: 2006, position: "gol", altPositions: [], overall: 81 },
   { id: "ayala-arg-06", name: "Roberto Ayala", country: "Argentina", flag: "🇦🇷", worldCup: 2006, position: "zag", altPositions: [], overall: 86 },
   { id: "sorin-arg-06", name: "Juan Pablo Sorín", country: "Argentina", flag: "🇦🇷", worldCup: 2006, position: "le", altPositions: ["le", "me"], overall: 84 },
@@ -358,9 +332,7 @@ const PLAYERS = [
   { id: "cruz-arg-06", name: "Julio Cruz", country: "Argentina", flag: "🇦🇷", worldCup: 2006, position: "ca", altPositions: [], overall: 80 },
   { id: "burdisso-arg-06", name: "Nicolás Burdisso", country: "Argentina", flag: "🇦🇷", worldCup: 2006, position: "zag", altPositions: ["ld"], overall: 80 },
   { id: "gonzalez-arg-06", name: "Lucho González", country: "Argentina", flag: "🇦🇷", worldCup: 2006, position: "mc", altPositions: ["md"], overall: 81 },
-  
   // 2010
-
   { id: "romero-arg-10", name: "Sergio Romero", country: "Argentina", flag: "🇦🇷", worldCup: 2010, position: "gol", altPositions: [], overall: 80 },
   { id: "andujar-arg-10", name: "Mariano Andújar", country: "Argentina", flag: "🇦🇷", worldCup: 2010, position: "gol", altPositions: [], overall: 78 },
   { id: "pozo-arg-10", name: "Diego Pozo", country: "Argentina", flag: "🇦🇷", worldCup: 2010, position: "gol", altPositions: [], overall: 73 },
@@ -383,9 +355,7 @@ const PLAYERS = [
   { id: "milito-d-arg-10", name: "Diego Milito", country: "Argentina", flag: "🇦🇷", worldCup: 2010, position: "ca", altPositions: [], overall: 87 },
   { id: "rodriguez-m-arg-10", name: "Maxi Rodríguez", country: "Argentina", flag: "🇦🇷", worldCup: 2010, position: "md", altPositions: ["me", "pd", "mc"], overall: 81 },
   { id: "pastore-arg-10", name: "Javier Pastore", country: "Argentina", flag: "🇦🇷", worldCup: 2010, position: "mei", altPositions: ["mc", "me"], overall: 80 },
-
   // 2014
-
   { id: "romero-arg-14", name: "Sergio Romero", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "gol", altPositions: [], overall: 82 },
   { id: "garay-arg-14", name: "Ezequiel Garay", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "zag", altPositions: [], overall: 83 },
   { id: "campagnaro-arg-14", name: "Hugo Campagnaro", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "zag", altPositions: ["ld"], overall: 78 },
@@ -395,7 +365,7 @@ const PLAYERS = [
   { id: "di-maria-arg-14", name: "Ángel Di María", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "pd", altPositions: ["pe", "mei"], overall: 86 },
   { id: "perez-arg-14", name: "Enzo Pérez", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "mc", altPositions: ["md", "vol"], overall: 81 },
   { id: "higuain-arg-14", name: "Gonzalo Higuaín", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "ca", altPositions: ["ca"], overall: 86 },
-  { id: "messi-arg-14", name: "Lionel Messi", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "ca", altPositions: ["pd", "ca", "mei"], overall: 94 },
+  { id: "messi-arg-14", name: "Lionel Messi", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "ca", altPositions: ["pd", "ca", "mei"], overall: 98 },
   { id: "rodriguez-m-arg-14", name: "Maxi Rodríguez", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "me", altPositions: ["md", "pe"], overall: 79 },
   { id: "orion-arg-14", name: "Agustín Orión", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "gol", altPositions: [], overall: 76 },
   { id: "fernandez-a-arg-14", name: "Augusto Fernández", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "md", altPositions: ["mc"], overall: 78 },
@@ -409,9 +379,7 @@ const PLAYERS = [
   { id: "andujar-arg-14", name: "Mariano Andújar", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "gol", altPositions: [], overall: 77 },
   { id: "lavezzi-arg-14", name: "Ezequiel Lavezzi", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "pd", altPositions: ["pe", "ca"], overall: 83 },
   { id: "basanta-arg-14", name: "José María Basanta", country: "Argentina", flag: "🇦🇷", worldCup: 2014, position: "zag", altPositions: ["le"], overall: 76 },
-
   // 2018
-
   { id: "guzman-arg-18", name: "Nahuel Guzmán", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "gol", altPositions: [], overall: 78 },
   { id: "mercado-arg-18", name: "Gabriel Mercado", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "ld", altPositions: ["zag", "ld"], overall: 78 },
   { id: "tagliafico-arg-18", name: "Nicolás Tagliafico", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "le", altPositions: ["le"], overall: 81 },
@@ -420,7 +388,7 @@ const PLAYERS = [
   { id: "fazio-arg-18", name: "Federico Fazio", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "zag", altPositions: [], overall: 80 },
   { id: "banega-arg-18", name: "Éver Banega", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "mc", altPositions: ["vol", "mei"], overall: 82 },
   { id: "higuain-arg-18", name: "Gonzalo Higuaín", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "ca", altPositions: ["ca"], overall: 86 },
-  { id: "messi-arg-18", name: "Lionel Messi", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "pd", altPositions: ["ca", "ca", "mei"], overall: 94 },
+  { id: "messi-arg-18", name: "Lionel Messi", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "pd", altPositions: ["ca", "ca", "mei"], overall: 98 },
   { id: "di-maria-arg-18", name: "Ángel Di María", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "pd", altPositions: ["pe", "mei"], overall: 84 },
   { id: "armani-arg-18", name: "Franco Armani", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "gol", altPositions: [], overall: 80 },
   { id: "meza-arg-18", name: "Maximiliano Meza", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "md", altPositions: ["pd", "mei"], overall: 78 },
@@ -434,9 +402,7 @@ const PLAYERS = [
   { id: "dybala-arg-18", name: "Paulo Dybala", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "mei", altPositions: ["ca", "pd", "ca"], overall: 87 },
   { id: "pavon-arg-18", name: "Cristian Pavón", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "pd", altPositions: ["pe", "md"], overall: 79 },
   { id: "caballero-arg-18", name: "Willy Caballero", country: "Argentina", flag: "🇦🇷", worldCup: 2018, position: "gol", altPositions: [], overall: 77 },
-
   // 2022
-
   { id: "armani-arg-22", name: "Franco Armani", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 79 },
   { id: "foyth-arg-22", name: "Juan Foyth", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "ld", altPositions: ["zag"], overall: 78 },
   { id: "tagliafico-arg-22", name: "Nicolás Tagliafico", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "le", altPositions: ["le"], overall: 81 },
@@ -446,7 +412,7 @@ const PLAYERS = [
   { id: "de-paul-arg-22", name: "Rodrigo De Paul", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "mc", altPositions: ["md", "vol"], overall: 85 },
   { id: "acuna-arg-22", name: "Marcos Acuña", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "le", altPositions: ["le", "me"], overall: 83 },
   { id: "alvarez-arg-22", name: "Julián Álvarez", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "ca", altPositions: ["ca", "pd", "pe"], overall: 85 },
-  { id: "messi-arg-22", name: "Lionel Messi", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "pd", altPositions: ["ca", "ca", "mei"], style: "drible", overall: 96 },
+  { id: "messi-arg-22", name: "Lionel Messi", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "pd", altPositions: ["ca", "ca", "mei"], style: "drible", overall: 93 },
   { id: "di-maria-arg-22", name: "Ángel Di María", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "pd", altPositions: ["pe", "mei"], overall: 85 },
   { id: "rulli-arg-22", name: "Gerónimo Rulli", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 80 },
   { id: "romero-arg-22", name: "Cristian Romero", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "zag", altPositions: [], overall: 85 },
@@ -463,9 +429,7 @@ const PLAYERS = [
   { id: "fernandez-e-arg-22", name: "Enzo Fernández", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "mc", altPositions: ["vol"], overall: 85 },
   { id: "martinez-li-arg-22", name: "Lisandro Martínez", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "zag", altPositions: ["le", "vol"], overall: 83 },
   { id: "molina-arg-22", name: "Nahuel Molina", country: "Argentina", flag: "🇦🇷", worldCup: 2022, position: "ld", altPositions: ["ld"], overall: 82 },
-
   // 2026
-
   { id: "musso-arg-26", name: "Juan Musso", country: "Argentina", flag: "🇦🇷", worldCup: 2026, position: "gol", altPositions: [], overall: 80 },
   { id: "balerdi-arg-26", name: "Leonardo Balerdi", country: "Argentina", flag: "🇦🇷", worldCup: 2026, position: "zag", altPositions: [], overall: 80 },
   { id: "tagliafico-arg-26", name: "Nicolás Tagliafico", country: "Argentina", flag: "🇦🇷", worldCup: 2026, position: "le", altPositions: ["le"], overall: 80 },
@@ -493,8 +457,7 @@ const PLAYERS = [
   { id: "medina-arg-26", name: "Facundo Medina", country: "Argentina", flag: "🇦🇷", worldCup: 2026, position: "zag", altPositions: ["le"], overall: 80 },
   { id: "molina-arg-26", name: "Nahuel Molina", country: "Argentina", flag: "🇦🇷", worldCup: 2026, position: "ld", altPositions: ["ld", "md"], overall: 83 },
 
-
-  // ===== AUS (Austrália) =====
+  // ===== Austrália =====
   // 2006
   { id: "schwarzer-aus-06", name: "Mark Schwarzer", country: "Austrália", flag: "🇦🇺", worldCup: 2006, position: "gol", altPositions: [], overall: 81 },
   { id: "neill-aus-06", name: "Lucas Neill", country: "Austrália", flag: "🇦🇺", worldCup: 2006, position: "zag", altPositions: ["ld"], overall: 79 },
@@ -519,9 +482,7 @@ const PLAYERS = [
   { id: "sterjovski-aus-06", name: "Mile Sterjovski", country: "Austrália", flag: "🇦🇺", worldCup: 2006, position: "pd", altPositions: ["md", "ca"], overall: 76 },
   { id: "milligan-aus-06", name: "Mark Milligan", country: "Austrália", flag: "🇦🇺", worldCup: 2006, position: "ld", altPositions: ["zag", "vol"], overall: 71 },
   { id: "bresciano-aus-06", name: "Mark Bresciano", country: "Austrália", flag: "🇦🇺", worldCup: 2006, position: "mei", altPositions: ["me", "mc"], overall: 80 },
-
   // 2022
-
   { id: "ryan-aus-22", name: "Mathew Ryan", country: "Austrália", flag: "🇦🇺", worldCup: 2022, position: "gol", altPositions: [], overall: 77 },
   { id: "degenek-aus-22", name: "Milos Degenek", country: "Austrália", flag: "🇦🇺", worldCup: 2022, position: "zag", altPositions: ["ld"], overall: 74 },
   { id: "atkinson-aus-22", name: "Nathaniel Atkinson", country: "Austrália", flag: "🇦🇺", worldCup: 2022, position: "ld", altPositions: ["md"], overall: 70 },
@@ -549,10 +510,8 @@ const PLAYERS = [
   { id: "cummings-aus-22", name: "Jason Cummings", country: "Austrália", flag: "🇦🇺", worldCup: 2022, position: "ca", altPositions: [], overall: 71 },
   { id: "baccus-aus-22", name: "Keanu Baccus", country: "Austrália", flag: "🇦🇺", worldCup: 2022, position: "vol", altPositions: ["mc"], overall: 69 },
 
-
-  // ===== AUT (Áustria) =====
+  // ===== Áustria =====
   // 1954
-
   { id: "schmied-aut-54", name: "Kurt Schmied", country: "Áustria", flag: "🇦🇹", worldCup: 1954, position: "gol", altPositions: [], overall: 80 },
   { id: "zeman-aut-54", name: "Walter Zeman", country: "Áustria", flag: "🇦🇹", worldCup: 1954, position: "gol", altPositions: [], overall: 82 },
   { id: "pelikan-aut-54", name: "Franz Pelikan", country: "Áustria", flag: "🇦🇹", worldCup: 1954, position: "gol", altPositions: [], overall: 75 },
@@ -575,9 +534,7 @@ const PLAYERS = [
   { id: "schleger-aut-54", name: "Walter Schleger", country: "Áustria", flag: "🇦🇹", worldCup: 1954, position: "ca", altPositions: [], overall: 77 },
   { id: "dienst-aut-54", name: "Robert Dienst", country: "Áustria", flag: "🇦🇹", worldCup: 1954, position: "ca", altPositions: [], overall: 78 },
   { id: "haummer-aut-54", name: "Walter Haummer", country: "Áustria", flag: "🇦🇹", worldCup: 1954, position: "pd", altPositions: ["ca"], overall: 76 },
-
-  //  1978
-  
+  // 1978
   { id: "koncilia-aut-78", name: "Friedrich Koncilia", country: "Áustria", flag: "🇦🇹", worldCup: 1978, position: "gol", altPositions: [], overall: 80 },
   { id: "sara-aut-78", name: "Robert Sara", country: "Áustria", flag: "🇦🇹", worldCup: 1978, position: "ld", altPositions: ["zag"], overall: 81 },
   { id: "obermayer-aut-78", name: "Erich Obermayer", country: "Áustria", flag: "🇦🇹", worldCup: 1978, position: "zag", altPositions: ["vol"], overall: 79 },
@@ -600,9 +557,7 @@ const PLAYERS = [
   { id: "baumeister-aut-78", name: "Ernst Baumeister", country: "Áustria", flag: "🇦🇹", worldCup: 1978, position: "mc", altPositions: ["vol"], overall: 77 },
   { id: "fuchsbichler-aut-78", name: "Erwin Fuchsbichler", country: "Áustria", flag: "🇦🇹", worldCup: 1978, position: "gol", altPositions: [], overall: 73 },
   { id: "baumgartner-aut-78", name: "Hubert Baumgartner", country: "Áustria", flag: "🇦🇹", worldCup: 1978, position: "gol", altPositions: [], overall: 75 },
-
   // 1982
-
   { id: "koncilia-aut-82", name: "Friedrich Koncilia", country: "Áustria", flag: "🇦🇹", worldCup: 1982, position: "gol", altPositions: [], overall: 80 },
   { id: "krauss-aut-82", name: "Bernd Krauss", country: "Áustria", flag: "🇦🇹", worldCup: 1982, position: "ld", altPositions: ["md"], overall: 78 },
   { id: "obermayer-aut-82", name: "Erich Obermayer", country: "Áustria", flag: "🇦🇹", worldCup: 1982, position: "zag", altPositions: ["vol"], overall: 80 },
@@ -626,10 +581,8 @@ const PLAYERS = [
   { id: "feurer-aut-82", name: "Herbert Feurer", country: "Áustria", flag: "🇦🇹", worldCup: 1982, position: "gol", altPositions: [], overall: 75 },
   { id: "lindenberger-aut-82", name: "Klaus Lindenberger", country: "Áustria", flag: "🇦🇹", worldCup: 1982, position: "gol", altPositions: [], overall: 74 },
 
-
-  // ===== BEL (Bélgica) =====
+  // ===== Bélgica =====
   // 1970
-  
   { id: "piot-bel-70", name: "Christian Piot", country: "Bélgica", flag: "🇧🇪", worldCup: 1970, position: "gol", altPositions: [], overall: 82 },
   { id: "trappeniers-bel-70", name: "Jean-Marie Trappeniers", country: "Bélgica", flag: "🇧🇪", worldCup: 1970, position: "gol", altPositions: [], overall: 76 },
   { id: "duquesne-bel-70", name: "Jacques Duquesne", country: "Bélgica", flag: "🇧🇪", worldCup: 1970, position: "gol", altPositions: [], overall: 74 },
@@ -652,9 +605,7 @@ const PLAYERS = [
   { id: "lambert-bel-70", name: "Raoul Lambert", country: "Bélgica", flag: "🇧🇪", worldCup: 1970, position: "ca", altPositions: ["pd"], overall: 84 },
   { id: "carteus-bel-70", name: "Pierre Carteus", country: "Bélgica", flag: "🇧🇪", worldCup: 1970, position: "mc", altPositions: ["mei"], overall: 76 },
   { id: "janssens-bel-70", name: "Frans Janssens", country: "Bélgica", flag: "🇧🇪", worldCup: 1970, position: "ca", altPositions: [], overall: 75 },
-
   // 1982
-
   { id: "pfaff-bel-82", name: "Jean-Marie Pfaff", country: "Bélgica", flag: "🇧🇪", worldCup: 1982, position: "gol", altPositions: [], overall: 86 },
   { id: "gerets-bel-82", name: "Eric Gerets", country: "Bélgica", flag: "🇧🇪", worldCup: 1982, position: "ld", altPositions: ["ld", "zag"], overall: 86 },
   { id: "millecamps-l-bel-82", name: "Luc Millecamps", country: "Bélgica", flag: "🇧🇪", worldCup: 1982, position: "zag", altPositions: ["vol"], overall: 80 },
@@ -677,9 +628,7 @@ const PLAYERS = [
   { id: "vandersmissen-bel-82", name: "Guy Vandersmissen", country: "Bélgica", flag: "🇧🇪", worldCup: 1982, position: "mc", altPositions: ["md"], overall: 78 },
   { id: "czerniatynski-bel-82", name: "Alexandre Czerniatynski", country: "Bélgica", flag: "🇧🇪", worldCup: 1982, position: "ca", altPositions: ["ca"], overall: 79 },
   { id: "munaron-bel-82", name: "Jacky Munaron", country: "Bélgica", flag: "🇧🇪", worldCup: 1982, position: "gol", altPositions: [], overall: 75 },
-
-  // 1986 
-
+  // 1986
   { id: "pfaff-bel-86", name: "Jean-Marie Pfaff", country: "Bélgica", flag: "🇧🇪", worldCup: 1986, position: "gol", altPositions: [], overall: 87 },
   { id: "gerets-bel-86", name: "Eric Gerets", country: "Bélgica", flag: "🇧🇪", worldCup: 1986, position: "ld", altPositions: ["ld", "zag"], overall: 86 },
   { id: "van-der-elst-f-bel-86", name: "Franky Van der Elst", country: "Bélgica", flag: "🇧🇪", worldCup: 1986, position: "vol", altPositions: ["mc"], overall: 83 },
@@ -702,16 +651,14 @@ const PLAYERS = [
   { id: "bodart-bel-86", name: "Gilbert Bodart", country: "Bélgica", flag: "🇧🇪", worldCup: 1986, position: "gol", altPositions: [], overall: 76 },
   { id: "demol-bel-86", name: "Stéphane Demol", country: "Bélgica", flag: "🇧🇪", worldCup: 1986, position: "zag", altPositions: [], overall: 81 },
   { id: "vervoort-bel-86", name: "Patrick Vervoort", country: "Bélgica", flag: "🇧🇪", worldCup: 1986, position: "me", altPositions: ["le", "mc"], overall: 80 },
-
   // 2018
-
   { id: "courtois-bel-18", name: "Thibaut Courtois", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "gol", altPositions: [], overall: 89 },
   { id: "alderweireld-bel-18", name: "Toby Alderweireld", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "zag", altPositions: ["ld"], overall: 85 },
   { id: "vermaelen-bel-18", name: "Thomas Vermaelen", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "zag", altPositions: ["le"], overall: 80 },
   { id: "kompany-bel-18", name: "Vincent Kompany", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "zag", altPositions: [], overall: 85 },
   { id: "vertonghen-bel-18", name: "Jan Vertonghen", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "zag", altPositions: ["le", "le"], overall: 86 },
   { id: "witsel-bel-18", name: "Axel Witsel", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "vol", altPositions: ["mc"], overall: 83 },
-  { id: "de-bruyne-bel-18", name: "Kevin De Bruyne", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "mei", altPositions: ["mc", "md"], overall: 91 },
+  { id: "de-bruyne-bel-18", name: "Kevin De Bruyne", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "mei", altPositions: ["mc", "md"], overall: 95 },
   { id: "fellaini-bel-18", name: "Marouane Fellaini", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "mc", altPositions: ["vol", "mei"], overall: 80 },
   { id: "lukaku-bel-18", name: "Romelu Lukaku", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "ca", altPositions: ["ca"], overall: 87 },
   { id: "hazard-e-bel-18", name: "Eden Hazard", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "pe", altPositions: ["mei", "ca"], overall: 91 },
@@ -728,9 +675,7 @@ const PLAYERS = [
   { id: "batshuayi-bel-18", name: "Michy Batshuayi", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "ca", altPositions: [], overall: 80 },
   { id: "chadli-bel-18", name: "Nacer Chadli", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "me", altPositions: ["mc", "le", "mei"], overall: 80 },
   { id: "dendoncker-bel-18", name: "Leander Dendoncker", country: "Bélgica", flag: "🇧🇪", worldCup: 2018, position: "vol", altPositions: ["zag", "mc"], overall: 78 },
-  
   // 2026
-
   { id: "courtois-bel-26", name: "Thibaut Courtois", country: "Bélgica", flag: "🇧🇪", worldCup: 2026, position: "gol", altPositions: [], overall: 88 },
   { id: "debast-bel-26", name: "Zeno Debast", country: "Bélgica", flag: "🇧🇪", worldCup: 2026, position: "zag", altPositions: ["ld"], overall: 79 },
   { id: "theate-bel-26", name: "Arthur Theate", country: "Bélgica", flag: "🇧🇪", worldCup: 2026, position: "zag", altPositions: ["le"], overall: 80 },
@@ -757,10 +702,8 @@ const PLAYERS = [
   { id: "ngoy-bel-26", name: "Nathan Ngoy", country: "Bélgica", flag: "🇧🇪", worldCup: 2026, position: "zag", altPositions: ["ld"], overall: 73 },
   { id: "fernandez-pardo-bel-26", name: "Matias Fernandez-Pardo", country: "Bélgica", flag: "🇧🇪", worldCup: 2026, position: "pe", altPositions: ["ca", "me"], overall: 73 },
 
-
-  // ===== BRA (Brasil) =====
+  // ===== Brasil =====
   // 1950
-  
   { id: "barbosa-bra-50", name: "Moacyr Barbosa", country: "Brasil", flag: "🇧🇷", worldCup: 1950, position: "gol", altPositions: [], overall: 83 },
   { id: "augusto-bra-50", name: "Augusto da Costa", country: "Brasil", flag: "🇧🇷", worldCup: 1950, position: "ld", altPositions: ["zag"], overall: 80 },
   { id: "juvenal-bra-50", name: "Juvenal Amarijo", country: "Brasil", flag: "🇧🇷", worldCup: 1950, position: "zag", altPositions: [], overall: 79 },
@@ -783,9 +726,7 @@ const PLAYERS = [
   { id: "nena-bra-50", name: "Nena", country: "Brasil", flag: "🇧🇷", worldCup: 1950, position: "zag", altPositions: [], overall: 77 },
   { id: "rui-campos-bra-50", name: "Rui Campos", country: "Brasil", flag: "🇧🇷", worldCup: 1950, position: "vol", altPositions: ["zag"], overall: 79 },
   { id: "ely-bra-50", name: "Ely do Amparo", country: "Brasil", flag: "🇧🇷", worldCup: 1950, position: "vol", altPositions: ["mc"], overall: 78 },
-  
   // 1954
-
   { id: "castilho-bra-54", name: "Carlos Castilho", country: "Brasil", flag: "🇧🇷", worldCup: 1954, position: "gol", altPositions: [], overall: 82 },
   { id: "santos-d-bra-54", name: "Djalma Santos", country: "Brasil", flag: "🇧🇷", worldCup: 1954, position: "ld", altPositions: ["ld", "zag"], overall: 90 },
   { id: "santos-n-bra-54", name: "Nílton Santos", country: "Brasil", flag: "🇧🇷", worldCup: 1954, position: "le", altPositions: ["le", "me"], overall: 88 },
@@ -808,9 +749,7 @@ const PLAYERS = [
   { id: "rubens-bra-54", name: "Rubens", country: "Brasil", flag: "🇧🇷", worldCup: 1954, position: "mei", altPositions: ["mc"], overall: 79 },
   { id: "veludo-bra-54", name: "Veludo", country: "Brasil", flag: "🇧🇷", worldCup: 1954, position: "gol", altPositions: [], overall: 78 },
   { id: "cabecao-bra-54", name: "Cabeção", country: "Brasil", flag: "🇧🇷", worldCup: 1954, position: "gol", altPositions: [], overall: 77 },
-  
-  // 1958 
-
+  // 1958
   { id: "castilho-bra-58", name: "Carlos Castilho", country: "Brasil", flag: "🇧🇷", worldCup: 1958, position: "gol", altPositions: [], overall: 82 },
   { id: "bellini-bra-58", name: "Hilderaldo Bellini", country: "Brasil", flag: "🇧🇷", worldCup: 1958, position: "zag", altPositions: [], overall: 84 },
   { id: "gilmar-bra-58", name: "Gilmar", country: "Brasil", flag: "🇧🇷", worldCup: 1958, position: "gol", altPositions: [], overall: 88 },
@@ -833,9 +772,7 @@ const PLAYERS = [
   { id: "vava-bra-58", name: "Vavá", country: "Brasil", flag: "🇧🇷", worldCup: 1958, position: "ca", altPositions: ["ca"], overall: 87 },
   { id: "dida-bra-58", name: "Dida", country: "Brasil", flag: "🇧🇷", worldCup: 1958, position: "mei", altPositions: ["ca", "ca"], overall: 82 },
   { id: "pepe-bra-58", name: "Pepe", country: "Brasil", flag: "🇧🇷", worldCup: 1958, position: "pe", altPositions: ["me", "ca"], overall: 85 },
-
-  // 1962 
-
+  // 1962
   { id: "gilmar-bra-62", name: "Gilmar", country: "Brasil", flag: "🇧🇷", worldCup: 1962, position: "gol", altPositions: [], overall: 89 },
   { id: "santos-d-bra-62", name: "Djalma Santos", country: "Brasil", flag: "🇧🇷", worldCup: 1962, position: "ld", altPositions: ["ld", "zag"], overall: 92 },
   { id: "mauro-bra-62", name: "Mauro Ramos", country: "Brasil", flag: "🇧🇷", worldCup: 1962, position: "zag", altPositions: [], overall: 88 },
@@ -858,9 +795,7 @@ const PLAYERS = [
   { id: "amarildo-bra-62", name: "Amarildo", country: "Brasil", flag: "🇧🇷", worldCup: 1962, position: "ca", altPositions: ["ca", "pe"], overall: 86 },
   { id: "zagallo-bra-62", name: "Mário Zagallo", country: "Brasil", flag: "🇧🇷", worldCup: 1962, position: "pe", altPositions: ["me"], overall: 86 },
   { id: "castilho-bra-62", name: "Carlos Castilho", country: "Brasil", flag: "🇧🇷", worldCup: 1962, position: "gol", altPositions: [], overall: 81 },
-  
-  // 1966 
-
+  // 1966
   { id: "gilmar-bra-66", name: "Gilmar", country: "Brasil", flag: "🇧🇷", worldCup: 1966, position: "gol", altPositions: [], overall: 87 },
   { id: "santos-d-bra-66", name: "Djalma Santos", country: "Brasil", flag: "🇧🇷", worldCup: 1966, position: "ld", altPositions: ["ld", "zag"], overall: 89 },
   { id: "fidelis-bra-66", name: "Fidélis", country: "Brasil", flag: "🇧🇷", worldCup: 1966, position: "ld", altPositions: ["zag"], overall: 78 },
@@ -883,9 +818,7 @@ const PLAYERS = [
   { id: "tostao-bra-66", name: "Tostão", country: "Brasil", flag: "🇧🇷", worldCup: 1966, position: "ca", altPositions: ["mei", "ca"], overall: 87 },
   { id: "parana-bra-66", name: "Paraná", country: "Brasil", flag: "🇧🇷", worldCup: 1966, position: "pe", altPositions: ["me"], overall: 80 },
   { id: "edu-bra-66", name: "Edu", country: "Brasil", flag: "🇧🇷", worldCup: 1966, position: "pe", altPositions: ["me", "pd"], overall: 82 },
-
-  // 1970 
-
+  // 1970
   { id: "felix-bra-70", name: "Félix", country: "Brasil", flag: "🇧🇷", worldCup: 1970, position: "gol", altPositions: [], overall: 82 },
   { id: "brito-bra-70", name: "Brito", country: "Brasil", flag: "🇧🇷", worldCup: 1970, position: "zag", altPositions: [], overall: 84 },
   { id: "piazza-bra-70", name: "Piazza", country: "Brasil", flag: "🇧🇷", worldCup: 1970, position: "zag", altPositions: ["vol", "mc"], overall: 84 },
@@ -908,9 +841,7 @@ const PLAYERS = [
   { id: "dario-bra-70", name: "Dario", country: "Brasil", flag: "🇧🇷", worldCup: 1970, position: "ca", altPositions: ["ca"], overall: 82 },
   { id: "ze-maria-bra-70", name: "Zé Maria", country: "Brasil", flag: "🇧🇷", worldCup: 1970, position: "ld", altPositions: ["ld"], overall: 82 },
   { id: "leao-bra-70", name: "Leão", country: "Brasil", flag: "🇧🇷", worldCup: 1970, position: "gol", altPositions: [], overall: 84 },
-
-  // 1974 
-
+  // 1974
   { id: "leao-bra-74", name: "Leão", country: "Brasil", flag: "🇧🇷", worldCup: 1974, position: "gol", altPositions: [], overall: 85 },
   { id: "luis-pereira-bra-74", name: "Luís Pereira", country: "Brasil", flag: "🇧🇷", worldCup: 1974, position: "zag", altPositions: [], overall: 86 },
   { id: "marinho-peres-bra-74", name: "Marinho Peres", country: "Brasil", flag: "🇧🇷", worldCup: 1974, position: "zag", altPositions: [], overall: 84 },
@@ -933,7 +864,6 @@ const PLAYERS = [
   { id: "edu-bra-74", name: "Edu", country: "Brasil", flag: "🇧🇷", worldCup: 1974, position: "pe", altPositions: ["me", "pd"], overall: 83 },
   { id: "dirceu-bra-74", name: "Dirceu", country: "Brasil", flag: "🇧🇷", worldCup: 1974, position: "me", altPositions: ["pe", "mc"], overall: 83 },
   { id: "waldir-peres-bra-74", name: "Waldir Peres", country: "Brasil", flag: "🇧🇷", worldCup: 1974, position: "gol", altPositions: [], overall: 82 },
-
   // 1978
   { id: "leao-bra-78", name: "Leão", country: "Brasil", flag: "🇧🇷", worldCup: 1978, position: "gol", altPositions: [], overall: 85 },
   { id: "toninho-baiano-bra-78", name: "Toninho Baiano", country: "Brasil", flag: "🇧🇷", worldCup: 1978, position: "ld", altPositions: ["ld"], overall: 80 },
@@ -957,8 +887,7 @@ const PLAYERS = [
   { id: "roberto-dinamite-bra-78", name: "Roberto Dinamite", country: "Brasil", flag: "🇧🇷", worldCup: 1978, position: "ca", altPositions: ["ca"], overall: 85 },
   { id: "chicao-bra-78", name: "Chicão", country: "Brasil", flag: "🇧🇷", worldCup: 1978, position: "vol", altPositions: ["zag"], overall: 80 },
   { id: "waldir-peres-bra-78", name: "Waldir Peres", country: "Brasil", flag: "🇧🇷", worldCup: 1978, position: "gol", altPositions: [], overall: 82 },
-
-  // 1982 
+  // 1982
   { id: "waldir-peres-bra-82", name: "Waldir Peres", country: "Brasil", flag: "🇧🇷", worldCup: 1982, position: "gol", altPositions: [], overall: 82 },
   { id: "leandro-bra-82", name: "Leandro", country: "Brasil", flag: "🇧🇷", worldCup: 1982, position: "ld", altPositions: ["ld", "zag"], overall: 86 },
   { id: "oscar-bra-82", name: "Oscar", country: "Brasil", flag: "🇧🇷", worldCup: 1982, position: "zag", altPositions: [], overall: 84 },
@@ -981,9 +910,7 @@ const PLAYERS = [
   { id: "roberto-dinamite-bra-82", name: "Roberto Dinamite", country: "Brasil", flag: "🇧🇷", worldCup: 1982, position: "ca", altPositions: ["ca"], overall: 84 },
   { id: "dirceu-bra-82", name: "Dirceu", country: "Brasil", flag: "🇧🇷", worldCup: 1982, position: "me", altPositions: ["pe", "mc"], overall: 83 },
   { id: "carlos-bra-82", name: "Carlos", country: "Brasil", flag: "🇧🇷", worldCup: 1982, position: "gol", altPositions: [], overall: 81 },
-
-  // 1986 
-
+  // 1986
   { id: "carlos-bra-86", name: "Carlos", country: "Brasil", flag: "🇧🇷", worldCup: 1986, position: "gol", altPositions: [], overall: 82 },
   { id: "edson-boaro-bra-86", name: "Édson Boaro", country: "Brasil", flag: "🇧🇷", worldCup: 1986, position: "ld", altPositions: ["ld"], overall: 79 },
   { id: "oscar-bra-86", name: "Oscar", country: "Brasil", flag: "🇧🇷", worldCup: 1986, position: "zag", altPositions: [], overall: 83 },
@@ -1006,9 +933,7 @@ const PLAYERS = [
   { id: "silas-bra-86", name: "Silas", country: "Brasil", flag: "🇧🇷", worldCup: 1986, position: "mc", altPositions: ["mei", "md"], overall: 81 },
   { id: "valdo-bra-86", name: "Valdo", country: "Brasil", flag: "🇧🇷", worldCup: 1986, position: "me", altPositions: ["mei", "mc", "pe"], overall: 81 },
   { id: "leao-bra-86", name: "Leão", country: "Brasil", flag: "🇧🇷", worldCup: 1986, position: "gol", altPositions: [], overall: 82 },
-
-  // 1990 
-
+  // 1990
   { id: "taffarel-bra-90", name: "Cláudio Taffarel", country: "Brasil", flag: "🇧🇷", worldCup: 1990, position: "gol", altPositions: [], overall: 86 },
   { id: "acacio-bra-90", name: "Acácio", country: "Brasil", flag: "🇧🇷", worldCup: 1990, position: "gol", altPositions: [], overall: 78 },
   { id: "ze-carlos-bra-90", name: "Zé Carlos", country: "Brasil", flag: "🇧🇷", worldCup: 1990, position: "gol", altPositions: [], overall: 77 },
@@ -1031,9 +956,7 @@ const PLAYERS = [
   { id: "muller-bra-90", name: "Müller", country: "Brasil", flag: "🇧🇷", worldCup: 1990, position: "pd", altPositions: ["ca", "ca"], overall: 84 },
   { id: "bebeto-bra-90", name: "Bebeto", country: "Brasil", flag: "🇧🇷", worldCup: 1990, position: "ca", altPositions: ["ca"], overall: 86 },
   { id: "renato-gaucho-bra-90", name: "Renato Gaúcho", country: "Brasil", flag: "🇧🇷", worldCup: 1990, position: "pd", altPositions: ["ca", "md"], overall: 85 },
-
-  // 1994 
-
+  // 1994
   { id: "taffarel-bra-94", name: "Cláudio Taffarel", country: "Brasil", flag: "🇧🇷", worldCup: 1994, position: "gol", altPositions: [], overall: 87 },
   { id: "jorginho-bra-94", name: "Jorginho", country: "Brasil", flag: "🇧🇷", worldCup: 1994, position: "ld", altPositions: ["ld", "md"], overall: 86 },
   { id: "ricardo-rocha-bra-94", name: "Ricardo Rocha", country: "Brasil", flag: "🇧🇷", worldCup: 1994, position: "zag", altPositions: [], overall: 84 },
@@ -1056,10 +979,8 @@ const PLAYERS = [
   { id: "ronaldo-bra-94", name: "Ronaldo", country: "Brasil", flag: "🇧🇷", worldCup: 1994, position: "ca", altPositions: ["ca"], overall: 82 },
   { id: "viola-bra-94", name: "Viola", country: "Brasil", flag: "🇧🇷", worldCup: 1994, position: "ca", altPositions: ["ca"], overall: 80 },
   { id: "gilmar-rinaldi-bra-94", name: "Gilmar Rinaldi", country: "Brasil", flag: "🇧🇷", worldCup: 1994, position: "gol", altPositions: [], overall: 78 },
-
-  // 1998 
-
-  { id: "taffarel-bra-98", name: "Cláudio Taffarel", country: "Brasil", flag: "🇧🇷", worldCup: 1998, position: "gol", altPositions: [], overall: 86 },
+  // 1998
+  { id: "taffarel-bra-98", name: "Cláudio Taffarel", country: "Brasil", flag: "🇧🇷", worldCup: 1998, position: "gol", altPositions: [], overall: 87 },
   { id: "cafu-bra-98", name: "Cafu", country: "Brasil", flag: "🇧🇷", worldCup: 1998, position: "ld", altPositions: ["ld", "md"], overall: 90 },
   { id: "aldair-bra-98", name: "Aldair", country: "Brasil", flag: "🇧🇷", worldCup: 1998, position: "zag", altPositions: [], overall: 87 },
   { id: "junior-baiano-bra-98", name: "Júnior Baiano", country: "Brasil", flag: "🇧🇷", worldCup: 1998, position: "zag", altPositions: [], overall: 82 },
@@ -1081,9 +1002,7 @@ const PLAYERS = [
   { id: "bebeto-bra-98", name: "Bebeto", country: "Brasil", flag: "🇧🇷", worldCup: 1998, position: "ca", altPositions: ["ca"], overall: 86 },
   { id: "edmundo-bra-98", name: "Edmundo", country: "Brasil", flag: "🇧🇷", worldCup: 1998, position: "ca", altPositions: ["ca", "pd", "mei"], overall: 85 },
   { id: "dida-bra-98", name: "Dida", country: "Brasil", flag: "🇧🇷", worldCup: 1998, position: "gol", altPositions: [], overall: 82 },
-
-  // 2002 
-
+  // 2002
   { id: "marcos-bra-02", name: "Marcos", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "gol", altPositions: [], overall: 86 },
   { id: "cafu-bra-02", name: "Cafu", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "ld", altPositions: ["ld", "md"], style: "contra-ataque", overall: 91 },
   { id: "lucio-bra-02", name: "Lúcio", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "zag", altPositions: [], overall: 88 },
@@ -1091,10 +1010,10 @@ const PLAYERS = [
   { id: "edmilson-bra-02", name: "Edmílson", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "zag", altPositions: ["vol"], overall: 84 },
   { id: "roberto-carlos-bra-02", name: "Roberto Carlos", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "le", altPositions: ["le", "me"], style: "contra-ataque", overall: 92 },
   { id: "ricardinho-bra-02", name: "Ricardinho", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "mc", altPositions: ["mei", "me"], overall: 81 },
-  { id: "gilberto-silva-bra-02", name: "Gilberto Silva", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "vol", altPositions: ["mc", "zag"], overall: 85 },
-  { id: "ronaldo-bra-02", name: "Ronaldo", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "ca", altPositions: ["ca"], style: "goleador", overall: 96 },
-  { id: "rivaldo-bra-02", name: "Rivaldo", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "mei", altPositions: ["ca", "pe"], overall: 93 },
-  { id: "ronaldinho-bra-02", name: "Ronaldinho", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "mei", altPositions: ["pe", "pd"], style: "drible", overall: 91 },
+  { id: "gilberto-silva-bra-02", name: "Gilberto Silva", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "vol", altPositions: ["mc", "zag"], overall: 86 },
+  { id: "ronaldo-bra-02", name: "Ronaldo", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "ca", altPositions: ["ca"], style: "goleador", overall: 97 },
+  { id: "rivaldo-bra-02", name: "Rivaldo", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "mei", altPositions: ["ca", "pe"], overall: 94 },
+  { id: "ronaldinho-bra-02", name: "Ronaldinho", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "mei", altPositions: ["pe", "pd"], style: "drible", overall: 97 },
   { id: "dida-bra-02", name: "Dida", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "gol", altPositions: [], overall: 85 },
   { id: "belletti-bra-02", name: "Juliano Belletti", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "ld", altPositions: ["ld", "md"], overall: 82 },
   { id: "anderson-polga-bra-02", name: "Anderson Polga", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "zag", altPositions: ["vol"], overall: 80 },
@@ -1107,9 +1026,7 @@ const PLAYERS = [
   { id: "luizao-bra-02", name: "Luizão", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "ca", altPositions: ["ca"], overall: 81 },
   { id: "rogerio-ceni-bra-02", name: "Rogério Ceni", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "gol", altPositions: [], overall: 83 },
   { id: "kaka-bra-02", name: "Kaká", country: "Brasil", flag: "🇧🇷", worldCup: 2002, position: "mei", altPositions: ["mc"], overall: 83 },
-
-  // 2006 
-
+  // 2006
   { id: "dida-bra-06", name: "Dida", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "gol", altPositions: [], overall: 86 },
   { id: "rogerio-ceni-bra-06", name: "Rogério Ceni", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "gol", altPositions: [], overall: 84 },
   { id: "julio-cesar-bra-06", name: "Júlio César", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "gol", altPositions: [], overall: 83 },
@@ -1117,11 +1034,11 @@ const PLAYERS = [
   { id: "lucio-bra-06", name: "Lúcio", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "zag", altPositions: [], overall: 88 },
   { id: "juan-bra-06", name: "Juan", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "zag", altPositions: [], overall: 85 },
   { id: "emerson-bra-06", name: "Emerson", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "vol", altPositions: ["mc"], overall: 85 },
-  { id: "roberto-carlos-bra-06", name: "Roberto Carlos", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "le", altPositions: ["le", "me"], overall: 88 },
-  { id: "adriano-bra-06", name: "Adriano", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "ca", altPositions: ["ca"], overall: 90 },
-  { id: "kaka-bra-06", name: "Kaká", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "mei", altPositions: ["mc", "ca"], overall: 90 },
-  { id: "ronaldo-bra-06", name: "Ronaldo", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "ca", altPositions: ["ca"], overall: 91 },
-  { id: "ronaldinho-bra-06", name: "Ronaldinho", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "mei", altPositions: ["pe", "ca"], overall: 93 },
+  { id: "roberto-carlos-bra-06", name: "Roberto Carlos", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "le", altPositions: ["le", "me"], overall: 90 },
+  { id: "adriano-bra-06", name: "Adriano", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "ca", altPositions: ["ca"], overall: 91 },
+  { id: "kaka-bra-06", name: "Kaká", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "mei", altPositions: ["mc", "ca"], overall: 95 },
+  { id: "ronaldo-bra-06", name: "Ronaldo", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "ca", altPositions: ["ca"], overall: 96 },
+  { id: "ronaldinho-bra-06", name: "Ronaldinho", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "mei", altPositions: ["pe", "ca"], overall: 95 },
   { id: "ze-roberto-bra-06", name: "Zé Roberto", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "mc", altPositions: ["me", "vol"], overall: 86 },
   { id: "cicinho-bra-06", name: "Cicinho", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "ld", altPositions: ["ld", "md"], overall: 83 },
   { id: "luisao-bra-06", name: "Luisão", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "zag", altPositions: [], overall: 83 },
@@ -1133,9 +1050,7 @@ const PLAYERS = [
   { id: "ricardinho-bra-06", name: "Ricardinho", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "mc", altPositions: ["mei", "me"], overall: 80 },
   { id: "fred-bra-06", name: "Fred", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "ca", altPositions: ["ca"], overall: 82 },
   { id: "robinho-bra-06", name: "Robinho", country: "Brasil", flag: "🇧🇷", worldCup: 2006, position: "ca", altPositions: ["ca", "pe"], overall: 86 },
-
-  // 2010 
-
+  // 2010
   { id: "julio-cesar-bra-10", name: "Júlio César", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "gol", altPositions: [], overall: 87 },
   { id: "gomes-bra-10", name: "Gomes", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "gol", altPositions: [], overall: 82 },
   { id: "doni-bra-10", name: "Doni", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "gol", altPositions: [], overall: 80 },
@@ -1147,31 +1062,28 @@ const PLAYERS = [
   { id: "elano-bra-10", name: "Elano", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "md", altPositions: ["mc", "mei"], overall: 82 },
   { id: "gilberto-silva-bra-10", name: "Gilberto Silva", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "vol", altPositions: ["zag"], overall: 81 },
   { id: "luis-fabiano-bra-10", name: "Luís Fabiano", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "ca", altPositions: ["ca"], overall: 85 },
-  { id: "kaka-bra-10", name: "Kaká", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "mei", altPositions: ["mc", "ca"], overall: 86 },
+  { id: "kaka-bra-10", name: "Kaká", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "mei", altPositions: ["mc", "ca"], overall: 87 },
   { id: "robinho-bra-10", name: "Robinho", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "pe", altPositions: ["ca", "ca"], overall: 84 },
-  { id: "dani-alves-bra-10", name: "Dani Alves", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "ld", altPositions: ["ld", "md"], overall: 86 },
+  { id: "dani-alves-bra-10", name: "Dani Alves", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "ld", altPositions: ["ld", "md"], overall: 89 },
   { id: "luisao-bra-10", name: "Luisão", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "zag", altPositions: [], overall: 82 },
-  { id: "thiago-silva-bra-10", name: "Thiago Silva", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "zag", altPositions: [], overall: 85 },
+  { id: "thiago-silva-bra-10", name: "Thiago Silva", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "zag", altPositions: [], overall: 90 },
   { id: "gilberto-bra-10", name: "Gilberto", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "le", altPositions: ["le", "me"], overall: 78 },
   { id: "josue-bra-10", name: "Josué", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "vol", altPositions: ["mc"], overall: 79 },
   { id: "ramires-bra-10", name: "Ramires", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "mc", altPositions: ["md", "vol"], overall: 81 },
   { id: "julio-baptista-bra-10", name: "Júlio Baptista", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "mei", altPositions: ["ca", "ca"], overall: 82 },
   { id: "kleberson-bra-10", name: "Kléberson", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "mc", altPositions: ["vol"], overall: 77 },
   { id: "nilmar-bra-10", name: "Nilmar", country: "Brasil", flag: "🇧🇷", worldCup: 2010, position: "ca", altPositions: ["ca"], overall: 83 },
-
-
-  // 2014 
-
+  // 2014
   { id: "jefferson-bra-14", name: "Jefferson", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "gol", altPositions: [], overall: 82 },
   { id: "dani-alves-bra-14", name: "Dani Alves", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "ld", altPositions: ["ld", "md"], overall: 84 },
-  { id: "thiago-silva-bra-14", name: "Thiago Silva", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "zag", altPositions: [], overall: 88 },
+  { id: "thiago-silva-bra-14", name: "Thiago Silva", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "zag", altPositions: [], overall: 90 },
   { id: "david-luiz-bra-14", name: "David Luiz", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "zag", altPositions: ["vol"], overall: 83 },
   { id: "fernandinho-bra-14", name: "Fernandinho", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "vol", altPositions: ["mc"], overall: 83 },
   { id: "marcelo-bra-14", name: "Marcelo", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "le", altPositions: ["le", "me"], overall: 84 },
   { id: "hulk-bra-14", name: "Hulk", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "pd", altPositions: ["md", "ca"], overall: 83 },
   { id: "paulinho-bra-14", name: "Paulinho", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "mc", altPositions: ["vol"], overall: 81 },
   { id: "fred-bra-14", name: "Fred", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "ca", altPositions: ["ca"], overall: 80 },
-  { id: "neymar-bra-14", name: "Neymar Jr", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "pe", altPositions: ["mei", "ca"], overall: 88 },
+  { id: "neymar-bra-14", name: "Neymar Jr", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "pe", altPositions: ["mei", "ca"], overall: 95 },
   { id: "oscar-bra-14", name: "Oscar", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "mei", altPositions: ["md", "mc"], overall: 84 },
   { id: "julio-cesar-bra-14", name: "Júlio César", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "gol", altPositions: [], overall: 82 },
   { id: "dante-bra-14", name: "Dante", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "zag", altPositions: [], overall: 82 },
@@ -1185,20 +1097,17 @@ const PLAYERS = [
   { id: "jo-bra-14", name: "Jô", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "ca", altPositions: ["ca"], overall: 78 },
   { id: "victor-bra-14", name: "Victor", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "gol", altPositions: [], overall: 80 },
   { id: "maicon-bra-14", name: "Maicon", country: "Brasil", flag: "🇧🇷", worldCup: 2014, position: "ld", altPositions: ["ld"], overall: 81 },
-
-
-  // 2018 
-
-  { id: "alisson-bra-18", name: "Alisson", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "gol", altPositions: [], overall: 87 },
-  { id: "thiago-silva-bra-18", name: "Thiago Silva", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "zag", altPositions: [], overall: 88 },
+  // 2018
+  { id: "alisson-bra-18", name: "Alisson", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "gol", altPositions: [], overall: 95 },
+  { id: "thiago-silva-bra-18", name: "Thiago Silva", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "zag", altPositions: [], overall: 90 },
   { id: "miranda-bra-18", name: "Miranda", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "zag", altPositions: [], overall: 85 },
   { id: "geromel-bra-18", name: "Pedro Geromel", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "zag", altPositions: [], overall: 82 },
-  { id: "casemiro-bra-18", name: "Casemiro", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "vol", altPositions: ["mc"], overall: 88 },
+  { id: "casemiro-bra-18", name: "Casemiro", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "vol", altPositions: ["mc"], overall: 90 },
   { id: "filipe-luis-bra-18", name: "Filipe Luís", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "le", altPositions: ["le", "me"], overall: 85 },
   { id: "douglas-costa-bra-18", name: "Douglas Costa", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "me", altPositions: ["pe", "pd", "md"], overall: 85 },
   { id: "renato-augusto-bra-18", name: "Renato Augusto", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "mc", altPositions: ["mei", "vol"], overall: 81 },
   { id: "gabriel-jesus-bra-18", name: "Gabriel Jesus", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "ca", altPositions: ["ca"], overall: 83 },
-  { id: "neymar-bra-18", name: "Neymar Jr", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "pe", altPositions: ["mei", "ca"], overall: 92 },
+  { id: "neymar-bra-18", name: "Neymar Jr", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "pe", altPositions: ["mei", "ca"], overall: 97 },
   { id: "coutinho-bra-18", name: "Philippe Coutinho", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "mei", altPositions: ["pe", "mc"], overall: 87 },
   { id: "marcelo-bra-18", name: "Marcelo", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "le", altPositions: ["le", "me"], overall: 88 },
   { id: "marquinhos-bra-18", name: "Marquinhos", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "zag", altPositions: ["vol", "ld"], overall: 84 },
@@ -1210,21 +1119,18 @@ const PLAYERS = [
   { id: "willian-bra-18", name: "Willian", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "pd", altPositions: ["md", "mei"], overall: 84 },
   { id: "taison-bra-18", name: "Taison", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "me", altPositions: ["mei", "pe"], overall: 81 },
   { id: "fagner-bra-18", name: "Fagner", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "ld", altPositions: ["ld"], overall: 80 },
-  { id: "ederson-bra-18", name: "Ederson", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "gol", altPositions: [], overall: 86 },
-
-
-  // 2022 
-
-  { id: "alisson-bra-22", name: "Alisson", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 89 },
+  { id: "ederson-bra-18", name: "Ederson", country: "Brasil", flag: "🇧🇷", worldCup: 2018, position: "gol", altPositions: [], overall: 87 },
+  // 2022
+  { id: "alisson-bra-22", name: "Alisson", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 92 },
   { id: "danilo-bra-22", name: "Danilo", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "ld", altPositions: ["le", "ld"], overall: 81 },
-  { id: "thiago-silva-bra-22", name: "Thiago Silva", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "zag", altPositions: [], overall: 86 },
-  { id: "marquinhos-bra-22", name: "Marquinhos", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "zag", altPositions: ["vol"], overall: 88 },
-  { id: "casemiro-bra-22", name: "Casemiro", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "vol", altPositions: ["mc"], overall: 89 },
+  { id: "thiago-silva-bra-22", name: "Thiago Silva", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "zag", altPositions: [], overall: 89 },
+  { id: "marquinhos-bra-22", name: "Marquinhos", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "zag", altPositions: ["vol"], overall: 89 },
+  { id: "casemiro-bra-22", name: "Casemiro", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "vol", altPositions: ["mc"], overall: 90 },
   { id: "alex-sandro-bra-22", name: "Alex Sandro", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "le", altPositions: ["le", "me"], overall: 80 },
   { id: "lucas-paqueta-bra-22", name: "Lucas Paquetá", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "mei", altPositions: ["mc", "me"], overall: 82 },
   { id: "fred-bra-22", name: "Fred", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "mc", altPositions: ["vol"], overall: 80 },
   { id: "richarlison-bra-22", name: "Richarlison", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "ca", altPositions: ["ca", "pe"], overall: 81 },
-  { id: "neymar-bra-22", name: "Neymar Jr", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "mei", altPositions: ["pe", "ca"], overall: 89 },
+  { id: "neymar-bra-22", name: "Neymar Jr", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "mei", altPositions: ["pe", "ca"], overall: 94 },
   { id: "raphinha-bra-22", name: "Raphinha", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "pd", altPositions: ["md"], overall: 83 },
   { id: "weverton-bra-22", name: "Weverton", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 80 },
   { id: "dani-alves-bra-22", name: "Dani Alves", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "ld", altPositions: ["ld"], overall: 77 },
@@ -1234,28 +1140,25 @@ const PLAYERS = [
   { id: "bruno-guimaraes-bra-22", name: "Bruno Guimarães", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "mc", altPositions: ["vol"], overall: 82 },
   { id: "gabriel-jesus-bra-22", name: "Gabriel Jesus", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "ca", altPositions: ["pd", "ca"], overall: 83 },
   { id: "antony-bra-22", name: "Antony", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "pd", altPositions: ["md"], overall: 82 },
-  { id: "vinicius-junior-bra-22", name: "Vinícius Jr", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "pe", altPositions: ["me"], overall: 86 },
+  { id: "vinicius-junior-bra-22", name: "Vinícius Jr", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "pe", altPositions: ["me"], overall: 94 },
   { id: "rodrygo-bra-22", name: "Rodrygo", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "pd", altPositions: ["pe", "mei", "ca"], overall: 81 },
   { id: "everton-ribeiro-bra-22", name: "Éverton Ribeiro", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "mei", altPositions: ["md", "mc"], overall: 79 },
-  { id: "ederson-bra-22", name: "Ederson", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 89 },
+  { id: "ederson-bra-22", name: "Ederson", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 91 },
   { id: "bremer-bra-22", name: "Bremer", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "zag", altPositions: [], overall: 83 },
   { id: "pedro-bra-22", name: "Pedro", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "ca", altPositions: ["ca"], overall: 80 },
   { id: "gabriel-martinelli-bra-22", name: "Gabriel Martinelli", country: "Brasil", flag: "🇧🇷", worldCup: 2022, position: "pe", altPositions: ["me", "ca"], overall: 80 },
-
-
   // 2026
-
-  { id: "alisson-bra-26", name: "Alisson", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "gol", altPositions: [], overall: 88 },
+  { id: "alisson-bra-26", name: "Alisson", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "gol", altPositions: [], overall: 90 },
   { id: "wesley-franca-bra-26", name: "Wesley", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "ld", altPositions: ["ld"], overall: 80 },
-  { id: "gabriel-magalhaes-bra-26", name: "Gabriel Magalhães", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "zag", altPositions: [], overall: 86 },
+  { id: "gabriel-magalhaes-bra-26", name: "Gabriel Magalhães", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "zag", altPositions: [], overall: 93 },
   { id: "marquinhos-bra-26", name: "Marquinhos", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "zag", altPositions: ["vol"], overall: 86 },
   { id: "casemiro-bra-26", name: "Casemiro", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 83 },
   { id: "alex-sandro-bra-26", name: "Alex Sandro", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "le", altPositions: ["le", "me"], overall: 77 },
-  { id: "vinicius-junior-bra-26", name: "Vinícius Jr", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "pe", altPositions: ["me", "ca"], overall: 90 },
-  { id: "bruno-guimaraes-bra-26", name: "Bruno Guimarães", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "mc", altPositions: ["vol"], overall: 86 },
+  { id: "vinicius-junior-bra-26", name: "Vinícius Jr", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "pe", altPositions: ["me", "ca"], overall: 94 },
+  { id: "bruno-guimaraes-bra-26", name: "Bruno Guimarães", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "mc", altPositions: ["vol"], overall: 88 },
   { id: "matheus-cunha-bra-26", name: "Matheus Cunha", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "ca", altPositions: ["ca", "mei"], overall: 82 },
-  { id: "neymar-bra-26", name: "Neymar Jr", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "mei", altPositions: ["pe", "ca"], overall: 86 },
-  { id: "raphinha-bra-26", name: "Raphinha", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "pd", altPositions: ["md"], overall: 85 },
+  { id: "neymar-bra-26", name: "Neymar Jr", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "mei", altPositions: ["pe", "ca"], overall: 89 },
+  { id: "raphinha-bra-26", name: "Raphinha", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "pd", altPositions: ["md"], overall: 89 },
   { id: "weverton-bra-26", name: "Weverton", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "gol", altPositions: [], overall: 79 },
   { id: "danilo-bra-26", name: "Danilo", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "ld", altPositions: ["zag", "ld"], overall: 79 },
   { id: "bremer-bra-26", name: "Bremer", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "zag", altPositions: [], overall: 85 },
@@ -1272,11 +1175,8 @@ const PLAYERS = [
   { id: "igor-thiago-bra-26", name: "Igor Thiago", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "ca", altPositions: ["ca"], overall: 80 },
   { id: "rayan-bra-26", name: "Rayan", country: "Brasil", flag: "🇧🇷", worldCup: 2026, position: "pd", altPositions: ["ca", "md"], overall: 78 },
 
-
-// ===== BUL (Bulgária) =====
-
-// 1970
-
+  // ===== Bulgária =====
+  // 1970
   { id: "simeonov-bul-70", name: "Simeon Simeonov", country: "Bulgária", flag: "🇧🇬", worldCup: 1970, position: "gol", altPositions: [], overall: 75 },
   { id: "shalamanov-bul-70", name: "Aleksandar Shalamanov", country: "Bulgária", flag: "🇧🇬", worldCup: 1970, position: "ld", altPositions: ["ld"], overall: 78 },
   { id: "dimitrov-bul-70", name: "Ivan Dimitrov", country: "Bulgária", flag: "🇧🇬", worldCup: 1970, position: "zag", altPositions: [], overall: 76 },
@@ -1299,9 +1199,7 @@ const PLAYERS = [
   { id: "mitkov-bul-70", name: "Vasil Mitkov", country: "Bulgária", flag: "🇧🇬", worldCup: 1970, position: "me", altPositions: ["pe", "mei"], overall: 75 },
   { id: "grigorov-bul-70", name: "Bozhidar Grigorov", country: "Bulgária", flag: "🇧🇬", worldCup: 1970, position: "ca", altPositions: ["ca"], overall: 75 },
   { id: "kamenski-bul-70", name: "Georgi Kamenski", country: "Bulgária", flag: "🇧🇬", worldCup: 1970, position: "gol", altPositions: [], overall: 73 },
-
-// 1986
-
+  // 1986
   { id: "mihaylov-bul-86", name: "Borislav Mihaylov", country: "Bulgária", flag: "🇧🇬", worldCup: 1986, position: "gol", altPositions: [], overall: 81 },
   { id: "sirakov-bul-86", name: "Nasko Sirakov", country: "Bulgária", flag: "🇧🇬", worldCup: 1986, position: "ca", altPositions: ["ca", "mei"], overall: 82 },
   { id: "arabov-bul-86", name: "Nikolay Arabov", country: "Bulgária", flag: "🇧🇬", worldCup: 1986, position: "zag", altPositions: [], overall: 76 },
@@ -1324,9 +1222,7 @@ const PLAYERS = [
   { id: "kostadinov-bul-86", name: "Kostadin Kostadinov", country: "Bulgária", flag: "🇧🇬", worldCup: 1986, position: "pe", altPositions: ["me"], overall: 74 },
   { id: "dyakov-bul-86", name: "Iliya Dyakov", country: "Bulgária", flag: "🇧🇬", worldCup: 1986, position: "zag", altPositions: [], overall: 72 },
   { id: "valov-bul-86", name: "Iliya Valov", country: "Bulgária", flag: "🇧🇬", worldCup: 1986, position: "gol", altPositions: [], overall: 73 },
-
-// 1994
-
+  // 1994
   { id: "mihaylov-bul-94", name: "Borislav Mihaylov", country: "Bulgária", flag: "🇧🇬", worldCup: 1994, position: "gol", altPositions: [], overall: 83 },
   { id: "kremenliev-bul-94", name: "Emil Kremenliev", country: "Bulgária", flag: "🇧🇬", worldCup: 1994, position: "ld", altPositions: ["zag"], overall: 78 },
   { id: "ivanov-bul-94", name: "Trifon Ivanov", country: "Bulgária", flag: "🇧🇬", worldCup: 1994, position: "zag", altPositions: ["zag"], overall: 84 },
@@ -1350,10 +1246,8 @@ const PLAYERS = [
   { id: "yotov-bul-94", name: "Velko Yotov", country: "Bulgária", flag: "🇧🇬", worldCup: 1994, position: "ca", altPositions: ["pd"], overall: 74 },
   { id: "andonov-bul-94", name: "Ivaylo Andonov", country: "Bulgária", flag: "🇧🇬", worldCup: 1994, position: "ca", altPositions: ["ca"], overall: 74 },
 
-
-  // ===== CHI (Chile) =====
-// 1950
-
+  // ===== Chile =====
+  // 1950
   { id: "livingstone-chi-50", name: "Sergio Livingstone", country: "Chile", flag: "🇨🇱", worldCup: 1950, position: "gol", altPositions: [], overall: 81 },
   { id: "quitral-chi-50", name: "René Quitral", country: "Chile", flag: "🇨🇱", worldCup: 1950, position: "gol", altPositions: [], overall: 72 },
   { id: "alvarez-chi-50", name: "Manuel Álvarez", country: "Chile", flag: "🇨🇱", worldCup: 1950, position: "zag", altPositions: [], overall: 74 },
@@ -1376,9 +1270,7 @@ const PLAYERS = [
   { id: "ibanez-chi-50", name: "Carlos Ibáñez", country: "Chile", flag: "🇨🇱", worldCup: 1950, position: "ca", altPositions: ["ca"], overall: 72 },
   { id: "prieto-chi-50", name: "Andrés Prieto", country: "Chile", flag: "🇨🇱", worldCup: 1950, position: "pd", altPositions: ["ca"], overall: 75 },
   { id: "diaz-chi-50", name: "Guillermo Díaz", country: "Chile", flag: "🇨🇱", worldCup: 1950, position: "pe", altPositions: ["me"], overall: 75 },
-
-// 1962 
-
+  // 1962
   { id: "escuti-chi-62", name: "Misael Escuti", country: "Chile", flag: "🇨🇱", worldCup: 1962, position: "gol", altPositions: [], overall: 78 },
   { id: "eyzaguirre-chi-62", name: "Luis Eyzaguirre", country: "Chile", flag: "🇨🇱", worldCup: 1962, position: "ld", altPositions: ["ld"], overall: 80 },
   { id: "sanchez-chi-62", name: "Raúl Sánchez", country: "Chile", flag: "🇨🇱", worldCup: 1962, position: "zag", altPositions: [], overall: 77 },
@@ -1399,9 +1291,7 @@ const PLAYERS = [
   { id: "moreno-chi-62", name: "Mario Moreno", country: "Chile", flag: "🇨🇱", worldCup: 1962, position: "pd", altPositions: ["md"], overall: 75 },
   { id: "musso-chi-62", name: "Braulio Musso", country: "Chile", flag: "🇨🇱", worldCup: 1962, position: "ca", altPositions: ["ca"], overall: 74 },
   { id: "campos-chi-62", name: "Carlos Campos", country: "Chile", flag: "🇨🇱", worldCup: 1962, position: "ca", altPositions: ["ca"], overall: 78 },
-
-// 1974 
-
+  // 1974
   { id: "vallejos-chi-74", name: "Leopoldo Vallejos", country: "Chile", flag: "🇨🇱", worldCup: 1974, position: "gol", altPositions: [], overall: 76 },
   { id: "garcia-chi-74", name: "Rolando García", country: "Chile", flag: "🇨🇱", worldCup: 1974, position: "ld", altPositions: ["ld"], overall: 77 },
   { id: "quintano-chi-74", name: "Alberto Quintano", country: "Chile", flag: "🇨🇱", worldCup: 1974, position: "zag", altPositions: [], overall: 79 },
@@ -1424,9 +1314,7 @@ const PLAYERS = [
   { id: "castro-chi-74", name: "Osvaldo Castro", country: "Chile", flag: "🇨🇱", worldCup: 1974, position: "ca", altPositions: ["ca"], overall: 78 },
   { id: "olivares-chi-74", name: "Juan Olivares", country: "Chile", flag: "🇨🇱", worldCup: 1974, position: "gol", altPositions: [], overall: 73 },
   { id: "nef-chi-74", name: "Adolfo Nef", country: "Chile", flag: "🇨🇱", worldCup: 1974, position: "gol", altPositions: [], overall: 75 },
-
-// 2010 
-
+  // 2010
   { id: "bravo-chi-10", name: "Claudio Bravo", country: "Chile", flag: "🇨🇱", worldCup: 2010, position: "gol", altPositions: [], overall: 84 },
   { id: "fuentes-chi-10", name: "Ismael Fuentes", country: "Chile", flag: "🇨🇱", worldCup: 2010, position: "zag", altPositions: ["ld"], overall: 76 },
   { id: "ponce-chi-10", name: "Waldo Ponce", country: "Chile", flag: "🇨🇱", worldCup: 2010, position: "zag", altPositions: [], overall: 77 },
@@ -1449,9 +1337,7 @@ const PLAYERS = [
   { id: "millar-chi-10", name: "Rodrigo Millar", country: "Chile", flag: "🇨🇱", worldCup: 2010, position: "mc", altPositions: ["vol"], overall: 76 },
   { id: "tello-chi-10", name: "Rodrigo Tello", country: "Chile", flag: "🇨🇱", worldCup: 2010, position: "le", altPositions: ["me", "le"], overall: 75 },
   { id: "paredes-chi-10", name: "Esteban Paredes", country: "Chile", flag: "🇨🇱", worldCup: 2010, position: "ca", altPositions: ["ca"], overall: 76 },
-
-// 2014
-
+  // 2014
   { id: "bravo-chi-14", name: "Claudio Bravo", country: "Chile", flag: "🇨🇱", worldCup: 2014, position: "gol", altPositions: [], overall: 84 },
   { id: "toselli-chi-14", name: "Cristopher Toselli", country: "Chile", flag: "🇨🇱", worldCup: 2014, position: "gol", altPositions: [], overall: 76 },
   { id: "herrera-chi-14", name: "Johnny Herrera", country: "Chile", flag: "🇨🇱", worldCup: 2014, position: "gol", altPositions: [], overall: 76 },
@@ -1476,10 +1362,8 @@ const PLAYERS = [
   { id: "vargas-chi-14", name: "Eduardo Vargas", country: "Chile", flag: "🇨🇱", worldCup: 2014, position: "ca", altPositions: ["pe", "ca"], overall: 80 },
   { id: "paredes-chi-14", name: "Esteban Paredes", country: "Chile", flag: "🇨🇱", worldCup: 2014, position: "ca", altPositions: ["ca"], overall: 77 },
 
-
-  // ===== CIV (Costa do Marfim) =====
+  // ===== Costa do Marfim =====
   // 2006
-  
   { id: "tizie-civ-06", name: "Jean-Jacques Tizié", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2006, position: "gol", altPositions: [], overall: 76 },
   { id: "akale-civ-06", name: "Kanga Akalé", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2006, position: "me", altPositions: ["pe"], overall: 78 },
   { id: "boka-civ-06", name: "Arthur Boka", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2006, position: "le", altPositions: ["le"], overall: 79 },
@@ -1503,9 +1387,7 @@ const PLAYERS = [
   { id: "eboue-civ-06", name: "Emmanuel Eboué", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2006, position: "ld", altPositions: ["md"], overall: 80 },
   { id: "romaric-civ-06", name: "Romaric", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2006, position: "mc", altPositions: ["vol"], overall: 78 },
   { id: "barry-civ-06", name: "Boubacar Barry", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2006, position: "gol", altPositions: [], overall: 75 },
-
-  // 2010 
-
+  // 2010
   { id: "barry-civ-10", name: "Boubacar Barry", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2010, position: "gol", altPositions: [], overall: 78 },
   { id: "angoua-civ-10", name: "Benjamin Angoua", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2010, position: "zag", altPositions: ["ld"], overall: 75 },
   { id: "boka-civ-10", name: "Arthur Boka", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2010, position: "le", altPositions: ["le"], overall: 78 },
@@ -1529,9 +1411,7 @@ const PLAYERS = [
   { id: "eboue-civ-10", name: "Emmanuel Eboué", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2010, position: "ld", altPositions: ["md"], overall: 79 },
   { id: "bamba-civ-10", name: "Sol Bamba", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2010, position: "zag", altPositions: [], overall: 76 },
   { id: "yeboah-civ-10", name: "Daniel Yeboah", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2010, position: "gol", altPositions: [], overall: 70 },
-
   // 2014
-
   { id: "barry-civ-14", name: "Boubacar Barry", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2014, position: "gol", altPositions: [], overall: 76 },
   { id: "viera-civ-14", name: "Ousmane Viera", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2014, position: "zag", altPositions: [], overall: 73 },
   { id: "boka-civ-14", name: "Arthur Boka", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2014, position: "le", altPositions: ["le"], overall: 76 },
@@ -1556,10 +1436,8 @@ const PLAYERS = [
   { id: "bamba-civ-14", name: "Sol Bamba", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2014, position: "zag", altPositions: [], overall: 75 },
   { id: "mande-civ-14", name: "Sayouba Mandé", country: "Costa do Marfim", flag: "🇨🇮", worldCup: 2014, position: "gol", altPositions: [], overall: 71 },
 
-
-  // ===== CMR (Camarões) =====
+  // ===== Camarões =====
   // 1982
-  
   { id: "nkono-cmr-82", name: "Thomas N'Kono", country: "Camarões", flag: "🇨🇲", worldCup: 1982, position: "gol", altPositions: [], overall: 85 },
   { id: "bell-cmr-82", name: "Joseph-Antoine Bell", country: "Camarões", flag: "🇨🇲", worldCup: 1982, position: "gol", altPositions: [], overall: 80 },
   { id: "tchobang-cmr-82", name: "Simon Tchobang", country: "Camarões", flag: "🇨🇲", worldCup: 1982, position: "gol", altPositions: [], overall: 72 },
@@ -1582,9 +1460,7 @@ const PLAYERS = [
   { id: "enanga-cmr-82", name: "Joseph Enanga", country: "Camarões", flag: "🇨🇲", worldCup: 1982, position: "le", altPositions: ["le"], overall: 72 },
   { id: "eyobo-cmr-82", name: "Oscar Eyobo", country: "Camarões", flag: "🇨🇲", worldCup: 1982, position: "ca", altPositions: ["ca"], overall: 72 },
   { id: "ebongue-cmr-82", name: "Ernest Ebongue", country: "Camarões", flag: "🇨🇲", worldCup: 1982, position: "pd", altPositions: ["ca"], overall: 75 },
-
-  // 1990 
-
+  // 1990
   { id: "bell-cmr-90", name: "Joseph-Antoine Bell", country: "Camarões", flag: "🇨🇲", worldCup: 1990, position: "gol", altPositions: [], overall: 79 },
   { id: "kana-biyik-cmr-90", name: "André Kana-Biyik", country: "Camarões", flag: "🇨🇲", worldCup: 1990, position: "mc", altPositions: ["zag", "vol"], overall: 78 },
   { id: "onana-cmr-90", name: "Jules Onana", country: "Camarões", flag: "🇨🇲", worldCup: 1990, position: "zag", altPositions: [], overall: 76 },
@@ -1607,9 +1483,7 @@ const PLAYERS = [
   { id: "makanaky-cmr-90", name: "Cyrille Makanaky", country: "Camarões", flag: "🇨🇲", worldCup: 1990, position: "pd", altPositions: ["md", "pe"], overall: 77 },
   { id: "maboang-cmr-90", name: "Emmanuel Maboang", country: "Camarões", flag: "🇨🇲", worldCup: 1990, position: "ca", altPositions: ["ca"], overall: 73 },
   { id: "songoo-cmr-90", name: "Jacques Songo'o", country: "Camarões", flag: "🇨🇲", worldCup: 1990, position: "gol", altPositions: [], overall: 76 },
-
   // 2002
-
   { id: "boukar-cmr-02", name: "Alioum Boukar", country: "Camarões", flag: "🇨🇲", worldCup: 2002, position: "gol", altPositions: [], overall: 76 },
   { id: "tchato-cmr-02", name: "Bill Tchato", country: "Camarões", flag: "🇨🇲", worldCup: 2002, position: "le", altPositions: ["zag"], overall: 77 },
   { id: "wome-cmr-02", name: "Pierre Womé", country: "Camarões", flag: "🇨🇲", worldCup: 2002, position: "le", altPositions: ["le", "mc"], overall: 79 },
@@ -1634,10 +1508,8 @@ const PLAYERS = [
   { id: "kameni-cmr-02", name: "Carlos Kameni", country: "Camarões", flag: "🇨🇲", worldCup: 2002, position: "gol", altPositions: [], overall: 77 },
   { id: "ngom-kome-cmr-02", name: "Daniel Ngom Kome", country: "Camarões", flag: "🇨🇲", worldCup: 2002, position: "md", altPositions: ["me", "mei"], overall: 74 },
 
-
-  // ===== COL (Colômbia) =====
-// 1990
-
+  // ===== Colômbia =====
+  // 1990
   { id: "higuita-col-90", name: "René Higuita", country: "Colômbia", flag: "🇨🇴", worldCup: 1990, position: "gol", altPositions: [], overall: 82 },
   { id: "nino-col-90", name: "Eduardo Niño", country: "Colômbia", flag: "🇨🇴", worldCup: 1990, position: "gol", altPositions: [], overall: 73 },
   { id: "escobar-col-90", name: "Andrés Escobar", country: "Colômbia", flag: "🇨🇴", worldCup: 1990, position: "zag", altPositions: [], overall: 80 },
@@ -1660,9 +1532,7 @@ const PLAYERS = [
   { id: "guerrero-col-90", name: "Miguel Guerrero", country: "Colômbia", flag: "🇨🇴", worldCup: 1990, position: "ca", altPositions: ["ca"], overall: 74 },
   { id: "iguaran-col-90", name: "Arnoldo Iguarán", country: "Colômbia", flag: "🇨🇴", worldCup: 1990, position: "ca", altPositions: ["ca"], overall: 79 },
   { id: "hernandez-col-90", name: "Rubén Darío Hernández", country: "Colômbia", flag: "🇨🇴", worldCup: 1990, position: "ca", altPositions: ["ca"], overall: 74 },
-
-// 1994 
-
+  // 1994
   { id: "cordoba-col-94", name: "Óscar Córdoba", country: "Colômbia", flag: "🇨🇴", worldCup: 1994, position: "gol", altPositions: [], overall: 81 },
   { id: "escobar-col-94", name: "Andrés Escobar", country: "Colômbia", flag: "🇨🇴", worldCup: 1994, position: "zag", altPositions: [], overall: 81 },
   { id: "mendoza-col-94", name: "Alexis Mendoza", country: "Colômbia", flag: "🇨🇴", worldCup: 1994, position: "zag", altPositions: [], overall: 77 },
@@ -1685,9 +1555,7 @@ const PLAYERS = [
   { id: "moreno-col-94", name: "Jaime Moreno", country: "Colômbia", flag: "🇨🇴", worldCup: 1994, position: "ca", altPositions: ["ca"], overall: 74 },
   { id: "montoya-col-94", name: "Juan Pablo Montoya", country: "Colômbia", flag: "🇨🇴", worldCup: 1994, position: "mc", altPositions: ["mei"], overall: 71 },
   { id: "restrepo-col-94", name: "Óscar Restrepo", country: "Colômbia", flag: "🇨🇴", worldCup: 1994, position: "mc", altPositions: ["vol"], overall: 70 },
-
-// 1998 
-
+  // 1998
   { id: "cordoba-col-98", name: "Óscar Córdoba", country: "Colômbia", flag: "🇨🇴", worldCup: 1998, position: "gol", altPositions: [], overall: 82 },
   { id: "ivan-cordoba-col-98", name: "Iván Córdoba", country: "Colômbia", flag: "🇨🇴", worldCup: 1998, position: "zag", altPositions: ["ld"], overall: 81 },
   { id: "palacios-col-98", name: "Ever Palacios", country: "Colômbia", flag: "🇨🇴", worldCup: 1998, position: "zag", altPositions: ["vol"], overall: 75 },
@@ -1710,9 +1578,7 @@ const PLAYERS = [
   { id: "ricard-col-98", name: "Hamilton Ricard", country: "Colômbia", flag: "🇨🇴", worldCup: 1998, position: "ca", altPositions: ["ca"], overall: 77 },
   { id: "preciado-col-98", name: "Léider Preciado", country: "Colômbia", flag: "🇨🇴", worldCup: 1998, position: "ca", altPositions: ["ca"], overall: 75 },
   { id: "mondragon-col-98", name: "Faryd Mondragón", country: "Colômbia", flag: "🇨🇴", worldCup: 1998, position: "gol", altPositions: [], overall: 78 },
-
-// 2014
-
+  // 2014
   { id: "ospina-col-14", name: "David Ospina", country: "Colômbia", flag: "🇨🇴", worldCup: 2014, position: "gol", altPositions: [], overall: 81 },
   { id: "vargas-col-14", name: "Camilo Vargas", country: "Colômbia", flag: "🇨🇴", worldCup: 2014, position: "gol", altPositions: [], overall: 75 },
   { id: "mondragon-col-14", name: "Faryd Mondragón", country: "Colômbia", flag: "🇨🇴", worldCup: 2014, position: "gol", altPositions: [], overall: 73 },
@@ -1737,10 +1603,8 @@ const PLAYERS = [
   { id: "ramos-col-14", name: "Adrián Ramos", country: "Colômbia", flag: "🇨🇴", worldCup: 2014, position: "ca", altPositions: ["pe"], overall: 79 },
   { id: "martinez-col-14", name: "Jackson Martínez", country: "Colômbia", flag: "🇨🇴", worldCup: 2014, position: "ca", altPositions: ["ca"], overall: 82 },
 
-
-  // ===== CRC (Costa Rica) =====
+  // ===== Costa Rica =====
   // 2014
-  
   { id: "navas-crc-14", name: "Keylor Navas", country: "Costa Rica", flag: "🇨🇷", worldCup: 2014, position: "gol", altPositions: [], overall: 85 },
   { id: "acosta-crc-14", name: "Jhonny Acosta", country: "Costa Rica", flag: "🇨🇷", worldCup: 2014, position: "zag", altPositions: [], overall: 72 },
   { id: "gonzalez-crc-14", name: "Giancarlo González", country: "Costa Rica", flag: "🇨🇷", worldCup: 2014, position: "zag", altPositions: [], overall: 76 },
@@ -1764,9 +1628,7 @@ const PLAYERS = [
   { id: "urena-crc-14", name: "Marco Ureña", country: "Costa Rica", flag: "🇨🇷", worldCup: 2014, position: "ca", altPositions: ["ca"], overall: 72 },
   { id: "cubero-crc-14", name: "José Miguel Cubero", country: "Costa Rica", flag: "🇨🇷", worldCup: 2014, position: "vol", altPositions: ["mc"], overall: 72 },
   { id: "cambronero-crc-14", name: "Daniel Cambronero", country: "Costa Rica", flag: "🇨🇷", worldCup: 2014, position: "gol", altPositions: [], overall: 68 },
-
   // 2022
-
   { id: "navas-crc-22", name: "Keylor Navas", country: "Costa Rica", flag: "🇨🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 84 },
   { id: "chacon-crc-22", name: "Daniel Chacón", country: "Costa Rica", flag: "🇨🇷", worldCup: 2022, position: "zag", altPositions: ["vol"], overall: 68 },
   { id: "vargas-crc-22", name: "Juan Pablo Vargas", country: "Costa Rica", flag: "🇨🇷", worldCup: 2022, position: "zag", altPositions: [], overall: 72 },
@@ -1790,10 +1652,8 @@ const PLAYERS = [
   { id: "palma-crc-22", name: "José Luis Palma", country: "Costa Rica", flag: "🇨🇷", worldCup: 2022, position: "pe", altPositions: ["pd"], overall: 69 },
   { id: "smith-crc-22", name: "Ian Smith", country: "Costa Rica", flag: "🇨🇷", worldCup: 2022, position: "ld", altPositions: ["ld"], overall: 67 },
 
-
-  // ===== CRO (Croácia) =====
-  // 1998 
-
+  // ===== Croácia =====
+  // 1998
   { id: "ladic-cro-98", name: "Dražen Ladić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "gol", altPositions: [], overall: 81 },
   { id: "krpan-cro-98", name: "Petar Krpan", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "ca", altPositions: ["pd"], overall: 74 },
   { id: "seric-cro-98", name: "Anthony Šerić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "le", altPositions: ["le"], overall: 75 },
@@ -1816,9 +1676,7 @@ const PLAYERS = [
   { id: "simic-cro-98", name: "Dario Šimić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "zag", altPositions: ["ld"], overall: 78 },
   { id: "jurcic-cro-98", name: "Krunoslav Jurčić", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "vol", altPositions: ["mc"], overall: 76 },
   { id: "vasilj-cro-98", name: "Vladimir Vasilj", country: "Croácia", flag: "🇭🇷", worldCup: 1998, position: "gol", altPositions: [], overall: 73 },
-
-  // 2018 
-
+  // 2018
   { id: "livakovic-cro-18", name: "Dominik Livaković", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "gol", altPositions: [], overall: 78 },
   { id: "vrsaljko-cro-18", name: "Šime Vrsaljko", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "ld", altPositions: ["ld"], overall: 81 },
   { id: "strinic-cro-18", name: "Ivan Strinić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "le", altPositions: ["le"], overall: 76 },
@@ -1842,9 +1700,7 @@ const PLAYERS = [
   { id: "vida-cro-18", name: "Domagoj Vida", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "zag", altPositions: ["ld"], overall: 79 },
   { id: "pivaric-cro-18", name: "Josip Pivarić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "le", altPositions: ["le"], overall: 74 },
   { id: "subasic-cro-18", name: "Danijel Subašić", country: "Croácia", flag: "🇭🇷", worldCup: 2018, position: "gol", altPositions: [], overall: 82 },
-
   // 2022
-
   { id: "livakovic-cro-22", name: "Dominik Livaković", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 81 },
   { id: "grbic-cro-22", name: "Ivo Grbić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 75 },
   { id: "ivusic-cro-22", name: "Ivica Ivušić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 74 },
@@ -1868,10 +1724,8 @@ const PLAYERS = [
   { id: "budimir-cro-22", name: "Ante Budimir", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "ca", altPositions: [], overall: 77 },
   { id: "orsic-cro-22", name: "Mislav Oršić", country: "Croácia", flag: "🇭🇷", worldCup: 2022, position: "pe", altPositions: ["me"], overall: 79 },
 
-
-  // ===== CZE (República Tcheca/Tchecoslováquia) =====
-  // 1990 
-
+  // ===== Tchecoslováquia =====
+  // 1990
   { id: "stejskal-cze-90", name: "Jan Stejskal", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "gol", altPositions: [], overall: 78 },
   { id: "bielik-cze-90", name: "Július Bielik", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "zag", altPositions: [], overall: 74 },
   { id: "kadlec-cze-90", name: "Miroslav Kadlec", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "zag", altPositions: ["le"], overall: 79 },
@@ -1895,8 +1749,8 @@ const PLAYERS = [
   { id: "miklosko-cze-90", name: "Luděk Mikloško", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "gol", altPositions: [], overall: 77 },
   { id: "paluch-cze-90", name: "Peter Palúch", country: "Tchecoslováquia", flag: "🇨🇿", worldCup: 1990, position: "gol", altPositions: [], overall: 70 },
 
+  // ===== República Tcheca =====
   // 2006
-
   { id: "cech-cze-06", name: "Petr Čech", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "gol", altPositions: [], overall: 89 },
   { id: "grygera-cze-06", name: "Zdeněk Grygera", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "ld", altPositions: ["zag"], overall: 78 },
   { id: "mares-cze-06", name: "Pavel Mareš", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "le", altPositions: [], overall: 73 },
@@ -1921,10 +1775,8 @@ const PLAYERS = [
   { id: "rozehnal-cze-06", name: "David Rozehnal", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "zag", altPositions: [], overall: 77 },
   { id: "kinsky-cze-06", name: "Antonín Kinský", country: "República Tcheca", flag: "🇨🇿", worldCup: 2006, position: "gol", altPositions: [], overall: 73 },
 
-
-  // ===== DEN (Dinamarca) =====
-  // 1986 
-
+  // ===== Dinamarca =====
+  // 1986
   { id: "rasmussen-den-86", name: "Troels Rasmussen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "gol", altPositions: [], overall: 76 },
   { id: "sivebaek-den-86", name: "John Sivebæk", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "ld", altPositions: ["ld"], overall: 77 },
   { id: "busk-den-86", name: "Søren Busk", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "zag", altPositions: [], overall: 75 },
@@ -1947,9 +1799,7 @@ const PLAYERS = [
   { id: "bartram-den-86", name: "Jan Bartram", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "me", altPositions: ["le"], overall: 74 },
   { id: "andersen-den-86", name: "Henrik Andersen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "le", altPositions: ["me"], overall: 75 },
   { id: "hogh-den-86", name: "Lars Høgh", country: "Dinamarca", flag: "🇩🇰", worldCup: 1986, position: "gol", altPositions: [], overall: 77 },
-
   // 1998
-
   { id: "lerby-den-98", name: "Søren Lerby", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "mc", altPositions: [], overall: 75 },
   { id: "andersen-s-den-98", name: "Steen Andersen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "mc", altPositions: [], overall: 70 },
   { id: "andersen-h-den-98", name: "Henrik Andersen", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "le", altPositions: [], overall: 72 },
@@ -1967,9 +1817,7 @@ const PLAYERS = [
   { id: "tykjaer-den-98", name: "Michael Tykjaer", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "ld", altPositions: [], overall: 69 },
   { id: "holmqvist-den-98", name: "Hans Holmqvist", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "ca", altPositions: [], overall: 70 },
   { id: "bisgaard-den-98", name: "Morten Bisgaard", country: "Dinamarca", flag: "🇩🇰", worldCup: 1998, position: "md", altPositions: ["me"], overall: 72 },
-  
   // 2002
-
   { id: "sorensen-den-02", name: "Thomas Sørensen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "gol", altPositions: [], overall: 80 },
   { id: "tofting-den-02", name: "Stig Tøfting", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "vol", altPositions: ["mc"], overall: 76 },
   { id: "henriksen-den-02", name: "René Henriksen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "zag", altPositions: [], overall: 78 },
@@ -1994,10 +1842,8 @@ const PLAYERS = [
   { id: "christiansen-den-02", name: "Jesper Christiansen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "gol", altPositions: [], overall: 71 },
   { id: "nielsen-b-den-02", name: "Brian Steen Nielsen", country: "Dinamarca", flag: "🇩🇰", worldCup: 2002, position: "mc", altPositions: ["vol"], overall: 72 },
 
-
-  // ===== ECU (Equador) =====
-  // 2006 
-
+  // ===== Equador =====
+  // 2006
   { id: "villafuerte-ecu-06", name: "Edwin Villafuerte", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "gol", altPositions: [], overall: 68 },
   { id: "guagua-ecu-06", name: "Jorge Guagua", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "zag", altPositions: [], overall: 73 },
   { id: "hurtado-ecu-06", name: "Iván Hurtado", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "zag", altPositions: [], overall: 77 },
@@ -2021,9 +1867,7 @@ const PLAYERS = [
   { id: "tenorio-c-ecu-06", name: "Carlos Tenorio", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "ca", altPositions: ["ca"], overall: 77 },
   { id: "lanza-ecu-06", name: "Damián Lanza", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "gol", altPositions: [], overall: 69 },
   { id: "benitez-ecu-06", name: "Christian Benítez", country: "Equador", flag: "🇪🇨", worldCup: 2006, position: "ca", altPositions: ["ca", "pd"], overall: 74 },
-
   // 2022
-  
   { id: "galindez-ecu-22", name: "Hernán Galíndez", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "gol", altPositions: [], overall: 73 },
   { id: "torres-ecu-22", name: "Félix Torres", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "zag", altPositions: [], overall: 74 },
   { id: "hincapie-ecu-22", name: "Piero Hincapié", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "zag", altPositions: ["le"], overall: 78 },
@@ -2032,7 +1876,7 @@ const PLAYERS = [
   { id: "pacho-ecu-22", name: "Willian Pacho", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "zag", altPositions: [], overall: 72 },
   { id: "estupinan-ecu-22", name: "Pervis Estupiñán", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "le", altPositions: ["le"], overall: 80 },
   { id: "gruezo-ecu-22", name: "Carlos Gruezo", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "vol", altPositions: ["mc"], overall: 74 },
-  { id: "preciado-a-ecu-22", name: "Ayrton Preciado", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "pe", altPositions: ["pd"], overall: 72 },
+  { id: "preciado-ay-ecu-22", name: "Ayrton Preciado", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "pe", altPositions: ["pd"], overall: 72 },
   { id: "ibarra-ecu-22", name: "Romario Ibarra", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "pe", altPositions: ["pd"], overall: 73 },
   { id: "estrada-ecu-22", name: "Michael Estrada", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "ca", altPositions: ["ca"], overall: 71 },
   { id: "ramirez-ecu-22", name: "Moisés Ramírez", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "gol", altPositions: [], overall: 71 },
@@ -2040,7 +1884,7 @@ const PLAYERS = [
   { id: "arreaga-ecu-22", name: "Xavier Arreaga", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "zag", altPositions: [], overall: 71 },
   { id: "mena-ecu-22", name: "Ángel Mena", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "pd", altPositions: ["md", "mei"], overall: 76 },
   { id: "sarmiento-ecu-22", name: "Jeremy Sarmiento", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "pe", altPositions: ["mei"], overall: 70 },
-  { id: "preciado-a-ecu-22", name: "Ángelo Preciado", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "ld", altPositions: ["ld"], overall: 73 },
+  { id: "preciado-an-ecu-22", name: "Ángelo Preciado", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "ld", altPositions: ["ld"], overall: 73 },
   { id: "palacios-ecu-22", name: "Diego Palacios", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "le", altPositions: ["le"], overall: 73 },
   { id: "plata-ecu-22", name: "Gonzalo Plata", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "pd", altPositions: ["md"], overall: 76 },
   { id: "mendez-ecu-22", name: "Sebas Méndez", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "vol", altPositions: ["mc"], overall: 74 },
@@ -2050,9 +1894,7 @@ const PLAYERS = [
   { id: "reasco-ecu-22", name: "Djorkaeff Reasco", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "ca", altPositions: ["ca"], overall: 68 },
   { id: "porozo-ecu-22", name: "Jackson Porozo", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "zag", altPositions: [], overall: 72 },
   { id: "rodriguez-ecu-22", name: "Kevin Rodríguez", country: "Equador", flag: "🇪🇨", worldCup: 2022, position: "ca", altPositions: ["pd"], overall: 67 },
-
   // 2026
-
   { id: "galindez-ecu-26", name: "Hernán Galíndez", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "gol", altPositions: [], overall: 72 },
   { id: "torres-ecu-26", name: "Félix Torres", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "zag", altPositions: [], overall: 75 },
   { id: "hincapie-ecu-26", name: "Piero Hincapié", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "zag", altPositions: ["le"], overall: 81 },
@@ -2080,10 +1922,8 @@ const PLAYERS = [
   { id: "porozo-ecu-26", name: "Jackson Porozo", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "zag", altPositions: [], overall: 73 },
   { id: "arevalo-ecu-26", name: "Jeremy Arévalo", country: "Equador", flag: "🇪🇨", worldCup: 2026, position: "pe", altPositions: ["pd"], overall: 68 },
 
-
-  // ===== EGY (Egito) =====
-  // 1990 
-
+  // ===== Egito =====
+  // 1990
   { id: "shobair-egy-90", name: "Ahmed Shobair", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "gol", altPositions: [], overall: 77 },
   { id: "hassan-i-egy-90", name: "Ibrahim Hassan", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "ld", altPositions: ["ld"], overall: 78 },
   { id: "yassin-egy-90", name: "Rabie Yassin", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "le", altPositions: ["le"], overall: 76 },
@@ -2106,9 +1946,7 @@ const PLAYERS = [
   { id: "el-kass-egy-90", name: "Ahmed El-Kass", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "ca", altPositions: ["ca", "mei"], overall: 76 },
   { id: "taher-egy-90", name: "Ayman Taher", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "gol", altPositions: [], overall: 73 },
   { id: "el-batal-egy-90", name: "Thabet El-Batal", country: "Egito", flag: "🇪🇬", worldCup: 1990, position: "gol", altPositions: [], overall: 72 },
-  
   // 2018
-
   { id: "el-hadary-egy-18", name: "Essam El-Hadary", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "gol", altPositions: [], overall: 74 },
   { id: "gabr-egy-18", name: "Ali Gabr", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "zag", altPositions: [], overall: 74 },
   { id: "elmohamady-egy-18", name: "Ahmed Elmohamady", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "ld", altPositions: ["ld", "md"], overall: 76 },
@@ -2133,14 +1971,8 @@ const PLAYERS = [
   { id: "warda-egy-18", name: "Amr Warda", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "mei", altPositions: ["pe", "pd"], overall: 73 },
   { id: "el-shenawy-egy-18", name: "Mohamed El-Shenawy", country: "Egito", flag: "🇪🇬", worldCup: 2018, position: "gol", altPositions: [], overall: 76 },
 
-
-  // ===== ENG (Inglaterra) =====
+  // ===== Inglaterra =====
   // 1950
-
-
-  
-  // 1954
-
   { id: "williams-eng-50", name: "Bert Williams", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1950, position: "gol", altPositions: [], overall: 81 },
   { id: "ditchburn-eng-50", name: "Ted Ditchburn", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1950, position: "gol", altPositions: [], overall: 78 },
   { id: "ramsey-eng-50", name: "Alf Ramsey", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1950, position: "ld", altPositions: ["zag"], overall: 80 },
@@ -2162,9 +1994,7 @@ const PLAYERS = [
   { id: "mortensen-eng-50", name: "Stan Mortensen", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1950, position: "ca", altPositions: ["ca"], overall: 83 },
   { id: "milburn-eng-50", name: "Jackie Milburn", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1950, position: "ca", altPositions: ["ca"], overall: 81 },
   { id: "bentley-eng-50", name: "Roy Bentley", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1950, position: "ca", altPositions: ["ca"], overall: 79 },
-
-  // 1958 
-
+  // 1958
   { id: "mcdonald-eng-58", name: "Colin McDonald", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1958, position: "gol", altPositions: [], overall: 76 },
   { id: "howe-eng-58", name: "Don Howe", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1958, position: "ld", altPositions: [], overall: 75 },
   { id: "banks-eng-58", name: "Tommy Banks", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1958, position: "le", altPositions: [], overall: 72 },
@@ -2187,9 +2017,7 @@ const PLAYERS = [
   { id: "charlton-eng-58", name: "Bobby Charlton", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1958, position: "mei", altPositions: ["mc", "pe"], overall: 84 },
   { id: "acourt-eng-58", name: "Alan A'Court", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1958, position: "pe", altPositions: ["me"], overall: 72 },
   { id: "setters-eng-58", name: "Maurice Setters", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1958, position: "vol", altPositions: [], overall: 71 },
-  
-  // 1962 
-
+  // 1962
   { id: "springett-eng-62", name: "Ron Springett", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1962, position: "gol", altPositions: [], overall: 78 },
   { id: "armfield-eng-62", name: "Jimmy Armfield", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1962, position: "ld", altPositions: ["ld"], overall: 81 },
   { id: "wilson-eng-62", name: "Ray Wilson", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1962, position: "le", altPositions: ["le"], overall: 80 },
@@ -2212,9 +2040,7 @@ const PLAYERS = [
   { id: "eastham-eng-62", name: "George Eastham", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1962, position: "mei", altPositions: ["mc"], overall: 78 },
   { id: "howe-eng-62", name: "Don Howe", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1962, position: "ld", altPositions: [], overall: 74 },
   { id: "adamson-eng-62", name: "Jimmy Adamson", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1962, position: "vol", altPositions: ["mc"], overall: 75 },
-
-  // 1966 
-
+  // 1966
   { id: "banks-eng-66", name: "Gordon Banks", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1966, position: "gol", altPositions: [], overall: 91 },
   { id: "cohen-eng-66", name: "George Cohen", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1966, position: "ld", altPositions: ["ld"], overall: 81 },
   { id: "wilson-eng-66", name: "Ray Wilson", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1966, position: "le", altPositions: ["le"], overall: 80 },
@@ -2237,9 +2063,7 @@ const PLAYERS = [
   { id: "callaghan-eng-66", name: "Ian Callaghan", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1966, position: "md", altPositions: ["pd"], overall: 77 },
   { id: "hunt-eng-66", name: "Roger Hunt", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1966, position: "ca", altPositions: ["ca"], overall: 82 },
   { id: "eastham-eng-66", name: "George Eastham", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1966, position: "mei", altPositions: ["mc"], overall: 77 },
-
-  // 1970 
-
+  // 1970
   { id: "banks-eng-70", name: "Gordon Banks", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1970, position: "gol", altPositions: [], overall: 90 },
   { id: "bonetti-eng-70", name: "Peter Bonetti", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1970, position: "gol", altPositions: [], overall: 77 },
   { id: "stepney-eng-70", name: "Alex Stepney", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1970, position: "gol", altPositions: [], overall: 76 },
@@ -2262,9 +2086,7 @@ const PLAYERS = [
   { id: "clarke-eng-70", name: "Allan Clarke", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1970, position: "ca", altPositions: ["ca"], overall: 79 },
   { id: "hurst-eng-70", name: "Geoff Hurst", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1970, position: "ca", altPositions: ["ca"], overall: 83 },
   { id: "astle-eng-70", name: "Jeff Astle", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1970, position: "ca", altPositions: [], overall: 76 },
-
-  // 1982 
-
+  // 1982
   { id: "clemence-eng-82", name: "Ray Clemence", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1982, position: "gol", altPositions: [], overall: 83 },
   { id: "anderson-eng-82", name: "Viv Anderson", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1982, position: "ld", altPositions: [], overall: 77 },
   { id: "brooking-eng-82", name: "Trevor Brooking", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1982, position: "mei", altPositions: ["mc"], overall: 80 },
@@ -2287,9 +2109,7 @@ const PLAYERS = [
   { id: "withe-eng-82", name: "Peter Withe", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1982, position: "ca", altPositions: ["ca"], overall: 77 },
   { id: "woodcock-eng-82", name: "Tony Woodcock", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1982, position: "ca", altPositions: ["ca"], overall: 78 },
   { id: "shilton-eng-82", name: "Peter Shilton", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1982, position: "gol", altPositions: [], overall: 85 },
-
-  // 1986 
-
+  // 1986
   { id: "shilton-eng-86", name: "Peter Shilton", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1986, position: "gol", altPositions: [], overall: 86 },
   { id: "stevens-g-everton-eng-86", name: "Gary Stevens (Everton)", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1986, position: "ld", altPositions: ["ld"], overall: 78 },
   { id: "sansom-eng-86", name: "Kenny Sansom", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1986, position: "le", altPositions: ["le"], overall: 80 },
@@ -2312,9 +2132,7 @@ const PLAYERS = [
   { id: "beardsley-eng-86", name: "Peter Beardsley", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1986, position: "ca", altPositions: ["ca", "mei"], overall: 82 },
   { id: "dixon-eng-86", name: "Kerry Dixon", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1986, position: "ca", altPositions: ["ca"], overall: 77 },
   { id: "bailey-eng-86", name: "Gary Bailey", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1986, position: "gol", altPositions: [], overall: 75 },
-
-  // 1990 
-
+  // 1990
   { id: "shilton-eng-90", name: "Peter Shilton", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1990, position: "gol", altPositions: [], overall: 83 },
   { id: "woods-eng-90", name: "Chris Woods", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1990, position: "gol", altPositions: [], overall: 78 },
   { id: "beasant-eng-90", name: "Dave Beasant", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1990, position: "gol", altPositions: [], overall: 76 },
@@ -2337,16 +2155,14 @@ const PLAYERS = [
   { id: "beardsley-eng-90", name: "Peter Beardsley", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1990, position: "ca", altPositions: ["ca", "mei"], overall: 81 },
   { id: "lineker-eng-90", name: "Gary Lineker", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1990, position: "ca", altPositions: ["ca"], overall: 86 },
   { id: "bull-eng-90", name: "Steve Bull", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1990, position: "ca", altPositions: ["ca"], overall: 76 },
-
   // 1998
-
   { id: "seaman-eng-98", name: "David Seaman", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "gol", altPositions: [], overall: 82 },
   { id: "campbell-eng-98", name: "Sol Campbell", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "zag", altPositions: [], overall: 81 },
   { id: "le-saux-eng-98", name: "Graeme Le Saux", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "le", altPositions: ["le"], overall: 78 },
   { id: "ince-eng-98", name: "Paul Ince", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "vol", altPositions: ["mc"], overall: 80 },
   { id: "adams-eng-98", name: "Tony Adams", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "zag", altPositions: [], overall: 80 },
   { id: "southgate-eng-98", name: "Gareth Southgate", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "zag", altPositions: ["vol"], overall: 77 },
-  { id: "beckham-eng-98", name: "David Beckham", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "md", altPositions: ["mc"], overall: 83 },
+  { id: "beckham-eng-98", name: "David Beckham", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "md", altPositions: ["mc"], overall: 86 },
   { id: "batty-eng-98", name: "David Batty", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "vol", altPositions: ["mc"], overall: 76 },
   { id: "shearer-eng-98", name: "Alan Shearer", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "ca", altPositions: ["ca"], overall: 88 },
   { id: "sheringham-eng-98", name: "Teddy Sheringham", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "ca", altPositions: ["ca", "mei"], overall: 80 },
@@ -2362,9 +2178,7 @@ const PLAYERS = [
   { id: "owen-eng-98", name: "Michael Owen", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "ca", altPositions: ["ca"], overall: 82 },
   { id: "ferdinand-r-eng-98", name: "Rio Ferdinand", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "zag", altPositions: [], overall: 75 },
   { id: "flowers-eng-98", name: "Tim Flowers", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 1998, position: "gol", altPositions: [], overall: 76 },
-  
-  // 2006 
-
+  // 2006
   { id: "robinson-eng-06", name: "Paul Robinson", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2006, position: "gol", altPositions: [], overall: 81 },
   { id: "neville-eng-06", name: "Gary Neville", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2006, position: "ld", altPositions: ["ld"], overall: 80 },
   { id: "cole-a-eng-06", name: "Ashley Cole", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2006, position: "le", altPositions: ["le"], overall: 85 },
@@ -2387,9 +2201,7 @@ const PLAYERS = [
   { id: "crouch-eng-06", name: "Peter Crouch", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2006, position: "ca", altPositions: [], overall: 78 },
   { id: "carson-eng-06", name: "Scott Carson", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2006, position: "gol", altPositions: [], overall: 72 },
   { id: "walcott-eng-06", name: "Theo Walcott", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2006, position: "pd", altPositions: ["ca"], overall: 74 },
-
-  // 2010 
-
+  // 2010
   { id: "james-eng-10", name: "David James", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "gol", altPositions: [], overall: 78 },
   { id: "johnson-eng-10", name: "Glen Johnson", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "ld", altPositions: ["ld"], overall: 79 },
   { id: "cole-a-eng-10", name: "Ashley Cole", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "le", altPositions: ["le"], overall: 84 },
@@ -2399,7 +2211,7 @@ const PLAYERS = [
   { id: "lennon-eng-10", name: "Aaron Lennon", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "md", altPositions: ["pd"], overall: 80 },
   { id: "lampard-eng-10", name: "Frank Lampard", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "mc", altPositions: ["mei"], overall: 85 },
   { id: "crouch-eng-10", name: "Peter Crouch", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "ca", altPositions: [], overall: 78 },
-  { id: "rooney-eng-10", name: "Wayne Rooney", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "ca", altPositions: ["ca"], overall: 87 },
+  { id: "rooney-eng-10", name: "Wayne Rooney", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "ca", altPositions: ["ca"], overall: 88 },
   { id: "cole-j-eng-10", name: "Joe Cole", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "me", altPositions: ["mei", "pe"], overall: 79 },
   { id: "green-eng-10", name: "Robert Green", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "gol", altPositions: [], overall: 77 },
   { id: "barry-eng-10", name: "Gareth Barry", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "vol", altPositions: ["mc"], overall: 80 },
@@ -2412,17 +2224,15 @@ const PLAYERS = [
   { id: "heskey-eng-10", name: "Emile Heskey", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "ca", altPositions: ["ca"], overall: 74 },
   { id: "carrick-eng-10", name: "Michael Carrick", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "vol", altPositions: ["mc"], overall: 80 },
   { id: "hart-eng-10", name: "Joe Hart", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2010, position: "gol", altPositions: [], overall: 81 },
-
-  // 2018 
-
-  { id: "pickford-eng-18", name: "Jordan Pickford", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "gol", altPositions: [], overall: 81 },
+  // 2018
+  { id: "pickford-eng-18", name: "Jordan Pickford", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "gol", altPositions: [], overall: 85 },
   { id: "butland-eng-18", name: "Jack Butland", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "gol", altPositions: [], overall: 78 },
   { id: "pope-eng-18", name: "Nick Pope", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "gol", altPositions: [], overall: 77 },
-  { id: "walker-eng-18", name: "Kyle Walker", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "zag", altPositions: ["ld"], overall: 84 },
+  { id: "walker-eng-18", name: "Kyle Walker", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "zag", altPositions: ["ld"], overall: 87 },
   { id: "trippier-eng-18", name: "Kieran Trippier", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "ld", altPositions: ["ld"], overall: 80 },
   { id: "alexander-arnold-eng-18", name: "Trent Alexander-Arnold", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "ld", altPositions: ["ld"], overall: 78 },
   { id: "stones-eng-18", name: "John Stones", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "zag", altPositions: [], overall: 80 },
-  { id: "maguire-eng-18", name: "Harry Maguire", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "zag", altPositions: [], overall: 81 },
+  { id: "maguire-eng-18", name: "Harry Maguire", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "zag", altPositions: [], overall: 83 },
   { id: "cahill-eng-18", name: "Gary Cahill", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "zag", altPositions: [], overall: 79 },
   { id: "jones-eng-18", name: "Phil Jones", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "zag", altPositions: ["ld"], overall: 77 },
   { id: "rose-eng-18", name: "Danny Rose", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "le", altPositions: ["le"], overall: 79 },
@@ -2434,14 +2244,12 @@ const PLAYERS = [
   { id: "lingard-eng-18", name: "Jesse Lingard", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "mei", altPositions: ["md", "pe"], overall: 82 },
   { id: "loftus-cheek-eng-18", name: "Ruben Loftus-Cheek", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "mc", altPositions: ["mei"], overall: 77 },
   { id: "sterling-eng-18", name: "Raheem Sterling", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "pe", altPositions: ["pd"], overall: 86 },
-  { id: "rashford-eng-18", name: "Marcus Rashford", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "pe", altPositions: ["ca"], overall: 81 },
-  { id: "kane-eng-18", name: "Harry Kane", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "ca", altPositions: ["ca"], overall: 89 },
+  { id: "rashford-eng-18", name: "Marcus Rashford", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "pe", altPositions: ["ca"], overall: 85 },
+  { id: "kane-eng-18", name: "Harry Kane", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "ca", altPositions: ["ca"], overall: 94 },
   { id: "vardy-eng-18", name: "Jamie Vardy", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "ca", altPositions: [], overall: 82 },
   { id: "welbeck-eng-18", name: "Danny Welbeck", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2018, position: "ca", altPositions: ["pe"], overall: 77 },
-
   // 2026
-
-  { id: "pickford-eng-26", name: "Jordan Pickford", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "gol", altPositions: [], overall: 83 },
+  { id: "pickford-eng-26", name: "Jordan Pickford", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "gol", altPositions: [], overall: 84 },
   { id: "henderson-d-eng-26", name: "Dean Henderson", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "gol", altPositions: [], overall: 80 },
   { id: "trafford-eng-26", name: "James Trafford", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "gol", altPositions: [], overall: 78 },
   { id: "konsa-eng-26", name: "Ezri Konsa", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "zag", altPositions: ["ld"], overall: 81 },
@@ -2453,25 +2261,23 @@ const PLAYERS = [
   { id: "guehi-eng-26", name: "Marc Guéhi", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "zag", altPositions: [], overall: 82 },
   { id: "burn-eng-26", name: "Dan Burn", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "zag", altPositions: ["le"], overall: 78 },
   { id: "quansah-eng-26", name: "Jarell Quansah", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "zag", altPositions: [], overall: 77 },
-  { id: "rice-eng-26", name: "Declan Rice", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 88 },
+  { id: "rice-eng-26", name: "Declan Rice", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 90 },
   { id: "anderson-e-eng-26", name: "Elliot Anderson", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "mc", altPositions: ["mei"], overall: 77 },
   { id: "henderson-j-eng-26", name: "Jordan Henderson", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "mc", altPositions: ["vol"], overall: 75 },
   { id: "mainoo-eng-26", name: "Kobbie Mainoo", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "mc", altPositions: ["vol"], overall: 84 },
-  { id: "bellingham-eng-26", name: "Jude Bellingham", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "mei", altPositions: ["mc", "ca"], overall: 91 },
+  { id: "bellingham-eng-26", name: "Jude Bellingham", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "mei", altPositions: ["mc", "ca"], overall: 92 },
   { id: "eze-eng-26", name: "Eberechi Eze", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "mei", altPositions: ["pe", "me"], overall: 83 },
   { id: "rogers-eng-26", name: "Morgan Rogers", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "pe", altPositions: ["mei", "ca"], overall: 79 },
-  { id: "saka-eng-26", name: "Bukayo Saka", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "pd", altPositions: ["md"], overall: 89 },
-  { id: "madueke-eng-26", name: "Noni Madueke", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "pd", altPositions: ["md"], overall: 80 },
-  { id: "gordon-eng-26", name: "Anthony Gordon", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "pe", altPositions: ["me"], overall: 82 },
-  { id: "rashford-eng-26", name: "Marcus Rashford", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "pe", altPositions: ["ca"], overall: 80 },
-  { id: "kane-eng-26", name: "Harry Kane", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "ca", altPositions: ["ca"], overall: 87 },
+  { id: "saka-eng-26", name: "Bukayo Saka", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "pd", altPositions: ["md"], overall: 90 },
+  { id: "madueke-eng-26", name: "Noni Madueke", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "pd", altPositions: ["md"], overall: 83 },
+  { id: "gordon-eng-26", name: "Anthony Gordon", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "pe", altPositions: ["me"], overall: 85 },
+  { id: "rashford-eng-26", name: "Marcus Rashford", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "pe", altPositions: ["ca"], overall: 84 },
+  { id: "kane-eng-26", name: "Harry Kane", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "ca", altPositions: ["ca"], overall: 94 },
   { id: "watkins-eng-26", name: "Ollie Watkins", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "ca", altPositions: ["ca"], overall: 84 },
   { id: "toney-eng-26", name: "Ivan Toney", country: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", worldCup: 2026, position: "ca", altPositions: [], overall: 81 },
 
-
-  // ===== ESP (Espanha) =====
-  // 1950 
-
+  // ===== Espanha =====
+  // 1950
   { id: "eizaguirre-esp-50", name: "Ignacio Eizaguirre", country: "Espanha", flag: "🇪🇸", worldCup: 1950, position: "gol", altPositions: [], overall: 78 },
   { id: "ramallets-esp-50", name: "Antoni Ramallets", country: "Espanha", flag: "🇪🇸", worldCup: 1950, position: "gol", altPositions: [], overall: 82 },
   { id: "acuna-esp-50", name: "Juan Acuña", country: "Espanha", flag: "🇪🇸", worldCup: 1950, position: "gol", altPositions: [], overall: 76 },
@@ -2494,9 +2300,7 @@ const PLAYERS = [
   { id: "igoa-esp-50", name: "Silvestre Igoa", country: "Espanha", flag: "🇪🇸", worldCup: 1950, position: "ca", altPositions: ["ca"], overall: 77 },
   { id: "juncosa-esp-50", name: "José Juncosa", country: "Espanha", flag: "🇪🇸", worldCup: 1950, position: "pd", altPositions: ["md"], overall: 75 },
   { id: "hernandez-esp-50", name: "Rosendo Hernández", country: "Espanha", flag: "🇪🇸", worldCup: 1950, position: "mei", altPositions: ["ca"], overall: 74 },
-
-  // 1962 
-
+  // 1962
   { id: "araquistain-esp-62", name: "José Araquistáin", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "gol", altPositions: [], overall: 76 },
   { id: "sadurni-esp-62", name: "Salvador Sadurní", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "gol", altPositions: [], overall: 78 },
   { id: "cedrun-esp-62", name: "Carmelo Cedrún", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "gol", altPositions: [], overall: 77 },
@@ -2510,7 +2314,7 @@ const PLAYERS = [
   { id: "rivilla-esp-62", name: "Feliciano Rivilla", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "ld", altPositions: ["ld"], overall: 78 },
   { id: "peiro-esp-62", name: "Joaquín Peiró", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "ca", altPositions: ["ca", "pe"], overall: 80 },
   { id: "pachin-esp-62", name: "Enrique Pérez Pachín", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "ld", altPositions: ["le"], overall: 75 },
-  { id: "puskas-esp-62", name: "Ferenc Puskás", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "ca", altPositions: ["ca"], overall: 91 },
+  { id: "puskas-esp-62", name: "Ferenc Puskás", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "ca", altPositions: ["ca"], overall: 92 },
   { id: "martinez-esp-62", name: "Eulogio Martínez", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "ca", altPositions: ["ca"], overall: 77 },
   { id: "reija-esp-62", name: "Severino Reija", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "le", altPositions: [], overall: 77 },
   { id: "rodri-esp-62", name: "Antonio Rodríguez Rodri", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "zag", altPositions: [], overall: 76 },
@@ -2519,9 +2323,7 @@ const PLAYERS = [
   { id: "segarra-esp-62", name: "Joan Segarra", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "le", altPositions: ["vol"], overall: 78 },
   { id: "suarez-esp-62", name: "Luis Suárez Miramontes", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "mei", altPositions: ["mc"], overall: 88 },
   { id: "verges-esp-62", name: "Martí Vergés", country: "Espanha", flag: "🇪🇸", worldCup: 1962, position: "vol", altPositions: ["mc"], overall: 75 },
-
-  // 1966 
-
+  // 1966
   { id: "iribar-esp-66", name: "José Ángel Iribar", country: "Espanha", flag: "🇪🇸", worldCup: 1966, position: "gol", altPositions: [], overall: 84 },
   { id: "sanchis-esp-66", name: "Manuel Sanchís Martínez", country: "Espanha", flag: "🇪🇸", worldCup: 1966, position: "ld", altPositions: ["zag"], overall: 78 },
   { id: "eladio-esp-66", name: "Eladio Silvestre", country: "Espanha", flag: "🇪🇸", worldCup: 1966, position: "le", altPositions: [], overall: 76 },
@@ -2544,9 +2346,7 @@ const PLAYERS = [
   { id: "peiro-esp-66", name: "Joaquín Peiró", country: "Espanha", flag: "🇪🇸", worldCup: 1966, position: "ca", altPositions: ["pe"], overall: 79 },
   { id: "adelardo-esp-66", name: "Adelardo Rodríguez", country: "Espanha", flag: "🇪🇸", worldCup: 1966, position: "mc", altPositions: ["mei"], overall: 78 },
   { id: "lapetra-esp-66", name: "Carlos Lapetra", country: "Espanha", flag: "🇪🇸", worldCup: 1966, position: "pe", altPositions: ["me"], overall: 79 },
-
-  // 1978 
-
+  // 1978
   { id: "arconada-esp-78", name: "Luis Arconada", country: "Espanha", flag: "🇪🇸", worldCup: 1978, position: "gol", altPositions: [], overall: 84 },
   { id: "de-la-cruz-esp-78", name: "Antonio de la Cruz", country: "Espanha", flag: "🇪🇸", worldCup: 1978, position: "le", altPositions: ["ld"], overall: 75 },
   { id: "uria-esp-78", name: "Francisco Javier Uria", country: "Espanha", flag: "🇪🇸", worldCup: 1978, position: "le", altPositions: [], overall: 74 },
@@ -2569,9 +2369,7 @@ const PLAYERS = [
   { id: "cano-esp-78", name: "Rubén Cano", country: "Espanha", flag: "🇪🇸", worldCup: 1978, position: "ca", altPositions: [], overall: 77 },
   { id: "san-jose-esp-78", name: "Isidoro San José", country: "Espanha", flag: "🇪🇸", worldCup: 1978, position: "ld", altPositions: ["le"], overall: 75 },
   { id: "urruti-esp-78", name: "Urruti", country: "Espanha", flag: "🇪🇸", worldCup: 1978, position: "gol", altPositions: [], overall: 77 },
-
-  // 1986 
-
+  // 1986
   { id: "zubizarreta-esp-86", name: "Andoni Zubizarreta", country: "Espanha", flag: "🇪🇸", worldCup: 1986, position: "gol", altPositions: [], overall: 85 },
   { id: "renones-esp-86", name: "Tomás Reñones", country: "Espanha", flag: "🇪🇸", worldCup: 1986, position: "ld", altPositions: [], overall: 77 },
   { id: "camacho-esp-86", name: "José Antonio Camacho", country: "Espanha", flag: "🇪🇸", worldCup: 1986, position: "le", altPositions: [], overall: 82 },
@@ -2594,10 +2392,8 @@ const PLAYERS = [
   { id: "eloy-esp-86", name: "Eloy", country: "Espanha", flag: "🇪🇸", worldCup: 1986, position: "pe", altPositions: ["ca"], overall: 75 },
   { id: "michel-esp-86", name: "Míchel", country: "Espanha", flag: "🇪🇸", worldCup: 1986, position: "md", altPositions: ["mei"], overall: 82 },
   { id: "ablanedo-esp-86", name: "Juan Carlos Ablanedo", country: "Espanha", flag: "🇪🇸", worldCup: 1986, position: "gol", altPositions: [], overall: 77 },
-
-  // 2002 
-
-  { id: "casillas-esp-02", name: "Iker Casillas", country: "Espanha", flag: "🇪🇸", worldCup: 2002, position: "gol", altPositions: [], overall: 85 },
+  // 2002
+  { id: "casillas-esp-02", name: "Iker Casillas", country: "Espanha", flag: "🇪🇸", worldCup: 2002, position: "gol", altPositions: [], overall: 86 },
   { id: "torres-esp-02", name: "Curro Torres", country: "Espanha", flag: "🇪🇸", worldCup: 2002, position: "ld", altPositions: [], overall: 78 },
   { id: "juanfran-esp-02", name: "Juanfran García", country: "Espanha", flag: "🇪🇸", worldCup: 2002, position: "le", altPositions: ["me"], overall: 77 },
   { id: "helguera-esp-02", name: "Iván Helguera", country: "Espanha", flag: "🇪🇸", worldCup: 2002, position: "zag", altPositions: ["vol", "mc"], overall: 84 },
@@ -2620,12 +2416,10 @@ const PLAYERS = [
   { id: "luis-enrique-esp-02", name: "Luis Enrique", country: "Espanha", flag: "🇪🇸", worldCup: 2002, position: "mc", altPositions: ["mei", "pd"], overall: 82 },
   { id: "joaquin-esp-02", name: "Joaquín Sánchez", country: "Espanha", flag: "🇪🇸", worldCup: 2002, position: "md", altPositions: ["pd"], overall: 80 },
   { id: "contreras-esp-02", name: "Pedro Contreras", country: "Espanha", flag: "🇪🇸", worldCup: 2002, position: "gol", altPositions: [], overall: 76 },
-
-  // 2010 
-
-  { id: "casillas-esp-10", name: "Iker Casillas", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "gol", altPositions: [], overall: 91 },
+  // 2010
+  { id: "casillas-esp-10", name: "Iker Casillas", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "gol", altPositions: [], overall: 93 },
   { id: "albiol-esp-10", name: "Raúl Albiol", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "zag", altPositions: [], overall: 80 },
-  { id: "pique-esp-10", name: "Gerard Piqué", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "zag", altPositions: [], overall: 86 },
+  { id: "pique-esp-10", name: "Gerard Piqué", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "zag", altPositions: [], overall: 92 },
   { id: "marchena-esp-10", name: "Carlos Marchena", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "zag", altPositions: ["vol"], overall: 79 },
   { id: "puyol-esp-10", name: "Carles Puyol", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "zag", altPositions: ["ld"], overall: 86 },
   { id: "iniesta-esp-10", name: "Andrés Iniesta", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "mc", altPositions: ["mei", "pe"], overall: 89 },
@@ -2637,7 +2431,7 @@ const PLAYERS = [
   { id: "valdes-esp-10", name: "Víctor Valdés", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "gol", altPositions: [], overall: 84 },
   { id: "mata-esp-10", name: "Juan Mata", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "pe", altPositions: ["mei", "pd"], overall: 83 },
   { id: "alonso-esp-10", name: "Xabi Alonso", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "vol", altPositions: ["mc"], overall: 86 },
-  { id: "ramos-esp-10", name: "Sergio Ramos", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "ld", altPositions: ["zag"], overall: 85 },
+  { id: "ramos-esp-10", name: "Sergio Ramos", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "zag", altPositions: ["ld"], overall: 92 },
   { id: "busquets-esp-10", name: "Sergio Busquets", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "vol", altPositions: ["mc"], overall: 82 },
   { id: "arbeloa-esp-10", name: "Álvaro Arbeloa", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "ld", altPositions: ["le"], overall: 79 },
   { id: "pedro-esp-10", name: "Pedro Rodríguez", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "pd", altPositions: ["pe"], overall: 82 },
@@ -2646,23 +2440,21 @@ const PLAYERS = [
   { id: "silva-esp-10", name: "David Silva", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "mei", altPositions: ["pe", "pd"], overall: 85 },
   { id: "navas-esp-10", name: "Jesús Navas", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "pd", altPositions: ["md"], overall: 81 },
   { id: "reina-esp-10", name: "Pepe Reina", country: "Espanha", flag: "🇪🇸", worldCup: 2010, position: "gol", altPositions: [], overall: 82 },
-
-  // 2018 
-
-  { id: "de-gea-esp-18", name: "David de Gea", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "gol", altPositions: [], overall: 91 },
+  // 2018
+  { id: "de-gea-esp-18", name: "David de Gea", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "gol", altPositions: [], overall: 92 },
   { id: "kepa-esp-18", name: "Kepa Arrizabalaga", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "gol", altPositions: [], overall: 83 },
   { id: "rico-esp-18", name: "Sergio Rico", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "gol", altPositions: [], overall: 78 },
-  { id: "carvajal-esp-18", name: "Dani Carvajal", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "ld", altPositions: [], overall: 85 },
+  { id: "carvajal-esp-18", name: "Dani Carvajal", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "ld", altPositions: [], overall: 89 },
   { id: "ramos-esp-18", name: "Sergio Ramos", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "zag", altPositions: [], overall: 89 },
-  { id: "pique-esp-18", name: "Gerard Piqué", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "zag", altPositions: [], overall: 87 },
+  { id: "pique-esp-18", name: "Gerard Piqué", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "zag", altPositions: [], overall: 89 },
   { id: "nacho-f-esp-18", name: "Nacho Fernández", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "zag", altPositions: ["ld", "le"], overall: 81 },
   { id: "alba-esp-18", name: "Jordi Alba", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "le", altPositions: ["le"], overall: 85 },
   { id: "monreal-esp-18", name: "Nacho Monreal", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "le", altPositions: ["zag"], overall: 80 },
   { id: "azpilicueta-esp-18", name: "César Azpilicueta", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "ld", altPositions: ["zag"], overall: 84 },
   { id: "busquets-esp-18", name: "Sergio Busquets", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "vol", altPositions: ["mc"], overall: 88 },
-  { id: "iniesta-esp-18", name: "Andrés Iniesta", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "mc", altPositions: ["mei", "me"], overall: 87 },
+  { id: "iniesta-esp-18", name: "Andrés Iniesta", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "mc", altPositions: ["mei", "me"], overall: 88 },
   { id: "silva-esp-18", name: "David Silva", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "mei", altPositions: ["mc", "pe"], overall: 88 },
-  { id: "isco-esp-18", name: "Isco", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "mei", altPositions: ["pe", "mc"], overall: 86 },
+  { id: "isco-esp-18", name: "Isco", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "mei", altPositions: ["pe", "mc"], overall: 87 },
   { id: "thiago-esp-18", name: "Thiago Alcântara", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "mc", altPositions: ["vol", "mei"], overall: 86 },
   { id: "koke-esp-18", name: "Koke", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "mc", altPositions: ["vol", "md"], overall: 84 },
   { id: "saul-esp-18", name: "Saúl Ñíguez", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "mc", altPositions: ["vol", "me"], overall: 85 },
@@ -2671,9 +2463,7 @@ const PLAYERS = [
   { id: "costa-esp-18", name: "Diego Costa", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "ca", altPositions: [], overall: 84 },
   { id: "rodrigo-esp-18", name: "Rodrigo Moreno", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "ca", altPositions: ["pd"], overall: 80 },
   { id: "aspas-esp-18", name: "Iago Aspas", country: "Espanha", flag: "🇪🇸", worldCup: 2018, position: "ca", altPositions: ["ca", "pd"], overall: 83 },
-
   // 2026
-
   { id: "raya-esp-26", name: "David Raya", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "gol", altPositions: [], overall: 85 },
   { id: "pubill-esp-26", name: "Marc Pubill", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "ld", altPositions: ["ld"], overall: 76 },
   { id: "grimaldo-esp-26", name: "Alejandro Grimaldo", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "le", altPositions: ["le", "me"], overall: 86 },
@@ -2689,11 +2479,11 @@ const PLAYERS = [
   { id: "garcia-j-esp-26", name: "Joan García", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "gol", altPositions: [], overall: 77 },
   { id: "laporte-esp-26", name: "Aymeric Laporte", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "zag", altPositions: [], overall: 82 },
   { id: "baena-esp-26", name: "Álex Baena", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "mei", altPositions: ["mc", "pe"], overall: 80 },
-  { id: "rodri-esp-26", name: "Rodri", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 91 },
+  { id: "rodri-esp-26", name: "Rodri", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 92 },
   { id: "williams-esp-26", name: "Nico Williams", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "pe", altPositions: ["pd"], overall: 85 },
   { id: "zubimendi-esp-26", name: "Martín Zubimendi", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 83 },
-  { id: "yamal-esp-26", name: "Lamine Yamal", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "pd", altPositions: ["pe"], overall: 87 },
-  { id: "pedri-esp-26", name: "Pedri", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "mc", altPositions: ["mei"], overall: 87 },
+  { id: "yamal-esp-26", name: "Lamine Yamal", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "pd", altPositions: ["pe"], overall: 94 },
+  { id: "pedri-esp-26", name: "Pedri", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "mc", altPositions: ["mei"], overall: 91 },
   { id: "oyarzabal-esp-26", name: "Mikel Oyarzabal", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "pe", altPositions: ["ca", "mei"], overall: 82 },
   { id: "cubarsi-esp-26", name: "Pau Cubarsí", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "zag", altPositions: [], overall: 80 },
   { id: "simon-esp-26", name: "Unai Simón", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "gol", altPositions: [], overall: 83 },
@@ -2701,10 +2491,8 @@ const PLAYERS = [
   { id: "munoz-v-esp-26", name: "Víctor Muñoz", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "mc", altPositions: [], overall: 75 },
   { id: "iglesias-esp-26", name: "Borja Iglesias", country: "Espanha", flag: "🇪🇸", worldCup: 2026, position: "ca", altPositions: [], overall: 77 },
 
-
-  // ===== FRA (França) =====
-  // 1954 
-
+  // ===== França =====
+  // 1954
   { id: "remetter-fra-54", name: "François Remetter", country: "França", flag: "🇫🇷", worldCup: 1954, position: "gol", altPositions: [], overall: 76 },
   { id: "ruminski-fra-54", name: "César Ruminski", country: "França", flag: "🇫🇷", worldCup: 1954, position: "gol", altPositions: [], overall: 74 },
   { id: "abbes-fra-54", name: "Claude Abbes", country: "França", flag: "🇫🇷", worldCup: 1954, position: "gol", altPositions: [], overall: 75 },
@@ -2727,9 +2515,7 @@ const PLAYERS = [
   { id: "schultz-fra-54", name: "Ernest Schultz", country: "França", flag: "🇫🇷", worldCup: 1954, position: "ca", altPositions: [], overall: 74 },
   { id: "strappe-fra-54", name: "André Strappe", country: "França", flag: "🇫🇷", worldCup: 1954, position: "pd", altPositions: ["ca"], overall: 77 },
   { id: "vincent-fra-54", name: "Jean Vincent", country: "França", flag: "🇫🇷", worldCup: 1954, position: "pe", altPositions: ["me"], overall: 78 },
-
-  // 1958 
-
+  // 1958
   { id: "abbes-fra-58", name: "Claude Abbes", country: "França", flag: "🇫🇷", worldCup: 1958, position: "gol", altPositions: [], overall: 77 },
   { id: "colonna-fra-58", name: "Dominique Colonna", country: "França", flag: "🇫🇷", worldCup: 1958, position: "gol", altPositions: [], overall: 76 },
   { id: "remetter-fra-58", name: "François Remetter", country: "França", flag: "🇫🇷", worldCup: 1958, position: "gol", altPositions: [], overall: 75 },
@@ -2752,9 +2538,7 @@ const PLAYERS = [
   { id: "piantoni-fra-58", name: "Roger Piantoni", country: "França", flag: "🇫🇷", worldCup: 1958, position: "mei", altPositions: ["ca"], overall: 82 },
   { id: "vincent-fra-58", name: "Jean Vincent", country: "França", flag: "🇫🇷", worldCup: 1958, position: "pe", altPositions: ["me"], overall: 80 },
   { id: "wisnieski-fra-58", name: "Maryan Wisnieski", country: "França", flag: "🇫🇷", worldCup: 1958, position: "pd", altPositions: ["md"], overall: 79 },
-
-  // 1966 
-
+  // 1966
   { id: "aubour-fra-66", name: "Marcel Aubour", country: "França", flag: "🇫🇷", worldCup: 1966, position: "gol", altPositions: [], overall: 76 },
   { id: "artelesa-fra-66", name: "Marcel Artelesa", country: "França", flag: "🇫🇷", worldCup: 1966, position: "zag", altPositions: [], overall: 77 },
   { id: "baraffe-fra-66", name: "Edmond Baraffe", country: "França", flag: "🇫🇷", worldCup: 1966, position: "ca", altPositions: ["pd"], overall: 73 },
@@ -2777,9 +2561,7 @@ const PLAYERS = [
   { id: "simon-fra-66", name: "Jacques Simon", country: "França", flag: "🇫🇷", worldCup: 1966, position: "mei", altPositions: ["mc"], overall: 77 },
   { id: "carnus-fra-66", name: "Georges Carnus", country: "França", flag: "🇫🇷", worldCup: 1966, position: "gol", altPositions: [], overall: 75 },
   { id: "schuth-fra-66", name: "Johnny Schuth", country: "França", flag: "🇫🇷", worldCup: 1966, position: "gol", altPositions: [], overall: 72 },
-
-  // 1978 
-
+  // 1978
   { id: "baratelli-fra-78", name: "Dominique Baratelli", country: "França", flag: "🇫🇷", worldCup: 1978, position: "gol", altPositions: [], overall: 77 },
   { id: "battiston-fra-78", name: "Patrick Battiston", country: "França", flag: "🇫🇷", worldCup: 1978, position: "ld", altPositions: ["zag"], overall: 78 },
   { id: "bossis-fra-78", name: "Maxime Bossis", country: "França", flag: "🇫🇷", worldCup: 1978, position: "zag", altPositions: ["le"], overall: 80 },
@@ -2794,7 +2576,7 @@ const PLAYERS = [
   { id: "papi-fra-78", name: "Claude Papi", country: "França", flag: "🇫🇷", worldCup: 1978, position: "mei", altPositions: ["mc"], overall: 76 },
   { id: "petit-fra-78", name: "Jean Petit", country: "França", flag: "🇫🇷", worldCup: 1978, position: "mc", altPositions: ["md"], overall: 75 },
   { id: "berdoll-fra-78", name: "Marc Berdoll", country: "França", flag: "🇫🇷", worldCup: 1978, position: "ca", altPositions: ["ca"], overall: 74 },
-  { id: "platini-fra-78", name: "Michel Platini", country: "França", flag: "🇫🇷", worldCup: 1978, position: "mei", altPositions: ["mc"], overall: 88 },
+  { id: "platini-fra-78", name: "Michel Platini", country: "França", flag: "🇫🇷", worldCup: 1978, position: "mei", altPositions: ["mc"], overall: 89 },
   { id: "dalger-fra-78", name: "Christian Dalger", country: "França", flag: "🇫🇷", worldCup: 1978, position: "pd", altPositions: ["ca"], overall: 75 },
   { id: "lacombe-fra-78", name: "Bernard Lacombe", country: "França", flag: "🇫🇷", worldCup: 1978, position: "ca", altPositions: ["ca"], overall: 79 },
   { id: "rocheteau-fra-78", name: "Dominique Rocheteau", country: "França", flag: "🇫🇷", worldCup: 1978, position: "pd", altPositions: ["ca"], overall: 80 },
@@ -2802,9 +2584,7 @@ const PLAYERS = [
   { id: "rouyer-fra-78", name: "Olivier Rouyer", country: "França", flag: "🇫🇷", worldCup: 1978, position: "pe", altPositions: ["ca"], overall: 76 },
   { id: "bertrand-demanes-fra-78", name: "Jean-Paul Bertrand-Demanes", country: "França", flag: "🇫🇷", worldCup: 1978, position: "gol", altPositions: [], overall: 78 },
   { id: "dropsy-fra-78", name: "Dominique Dropsy", country: "França", flag: "🇫🇷", worldCup: 1978, position: "gol", altPositions: [], overall: 77 },
-  
-  // 1982 
-
+  // 1982
   { id: "baratelli-fra-82", name: "Dominique Baratelli", country: "França", flag: "🇫🇷", worldCup: 1982, position: "gol", altPositions: [], overall: 77 },
   { id: "amoros-fra-82", name: "Manuel Amoros", country: "França", flag: "🇫🇷", worldCup: 1982, position: "ld", altPositions: ["le"], overall: 79 },
   { id: "battiston-fra-82", name: "Patrick Battiston", country: "França", flag: "🇫🇷", worldCup: 1982, position: "ld", altPositions: ["zag"], overall: 80 },
@@ -2814,7 +2594,7 @@ const PLAYERS = [
   { id: "mahut-fra-82", name: "Philippe Mahut", country: "França", flag: "🇫🇷", worldCup: 1982, position: "zag", altPositions: [], overall: 76 },
   { id: "tresor-fra-82", name: "Marius Trésor", country: "França", flag: "🇫🇷", worldCup: 1982, position: "zag", altPositions: ["vol"], overall: 84 },
   { id: "genghini-fra-82", name: "Bernard Genghini", country: "França", flag: "🇫🇷", worldCup: 1982, position: "mc", altPositions: ["mei"], overall: 80 },
-  { id: "platini-fra-82", name: "Michel Platini", country: "França", flag: "🇫🇷", worldCup: 1982, position: "mei", altPositions: ["mc"], overall: 91 },
+  { id: "platini-fra-82", name: "Michel Platini", country: "França", flag: "🇫🇷", worldCup: 1982, position: "mei", altPositions: ["mc"], overall: 92 },
   { id: "girard-fra-82", name: "René Girard", country: "França", flag: "🇫🇷", worldCup: 1982, position: "mc", altPositions: ["vol"], overall: 77 },
   { id: "giresse-fra-82", name: "Alain Giresse", country: "França", flag: "🇫🇷", worldCup: 1982, position: "mc", altPositions: ["mei"], overall: 86 },
   { id: "larios-fra-82", name: "Jean-François Larios", country: "França", flag: "🇫🇷", worldCup: 1982, position: "mc", altPositions: ["vol"], overall: 78 },
@@ -2827,9 +2607,7 @@ const PLAYERS = [
   { id: "soler-fra-82", name: "Gérard Soler", country: "França", flag: "🇫🇷", worldCup: 1982, position: "ca", altPositions: ["pe"], overall: 77 },
   { id: "castaneda-fra-82", name: "Jean Castaneda", country: "França", flag: "🇫🇷", worldCup: 1982, position: "gol", altPositions: [], overall: 76 },
   { id: "ettori-fra-82", name: "Jean-Luc Ettori", country: "França", flag: "🇫🇷", worldCup: 1982, position: "gol", altPositions: [], overall: 78 },
-
-  // 1986 
-
+  // 1986
   { id: "bats-fra-86", name: "Joël Bats", country: "França", flag: "🇫🇷", worldCup: 1986, position: "gol", altPositions: [], overall: 85 },
   { id: "amoros-fra-86", name: "Manuel Amoros", country: "França", flag: "🇫🇷", worldCup: 1986, position: "ld", altPositions: ["le"], overall: 83 },
   { id: "ayache-fra-86", name: "William Ayache", country: "França", flag: "🇫🇷", worldCup: 1986, position: "ld", altPositions: ["le"], overall: 77 },
@@ -2839,7 +2617,7 @@ const PLAYERS = [
   { id: "le-roux-fra-86", name: "Yvon Le Roux", country: "França", flag: "🇫🇷", worldCup: 1986, position: "zag", altPositions: [], overall: 79 },
   { id: "tusseau-fra-86", name: "Thierry Tusseau", country: "França", flag: "🇫🇷", worldCup: 1986, position: "le", altPositions: ["zag"], overall: 77 },
   { id: "fernandez-fra-86", name: "Luis Fernández", country: "França", flag: "🇫🇷", worldCup: 1986, position: "vol", altPositions: ["mc"], overall: 82 },
-  { id: "platini-fra-86", name: "Michel Platini", country: "França", flag: "🇫🇷", worldCup: 1986, position: "mei", altPositions: ["mc"], overall: 92 },
+  { id: "platini-fra-86", name: "Michel Platini", country: "França", flag: "🇫🇷", worldCup: 1986, position: "mei", altPositions: ["mc"], overall: 93 },
   { id: "ferreri-fra-86", name: "Jean-Marc Ferreri", country: "França", flag: "🇫🇷", worldCup: 1986, position: "mei", altPositions: ["mc"], overall: 78 },
   { id: "giresse-fra-86", name: "Alain Giresse", country: "França", flag: "🇫🇷", worldCup: 1986, position: "mc", altPositions: ["mei"], overall: 86 },
   { id: "genghini-fra-86", name: "Bernard Genghini", country: "França", flag: "🇫🇷", worldCup: 1986, position: "mc", altPositions: ["mei"], overall: 79 },
@@ -2851,33 +2629,7 @@ const PLAYERS = [
   { id: "stopyra-fra-86", name: "Yannick Stopyra", country: "França", flag: "🇫🇷", worldCup: 1986, position: "ca", altPositions: ["ca"], overall: 78 },
   { id: "xuereb-fra-86", name: "Daniel Xuereb", country: "França", flag: "🇫🇷", worldCup: 1986, position: "ca", altPositions: ["pd"], overall: 76 },
   { id: "rust-fra-86", name: "Albert Rust", country: "França", flag: "🇫🇷", worldCup: 1986, position: "gol", altPositions: [], overall: 77 },
-
-  // 1998 
-
-  { id: "bats-fra-86", name: "Joël Bats", country: "França", flag: "🇫🇷", worldCup: 1986, position: "gol", altPositions: [], overall: 85 },
-  { id: "amoros-fra-86", name: "Manuel Amoros", country: "França", flag: "🇫🇷", worldCup: 1986, position: "ld", altPositions: ["le"], overall: 83 },
-  { id: "ayache-fra-86", name: "William Ayache", country: "França", flag: "🇫🇷", worldCup: 1986, position: "ld", altPositions: ["le"], overall: 77 },
-  { id: "battiston-fra-86", name: "Patrick Battiston", country: "França", flag: "🇫🇷", worldCup: 1986, position: "ld", altPositions: ["zag"], overall: 81 },
-  { id: "bibard-fra-86", name: "Michel Bibard", country: "França", flag: "🇫🇷", worldCup: 1986, position: "ld", altPositions: [], overall: 76 },
-  { id: "bossis-fra-86", name: "Maxime Bossis", country: "França", flag: "🇫🇷", worldCup: 1986, position: "zag", altPositions: [], overall: 83 },
-  { id: "le-roux-fra-86", name: "Yvon Le Roux", country: "França", flag: "🇫🇷", worldCup: 1986, position: "zag", altPositions: [], overall: 79 },
-  { id: "tusseau-fra-86", name: "Thierry Tusseau", country: "França", flag: "🇫🇷", worldCup: 1986, position: "le", altPositions: ["zag"], overall: 77 },
-  { id: "fernandez-fra-86", name: "Luis Fernández", country: "França", flag: "🇫🇷", worldCup: 1986, position: "vol", altPositions: ["mc"], overall: 82 },
-  { id: "platini-fra-86", name: "Michel Platini", country: "França", flag: "🇫🇷", worldCup: 1986, position: "mei", altPositions: ["mc"], overall: 92 },
-  { id: "ferreri-fra-86", name: "Jean-Marc Ferreri", country: "França", flag: "🇫🇷", worldCup: 1986, position: "mei", altPositions: ["mc"], overall: 78 },
-  { id: "giresse-fra-86", name: "Alain Giresse", country: "França", flag: "🇫🇷", worldCup: 1986, position: "mc", altPositions: ["mei"], overall: 86 },
-  { id: "genghini-fra-86", name: "Bernard Genghini", country: "França", flag: "🇫🇷", worldCup: 1986, position: "mc", altPositions: ["mei"], overall: 79 },
-  { id: "tigana-fra-86", name: "Jean Tigana", country: "França", flag: "🇫🇷", worldCup: 1986, position: "mc", altPositions: ["vol"], overall: 87 },
-  { id: "vercruysse-fra-86", name: "Philippe Vercruysse", country: "França", flag: "🇫🇷", worldCup: 1986, position: "mei", altPositions: ["mc"], overall: 77 },
-  { id: "bellone-fra-86", name: "Bruno Bellone", country: "França", flag: "🇫🇷", worldCup: 1986, position: "pe", altPositions: ["pd"], overall: 79 },
-  { id: "papin-fra-86", name: "Jean-Pierre Papin", country: "França", flag: "🇫🇷", worldCup: 1986, position: "ca", altPositions: ["ca"], overall: 82 },
-  { id: "rocheteau-fra-86", name: "Dominique Rocheteau", country: "França", flag: "🇫🇷", worldCup: 1986, position: "pd", altPositions: ["ca"], overall: 81 },
-  { id: "stopyra-fra-86", name: "Yannick Stopyra", country: "França", flag: "🇫🇷", worldCup: 1986, position: "ca", altPositions: ["ca"], overall: 78 },
-  { id: "xuereb-fra-86", name: "Daniel Xuereb", country: "França", flag: "🇫🇷", worldCup: 1986, position: "ca", altPositions: ["pd"], overall: 76 },
-  { id: "rust-fra-86", name: "Albert Rust", country: "França", flag: "🇫🇷", worldCup: 1986, position: "gol", altPositions: [], overall: 77 },
-
-  // 2002 
-
+  // 2002
   { id: "rame-fra-02", name: "Ulrich Ramé", country: "França", flag: "🇫🇷", worldCup: 2002, position: "gol", altPositions: [], overall: 79 },
   { id: "candela-fra-02", name: "Vincent Candela", country: "França", flag: "🇫🇷", worldCup: 2002, position: "le", altPositions: ["ld"], overall: 81 },
   { id: "lizarazu-fra-02", name: "Bixente Lizarazu", country: "França", flag: "🇫🇷", worldCup: 2002, position: "le", altPositions: ["le"], overall: 83 },
@@ -2887,9 +2639,9 @@ const PLAYERS = [
   { id: "makelele-fra-02", name: "Claude Makélélé", country: "França", flag: "🇫🇷", worldCup: 2002, position: "vol", altPositions: ["mc"], overall: 84 },
   { id: "desailly-fra-02", name: "Marcel Desailly", country: "França", flag: "🇫🇷", worldCup: 2002, position: "zag", altPositions: ["vol"], overall: 85 },
   { id: "cisse-fra-02", name: "Djibril Cissé", country: "França", flag: "🇫🇷", worldCup: 2002, position: "ca", altPositions: [], overall: 80 },
-  { id: "zidane-fra-02", name: "Zinedine Zidane", country: "França", flag: "🇫🇷", worldCup: 2002, position: "mei", altPositions: ["mc"], overall: 94 },
+  { id: "zidane-fra-02", name: "Zinedine Zidane", country: "França", flag: "🇫🇷", worldCup: 2002, position: "mei", altPositions: ["mc"], overall: 96 },
   { id: "wiltord-fra-02", name: "Sylvain Wiltord", country: "França", flag: "🇫🇷", worldCup: 2002, position: "pd", altPositions: ["ca", "pe"], overall: 82 },
-  { id: "henry-fra-02", name: "Thierry Henry", country: "França", flag: "🇫🇷", worldCup: 2002, position: "ca", altPositions: ["pe"], overall: 89 },
+  { id: "henry-fra-02", name: "Thierry Henry", country: "França", flag: "🇫🇷", worldCup: 2002, position: "ca", altPositions: ["pe"], overall: 93 },
   { id: "silvestre-fra-02", name: "Mikaël Silvestre", country: "França", flag: "🇫🇷", worldCup: 2002, position: "zag", altPositions: ["le"], overall: 80 },
   { id: "boghossian-fra-02", name: "Alain Boghossian", country: "França", flag: "🇫🇷", worldCup: 2002, position: "mc", altPositions: ["vol"], overall: 78 },
   { id: "thuram-fra-02", name: "Lilian Thuram", country: "França", flag: "🇫🇷", worldCup: 2002, position: "zag", altPositions: ["ld"], overall: 87 },
@@ -2900,9 +2652,7 @@ const PLAYERS = [
   { id: "trezeguet-fra-02", name: "David Trezeguet", country: "França", flag: "🇫🇷", worldCup: 2002, position: "ca", altPositions: [], overall: 88 },
   { id: "dugarry-fra-02", name: "Christophe Dugarry", country: "França", flag: "🇫🇷", worldCup: 2002, position: "ca", altPositions: ["pe"], overall: 78 },
   { id: "micoud-fra-02", name: "Johan Micoud", country: "França", flag: "🇫🇷", worldCup: 2002, position: "mei", altPositions: ["mc"], overall: 80 },
-
-  // 2006 
-
+  // 2006
   { id: "landreau-fra-06", name: "Mickaël Landreau", country: "França", flag: "🇫🇷", worldCup: 2006, position: "gol", altPositions: [], overall: 78 },
   { id: "boumsong-fra-06", name: "Jean-Alain Boumsong", country: "França", flag: "🇫🇷", worldCup: 2006, position: "zag", altPositions: [], overall: 77 },
   { id: "abidal-fra-06", name: "Éric Abidal", country: "França", flag: "🇫🇷", worldCup: 2006, position: "le", altPositions: ["zag"], overall: 81 },
@@ -2912,7 +2662,7 @@ const PLAYERS = [
   { id: "malouda-fra-06", name: "Florent Malouda", country: "França", flag: "🇫🇷", worldCup: 2006, position: "me", altPositions: ["pe"], overall: 82 },
   { id: "dhorasoo-fra-06", name: "Vikash Dhorasoo", country: "França", flag: "🇫🇷", worldCup: 2006, position: "mc", altPositions: ["mei"], overall: 77 },
   { id: "govou-fra-06", name: "Sidney Govou", country: "França", flag: "🇫🇷", worldCup: 2006, position: "pd", altPositions: ["ca"], overall: 79 },
-  { id: "zidane-fra-06", name: "Zinedine Zidane", country: "França", flag: "🇫🇷", worldCup: 2006, position: "mei", altPositions: ["mc"], overall: 91 },
+  { id: "zidane-fra-06", name: "Zinedine Zidane", country: "França", flag: "🇫🇷", worldCup: 2006, position: "mei", altPositions: ["mc"], overall: 93 },
   { id: "wiltord-fra-06", name: "Sylvain Wiltord", country: "França", flag: "🇫🇷", worldCup: 2006, position: "pd", altPositions: ["ca", "pe"], overall: 81 },
   { id: "henry-fra-06", name: "Thierry Henry", country: "França", flag: "🇫🇷", worldCup: 2006, position: "ca", altPositions: ["pe"], overall: 92 },
   { id: "silvestre-fra-06", name: "Mikaël Silvestre", country: "França", flag: "🇫🇷", worldCup: 2006, position: "zag", altPositions: ["le"], overall: 80 },
@@ -2926,9 +2676,7 @@ const PLAYERS = [
   { id: "chimbonda-fra-06", name: "Pascal Chimbonda", country: "França", flag: "🇫🇷", worldCup: 2006, position: "ld", altPositions: [], overall: 77 },
   { id: "ribery-fra-06", name: "Franck Ribéry", country: "França", flag: "🇫🇷", worldCup: 2006, position: "pd", altPositions: ["pe", "me"], overall: 81 },
   { id: "coupet-fra-06", name: "Grégory Coupet", country: "França", flag: "🇫🇷", worldCup: 2006, position: "gol", altPositions: [], overall: 84 },
-  
-  // 2014 
-
+  // 2014
   { id: "lloris-fra-14", name: "Hugo Lloris", country: "França", flag: "🇫🇷", worldCup: 2014, position: "gol", altPositions: [], overall: 85 },
   { id: "ruffier-fra-14", name: "Stéphane Ruffier", country: "França", flag: "🇫🇷", worldCup: 2014, position: "gol", altPositions: [], overall: 81 },
   { id: "landreau-fra-14", name: "Mickaël Landreau", country: "França", flag: "🇫🇷", worldCup: 2014, position: "gol", altPositions: [], overall: 76 },
@@ -2948,23 +2696,21 @@ const PLAYERS = [
   { id: "pogba-fra-14", name: "Paul Pogba", country: "França", flag: "🇫🇷", worldCup: 2014, position: "mc", altPositions: ["vol", "mei"], overall: 83 },
   { id: "schneiderlin-fra-14", name: "Morgan Schneiderlin", country: "França", flag: "🇫🇷", worldCup: 2014, position: "vol", altPositions: ["mc"], overall: 79 },
   { id: "giroud-fra-14", name: "Olivier Giroud", country: "França", flag: "🇫🇷", worldCup: 2014, position: "ca", altPositions: [], overall: 82 },
-  { id: "benzema-fra-14", name: "Karim Benzema", country: "França", flag: "🇫🇷", worldCup: 2014, position: "ca", altPositions: ["ca"], overall: 86 },
+  { id: "benzema-fra-14", name: "Karim Benzema", country: "França", flag: "🇫🇷", worldCup: 2014, position: "ca", altPositions: ["ca"], overall: 91 },
   { id: "griezmann-fra-14", name: "Antoine Griezmann", country: "França", flag: "🇫🇷", worldCup: 2014, position: "pe", altPositions: ["ca", "pd"], overall: 82 },
   { id: "remy-fra-14", name: "Loïc Rémy", country: "França", flag: "🇫🇷", worldCup: 2014, position: "ca", altPositions: ["pd"], overall: 80 },
-
-  // 2018 
-
+  // 2018
   { id: "lloris-fra-18", name: "Hugo Lloris", country: "França", flag: "🇫🇷", worldCup: 2018, position: "gol", altPositions: [], overall: 88 },
   { id: "pavard-fra-18", name: "Benjamin Pavard", country: "França", flag: "🇫🇷", worldCup: 2018, position: "ld", altPositions: ["zag"], overall: 81 },
   { id: "kimpembe-fra-18", name: "Presnel Kimpembe", country: "França", flag: "🇫🇷", worldCup: 2018, position: "zag", altPositions: [], overall: 82 },
   { id: "varane-fra-18", name: "Raphaël Varane", country: "França", flag: "🇫🇷", worldCup: 2018, position: "zag", altPositions: [], overall: 87 },
   { id: "umtiti-fra-18", name: "Samuel Umtiti", country: "França", flag: "🇫🇷", worldCup: 2018, position: "zag", altPositions: [], overall: 87 },
-  { id: "pogba-fra-18", name: "Paul Pogba", country: "França", flag: "🇫🇷", worldCup: 2018, position: "mc", altPositions: ["vol"], overall: 87 },
+  { id: "pogba-fra-18", name: "Paul Pogba", country: "França", flag: "🇫🇷", worldCup: 2018, position: "mc", altPositions: ["vol"], overall: 88 },
   { id: "griezmann-fra-18", name: "Antoine Griezmann", country: "França", flag: "🇫🇷", worldCup: 2018, position: "ca", altPositions: ["ca", "mei"], overall: 89 },
   { id: "lemar-fra-18", name: "Thomas Lemar", country: "França", flag: "🇫🇷", worldCup: 2018, position: "pe", altPositions: ["me", "mei"], overall: 83 },
   { id: "giroud-fra-18", name: "Olivier Giroud", country: "França", flag: "🇫🇷", worldCup: 2018, position: "ca", altPositions: [], overall: 82 },
-  { id: "mbappe-fra-18", name: "Kylian Mbappé", country: "França", flag: "🇫🇷", worldCup: 2018, position: "ca", altPositions: ["pd", "pe"], overall: 88 },
-  { id: "dembele-fra-18", name: "Ousmane Dembélé", country: "França", flag: "🇫🇷", worldCup: 2018, position: "pd", altPositions: ["pe"], overall: 83 },
+  { id: "mbappe-fra-18", name: "Kylian Mbappé", country: "França", flag: "🇫🇷", worldCup: 2018, position: "ca", altPositions: ["pd", "pe"], overall: 96 },
+  { id: "dembele-fra-18", name: "Ousmane Dembélé", country: "França", flag: "🇫🇷", worldCup: 2018, position: "pd", altPositions: ["pe"], overall: 86 },
   { id: "tolisso-fra-18", name: "Corentin Tolisso", country: "França", flag: "🇫🇷", worldCup: 2018, position: "mc", altPositions: ["vol"], overall: 82 },
   { id: "kante-fra-18", name: "N'Golo Kanté", country: "França", flag: "🇫🇷", worldCup: 2018, position: "vol", altPositions: ["mc"], overall: 89 },
   { id: "matuidi-fra-18", name: "Blaise Matuidi", country: "França", flag: "🇫🇷", worldCup: 2018, position: "mc", altPositions: ["me"], overall: 83 },
@@ -2975,11 +2721,9 @@ const PLAYERS = [
   { id: "sidibe-fra-18", name: "Djibril Sidibé", country: "França", flag: "🇫🇷", worldCup: 2018, position: "ld", altPositions: ["ld"], overall: 79 },
   { id: "thauvin-fra-18", name: "Florian Thauvin", country: "França", flag: "🇫🇷", worldCup: 2018, position: "pd", altPositions: ["md"], overall: 83 },
   { id: "hernandez-fra-18", name: "Lucas Hernández", country: "França", flag: "🇫🇷", worldCup: 2018, position: "le", altPositions: ["zag"], overall: 81 },
-  { id: "mendy-fra-18", name: "Benjamin Mendy", country: "França", flag: "🇫🇷", worldCup: 2018, position: "le", altPositions: ["le"], overall: 80 },
+  { id: "mendy-fra-18", name: "Benjamin Mendy", country: "França", flag: "🇫🇷", worldCup: 2018, position: "le", altPositions: ["le"], overall: 85 },
   { id: "areola-fra-18", name: "Alphonse Areola", country: "França", flag: "🇫🇷", worldCup: 2018, position: "gol", altPositions: [], overall: 81 },
-
-  // 2022 
-
+  // 2022
   { id: "lloris-fra-22", name: "Hugo Lloris", country: "França", flag: "🇫🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 87 },
   { id: "pavard-fra-22", name: "Benjamin Pavard", country: "França", flag: "🇫🇷", worldCup: 2022, position: "ld", altPositions: ["zag"], overall: 81 },
   { id: "disasi-fra-22", name: "Axel Disasi", country: "França", flag: "🇫🇷", worldCup: 2022, position: "zag", altPositions: ["ld"], overall: 79 },
@@ -2987,41 +2731,39 @@ const PLAYERS = [
   { id: "kounde-fra-22", name: "Jules Koundé", country: "França", flag: "🇫🇷", worldCup: 2022, position: "ld", altPositions: ["zag"], overall: 84 },
   { id: "guendouzi-fra-22", name: "Mattéo Guendouzi", country: "França", flag: "🇫🇷", worldCup: 2022, position: "mc", altPositions: ["vol"], overall: 80 },
   { id: "griezmann-fra-22", name: "Antoine Griezmann", country: "França", flag: "🇫🇷", worldCup: 2022, position: "mei", altPositions: ["mc", "ca"], overall: 85 },
-  { id: "tchouameni-fra-22", name: "Aurélien Tchouaméni", country: "França", flag: "🇫🇷", worldCup: 2022, position: "vol", altPositions: ["mc"], overall: 85 },
+  { id: "tchouameni-fra-22", name: "Aurélien Tchouaméni", country: "França", flag: "🇫🇷", worldCup: 2022, position: "vol", altPositions: ["mc"], overall: 90 },
   { id: "giroud-fra-22", name: "Olivier Giroud", country: "França", flag: "🇫🇷", worldCup: 2022, position: "ca", altPositions: [], overall: 82 },
-  { id: "mbappe-fra-22", name: "Kylian Mbappé", country: "França", flag: "🇫🇷", worldCup: 2022, position: "ca", altPositions: ["pe"], overall: 91 },
-  { id: "dembele-fra-22", name: "Ousmane Dembélé", country: "França", flag: "🇫🇷", worldCup: 2022, position: "pd", altPositions: ["pe"], overall: 83 },
+  { id: "mbappe-fra-22", name: "Kylian Mbappé", country: "França", flag: "🇫🇷", worldCup: 2022, position: "ca", altPositions: ["pe"], overall: 97 },
+  { id: "dembele-fra-22", name: "Ousmane Dembélé", country: "França", flag: "🇫🇷", worldCup: 2022, position: "pd", altPositions: ["pe"], overall: 88 },
   { id: "kolo-muani-fra-22", name: "Randal Kolo Muani", country: "França", flag: "🇫🇷", worldCup: 2022, position: "ca", altPositions: ["pd"], overall: 81 },
   { id: "fofana-fra-22", name: "Youssouf Fofana", country: "França", flag: "🇫🇷", worldCup: 2022, position: "vol", altPositions: ["mc"], overall: 79 },
-  { id: "rabiot-fra-22", name: "Adrien Rabiot", country: "França", flag: "🇫🇷", worldCup: 2022, position: "mc", altPositions: ["vol", "me"], overall: 83 },
+  { id: "rabiot-fra-22", name: "Adrien Rabiot", country: "França", flag: "🇫🇷", worldCup: 2022, position: "mc", altPositions: ["vol", "me"], overall: 84 },
   { id: "veretout-fra-22", name: "Jordan Veretout", country: "França", flag: "🇫🇷", worldCup: 2022, position: "mc", altPositions: ["vol"], overall: 79 },
   { id: "mandanda-fra-22", name: "Steve Mandanda", country: "França", flag: "🇫🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 77 },
   { id: "saliba-fra-22", name: "William Saliba", country: "França", flag: "🇫🇷", worldCup: 2022, position: "zag", altPositions: [], overall: 83 },
   { id: "upamecano-fra-22", name: "Dayot Upamecano", country: "França", flag: "🇫🇷", worldCup: 2022, position: "zag", altPositions: [], overall: 82 },
   { id: "benzema-fra-22", name: "Karim Benzema", country: "França", flag: "🇫🇷", worldCup: 2022, position: "ca", altPositions: ["ca"], overall: 91 },
-  { id: "coman-fra-22", name: "Kingsley Coman", country: "França", flag: "🇫🇷", worldCup: 2022, position: "pe", altPositions: ["pd", "me"], overall: 85 },
+  { id: "coman-fra-22", name: "Kingsley Coman", country: "França", flag: "🇫🇷", worldCup: 2022, position: "pe", altPositions: ["pd", "me"], overall: 86 },
   { id: "hernandez-l-fra-22", name: "Lucas Hernández", country: "França", flag: "🇫🇷", worldCup: 2022, position: "le", altPositions: ["zag"], overall: 83 },
   { id: "hernandez-t-fra-22", name: "Theo Hernández", country: "França", flag: "🇫🇷", worldCup: 2022, position: "le", altPositions: ["le"], overall: 85 },
   { id: "areola-fra-22", name: "Alphonse Areola", country: "França", flag: "🇫🇷", worldCup: 2022, position: "gol", altPositions: [], overall: 79 },
   { id: "konate-fra-22", name: "Ibrahima Konaté", country: "França", flag: "🇫🇷", worldCup: 2022, position: "zag", altPositions: [], overall: 81 },
-  { id: "camavinga-fra-22", name: "Eduardo Camavinga", country: "França", flag: "🇫🇷", worldCup: 2022, position: "mc", altPositions: ["vol", "le"], overall: 82 },
+  { id: "camavinga-fra-22", name: "Eduardo Camavinga", country: "França", flag: "🇫🇷", worldCup: 2022, position: "mc", altPositions: ["vol", "le"], overall: 87 },
   { id: "thuram-fra-22", name: "Marcus Thuram", country: "França", flag: "🇫🇷", worldCup: 2022, position: "ca", altPositions: ["pe"], overall: 80 },
-
   // 2026
-
   { id: "samba-fra-26", name: "Brice Samba", country: "França", flag: "🇫🇷", worldCup: 2026, position: "gol", altPositions: [], overall: 82 },
   { id: "gusto-fra-26", name: "Malo Gusto", country: "França", flag: "🇫🇷", worldCup: 2026, position: "ld", altPositions: ["ld"], overall: 81 },
   { id: "digne-fra-26", name: "Lucas Digne", country: "França", flag: "🇫🇷", worldCup: 2026, position: "le", altPositions: ["le"], overall: 80 },
   { id: "upamecano-fra-26", name: "Dayot Upamecano", country: "França", flag: "🇫🇷", worldCup: 2026, position: "zag", altPositions: [], overall: 84 },
-  { id: "kounde-fra-26", name: "Jules Koundé", country: "França", flag: "🇫🇷", worldCup: 2026, position: "ld", altPositions: ["zag"], overall: 85 },
+  { id: "kounde-fra-26", name: "Jules Koundé", country: "França", flag: "🇫🇷", worldCup: 2026, position: "ld", altPositions: ["zag"], overall: 86 },
   { id: "kone-fra-26", name: "Manu Koné", country: "França", flag: "🇫🇷", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 81 },
-  { id: "dembele-fra-26", name: "Ousmane Dembélé", country: "França", flag: "🇫🇷", worldCup: 2026, position: "pd", altPositions: ["pe"], overall: 84 },
-  { id: "tchouameni-fra-26", name: "Aurélien Tchouaméni", country: "França", flag: "🇫🇷", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 87 },
+  { id: "dembele-fra-26", name: "Ousmane Dembélé", country: "França", flag: "🇫🇷", worldCup: 2026, position: "pd", altPositions: ["pe"], overall: 90 },
+  { id: "tchouameni-fra-26", name: "Aurélien Tchouaméni", country: "França", flag: "🇫🇷", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 88 },
   { id: "thuram-fra-26", name: "Marcus Thuram", country: "França", flag: "🇫🇷", worldCup: 2026, position: "ca", altPositions: ["pe"], overall: 83 },
-  { id: "mbappe-fra-26", name: "Kylian Mbappé", country: "França", flag: "🇫🇷", worldCup: 2026, position: "ca", altPositions: ["pe"], overall: 93 },
-  { id: "olise-fra-26", name: "Michael Olise", country: "França", flag: "🇫🇷", worldCup: 2026, position: "pd", altPositions: ["mei"], overall: 84 },
+  { id: "mbappe-fra-26", name: "Kylian Mbappé", country: "França", flag: "🇫🇷", worldCup: 2026, position: "ca", altPositions: ["pe"], overall: 98 },
+  { id: "olise-fra-26", name: "Michael Olise", country: "França", flag: "🇫🇷", worldCup: 2026, position: "pd", altPositions: ["mei"], overall: 95 },
   { id: "barcola-fra-26", name: "Bradley Barcola", country: "França", flag: "🇫🇷", worldCup: 2026, position: "pe", altPositions: ["pd"], overall: 83 },
-  { id: "kante-fra-26", name: "N'Golo Kanté", country: "França", flag: "🇫🇷", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 85 },
+  { id: "kante-fra-26", name: "N'Golo Kanté", country: "França", flag: "🇫🇷", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 86 },
   { id: "rabiot-fra-26", name: "Adrien Rabiot", country: "França", flag: "🇫🇷", worldCup: 2026, position: "mc", altPositions: ["vol"], overall: 82 },
   { id: "konate-fra-26", name: "Ibrahima Konaté", country: "França", flag: "🇫🇷", worldCup: 2026, position: "zag", altPositions: [], overall: 84 },
   { id: "maignan-fra-26", name: "Mike Maignan", country: "França", flag: "🇫🇷", worldCup: 2026, position: "gol", altPositions: [], overall: 88 },
@@ -3032,13 +2774,12 @@ const PLAYERS = [
   { id: "hernandez-l-fra-26", name: "Lucas Hernández", country: "França", flag: "🇫🇷", worldCup: 2026, position: "zag", altPositions: ["le"], overall: 82 },
   { id: "mateta-fra-26", name: "Jean-Philippe Mateta", country: "França", flag: "🇫🇷", worldCup: 2026, position: "ca", altPositions: [], overall: 79 },
   { id: "risser-fra-26", name: "Robin Risser", country: "França", flag: "🇫🇷", worldCup: 2026, position: "gol", altPositions: [], overall: 74 },
-  { id: "cherki-fra-26", name: "Rayan Cherki", country: "França", flag: "🇫🇷", worldCup: 2026, position: "mei", altPositions: ["pd"], overall: 80 },
+  { id: "cherki-fra-26", name: "Rayan Cherki", country: "França", flag: "🇫🇷", worldCup: 2026, position: "mei", altPositions: ["pd"], overall: 85 },
   { id: "akliouche-fra-26", name: "Maghnes Akliouche", country: "França", flag: "🇫🇷", worldCup: 2026, position: "mei", altPositions: ["pd"], overall: 79 },
   { id: "lacroix-fra-26", name: "Maxence Lacroix", country: "França", flag: "🇫🇷", worldCup: 2026, position: "zag", altPositions: [], overall: 79 },
 
-  // ===== GER (Alemanha) =====
+  // ===== Alemanha =====
   // 1954
-
   { id: "turek-ger-54", name: "Toni Turek", country: "Alemanha", flag: "🇩🇪", worldCup: 1954, position: "gol", altPositions: [], overall: 80 },
   { id: "kubsch-ger-54", name: "Heinz Kubsch", country: "Alemanha", flag: "🇩🇪", worldCup: 1954, position: "gol", altPositions: [], overall: 73 },
   { id: "kwiatkowski-ger-54", name: "Heinz Kwiatkowski", country: "Alemanha", flag: "🇩🇪", worldCup: 1954, position: "gol", altPositions: [], overall: 74 },
@@ -3061,9 +2802,7 @@ const PLAYERS = [
   { id: "klodt-ger-54", name: "Bernhard Klodt", country: "Alemanha", flag: "🇩🇪", worldCup: 1954, position: "pd", altPositions: ["md"], overall: 75 },
   { id: "herrmann-ger-54", name: "Richard Herrmann", country: "Alemanha", flag: "🇩🇪", worldCup: 1954, position: "pd", altPositions: ["pe"], overall: 74 },
   { id: "biesinger-ger-54", name: "Ulrich Biesinger", country: "Alemanha", flag: "🇩🇪", worldCup: 1954, position: "ca", altPositions: [], overall: 72 },
-  
   // 1958
-
   { id: "herkenrath-ger-58", name: "Fritz Herkenrath", country: "Alemanha", flag: "🇩🇪", worldCup: 1958, position: "gol", altPositions: [], overall: 77 },
   { id: "erhardt-ger-58", name: "Herbert Erhardt", country: "Alemanha", flag: "🇩🇪", worldCup: 1958, position: "zag", altPositions: ["vol"], overall: 78 },
   { id: "juskowiak-ger-58", name: "Erich Juskowiak", country: "Alemanha", flag: "🇩🇪", worldCup: 1958, position: "le", altPositions: ["zag"], overall: 76 },
@@ -3082,9 +2821,7 @@ const PLAYERS = [
   { id: "sturm-ger-58", name: "Hans Sturm", country: "Alemanha", flag: "🇩🇪", worldCup: 1958, position: "me", altPositions: ["pe"], overall: 75 },
   { id: "schnellinger-ger-58", name: "Karl-Heinz Schnellinger", country: "Alemanha", flag: "🇩🇪", worldCup: 1958, position: "le", altPositions: ["zag"], overall: 79 },
   { id: "kwiatkowski-ger-58", name: "Heinz Kwiatkowski", country: "Alemanha", flag: "🇩🇪", worldCup: 1958, position: "gol", altPositions: [], overall: 74 },
- 
   // 1962
-
   { id: "tilkowski-ger-62", name: "Hans Tilkowski", country: "Alemanha", flag: "🇩🇪", worldCup: 1962, position: "gol", altPositions: [], overall: 78 },
   { id: "erhardt-ger-62", name: "Herbert Erhardt", country: "Alemanha", flag: "🇩🇪", worldCup: 1962, position: "zag", altPositions: ["vol"], overall: 76 },
   { id: "schnellinger-ger-62", name: "Karl-Heinz Schnellinger", country: "Alemanha", flag: "🇩🇪", worldCup: 1962, position: "le", altPositions: ["zag"], overall: 82 },
@@ -3107,13 +2844,11 @@ const PLAYERS = [
   { id: "vollmar-ger-62", name: "Heinz Vollmar", country: "Alemanha", flag: "🇩🇪", worldCup: 1962, position: "ca", altPositions: [], overall: 73 },
   { id: "sawitzki-ger-62", name: "Günter Sawitzki", country: "Alemanha", flag: "🇩🇪", worldCup: 1962, position: "gol", altPositions: [], overall: 75 },
   { id: "fahrian-ger-62", name: "Wolfgang Fahrian", country: "Alemanha", flag: "🇩🇪", worldCup: 1962, position: "gol", altPositions: [], overall: 74 },
-
   // 1966
-  
   { id: "tilkowski-ger-66", name: "Hans Tilkowski", country: "Alemanha", flag: "🇩🇪", worldCup: 1966, position: "gol", altPositions: [], overall: 80 },
   { id: "hottges-ger-66", name: "Horst-Dieter Höttges", country: "Alemanha", flag: "🇩🇪", worldCup: 1966, position: "ld", altPositions: ["zag"], overall: 78 },
   { id: "schnellinger-ger-66", name: "Karl-Heinz Schnellinger", country: "Alemanha", flag: "🇩🇪", worldCup: 1966, position: "le", altPositions: ["zag"], overall: 83 },
-  { id: "beckenbauer-ger-66", name: "Franz Beckenbauer", country: "Alemanha", flag: "🇩🇪", worldCup: 1966, position: "mc", altPositions: ["zag", "vol"], overall: 90 },
+  { id: "beckenbauer-ger-66", name: "Franz Beckenbauer", country: "Alemanha", flag: "🇩🇪", worldCup: 1966, position: "mc", altPositions: ["zag", "vol"], overall: 95 },
   { id: "schulz-ger-66", name: "Willi Schulz", country: "Alemanha", flag: "🇩🇪", worldCup: 1966, position: "zag", altPositions: [], overall: 79 },
   { id: "weber-ger-66", name: "Wolfgang Weber", country: "Alemanha", flag: "🇩🇪", worldCup: 1966, position: "zag", altPositions: ["ld"], overall: 78 },
   { id: "brulls-ger-66", name: "Albert Brülls", country: "Alemanha", flag: "🇩🇪", worldCup: 1966, position: "mei", altPositions: ["mc"], overall: 77 },
@@ -3132,13 +2867,11 @@ const PLAYERS = [
   { id: "grabowski-ger-66", name: "Jürgen Grabowski", country: "Alemanha", flag: "🇩🇪", worldCup: 1966, position: "pd", altPositions: ["mei"], overall: 78 },
   { id: "bernard-ger-66", name: "Günter Bernard", country: "Alemanha", flag: "🇩🇪", worldCup: 1966, position: "gol", altPositions: [], overall: 76 },
   { id: "maier-ger-66", name: "Sepp Maier", country: "Alemanha", flag: "🇩🇪", worldCup: 1966, position: "gol", altPositions: [], overall: 79 },
-
   // 1970
-  
   { id: "maier-ger-70", name: "Sepp Maier", country: "Alemanha", flag: "🇩🇪", worldCup: 1970, position: "gol", altPositions: [], overall: 85 },
   { id: "hottges-ger-70", name: "Horst-Dieter Höttges", country: "Alemanha", flag: "🇩🇪", worldCup: 1970, position: "ld", altPositions: ["zag"], overall: 79 },
   { id: "schnellinger-ger-70", name: "Karl-Heinz Schnellinger", country: "Alemanha", flag: "🇩🇪", worldCup: 1970, position: "le", altPositions: ["zag"], overall: 82 },
-  { id: "beckenbauer-ger-70", name: "Franz Beckenbauer", country: "Alemanha", flag: "🇩🇪", worldCup: 1970, position: "mc", altPositions: ["zag", "vol"], overall: 92 },
+  { id: "beckenbauer-ger-70", name: "Franz Beckenbauer", country: "Alemanha", flag: "🇩🇪", worldCup: 1970, position: "mc", altPositions: ["zag", "vol"], overall: 96 },
   { id: "schulz-ger-70", name: "Willi Schulz", country: "Alemanha", flag: "🇩🇪", worldCup: 1970, position: "zag", altPositions: [], overall: 78 },
   { id: "weber-ger-70", name: "Wolfgang Weber", country: "Alemanha", flag: "🇩🇪", worldCup: 1970, position: "zag", altPositions: ["ld"], overall: 77 },
   { id: "vogts-ger-70", name: "Berti Vogts", country: "Alemanha", flag: "🇩🇪", worldCup: 1970, position: "ld", altPositions: ["le"], overall: 81 },
@@ -3157,9 +2890,7 @@ const PLAYERS = [
   { id: "grabowski-ger-70", name: "Jürgen Grabowski", country: "Alemanha", flag: "🇩🇪", worldCup: 1970, position: "pd", altPositions: ["mei"], overall: 81 },
   { id: "manglitz-ger-70", name: "Manfred Manglitz", country: "Alemanha", flag: "🇩🇪", worldCup: 1970, position: "gol", altPositions: [], overall: 77 },
   { id: "wolter-ger-70", name: "Horst Wolter", country: "Alemanha", flag: "🇩🇪", worldCup: 1970, position: "gol", altPositions: [], overall: 76 },
-
   // 1974
-  
   { id: "maier-ger-74", name: "Sepp Maier", country: "Alemanha", flag: "🇩🇪", worldCup: 1974, position: "gol", altPositions: [], overall: 89 },
   { id: "vogts-ger-74", name: "Berti Vogts", country: "Alemanha", flag: "🇩🇪", worldCup: 1974, position: "ld", altPositions: [], overall: 85 },
   { id: "breitner-ger-74", name: "Paul Breitner", country: "Alemanha", flag: "🇩🇪", worldCup: 1974, position: "le", altPositions: ["mc"], overall: 86 },
@@ -3182,9 +2913,7 @@ const PLAYERS = [
   { id: "kremers-ger-74", name: "Helmut Kremers", country: "Alemanha", flag: "🇩🇪", worldCup: 1974, position: "le", altPositions: [], overall: 79 },
   { id: "nigbur-ger-74", name: "Norbert Nigbur", country: "Alemanha", flag: "🇩🇪", worldCup: 1974, position: "gol", altPositions: [], overall: 80 },
   { id: "kleff-ger-74", name: "Wolfgang Kleff", country: "Alemanha", flag: "🇩🇪", worldCup: 1974, position: "gol", altPositions: [], overall: 78 },
-
   // 1982
-
   { id: "schumacher-ger-82", name: "Harald Schumacher", country: "Alemanha", flag: "🇩🇪", worldCup: 1982, position: "gol", altPositions: [], overall: 86 },
   { id: "briegel-ger-82", name: "Hans-Peter Briegel", country: "Alemanha", flag: "🇩🇪", worldCup: 1982, position: "le", altPositions: ["zag", "me"], overall: 84 },
   { id: "breitner-ger-82", name: "Paul Breitner", country: "Alemanha", flag: "🇩🇪", worldCup: 1982, position: "mc", altPositions: ["vol"], overall: 87 },
@@ -3207,9 +2936,7 @@ const PLAYERS = [
   { id: "kaltz-ger-82", name: "Manfred Kaltz", country: "Alemanha", flag: "🇩🇪", worldCup: 1982, position: "ld", altPositions: ["ld"], overall: 85 },
   { id: "franke-ger-82", name: "Bernd Franke", country: "Alemanha", flag: "🇩🇪", worldCup: 1982, position: "gol", altPositions: [], overall: 78 },
   { id: "immel-ger-82", name: "Eike Immel", country: "Alemanha", flag: "🇩🇪", worldCup: 1982, position: "gol", altPositions: [], overall: 80 },
-
   // 1986
-
   { id: "schumacher-ger-86", name: "Harald Schumacher", country: "Alemanha", flag: "🇩🇪", worldCup: 1986, position: "gol", altPositions: [], overall: 87 },
   { id: "briegel-ger-86", name: "Hans-Peter Briegel", country: "Alemanha", flag: "🇩🇪", worldCup: 1986, position: "le", altPositions: ["zag", "me"], overall: 83 },
   { id: "brehme-ger-86", name: "Andreas Brehme", country: "Alemanha", flag: "🇩🇪", worldCup: 1986, position: "le", altPositions: ["me", "ld"], overall: 82 },
@@ -3232,9 +2959,7 @@ const PLAYERS = [
   { id: "hoeness-ger-86", name: "Dieter Hoeneß", country: "Alemanha", flag: "🇩🇪", worldCup: 1986, position: "ca", altPositions: [], overall: 79 },
   { id: "rolff-ger-86", name: "Wolfgang Rolff", country: "Alemanha", flag: "🇩🇪", worldCup: 1986, position: "vol", altPositions: ["mc"], overall: 78 },
   { id: "immel-ger-86", name: "Eike Immel", country: "Alemanha", flag: "🇩🇪", worldCup: 1986, position: "gol", altPositions: [], overall: 81 },
-
   // 1990
-  
   { id: "illgner-ger-90", name: "Bodo Illgner", country: "Alemanha", flag: "🇩🇪", worldCup: 1990, position: "gol", altPositions: [], overall: 86 },
   { id: "reuter-ger-90", name: "Stefan Reuter", country: "Alemanha", flag: "🇩🇪", worldCup: 1990, position: "ld", altPositions: ["ld", "md"], overall: 81 },
   { id: "brehme-ger-90", name: "Andreas Brehme", country: "Alemanha", flag: "🇩🇪", worldCup: 1990, position: "le", altPositions: ["le", "me"], overall: 87 },
@@ -3257,9 +2982,7 @@ const PLAYERS = [
   { id: "thon-ger-90", name: "Olaf Thon", country: "Alemanha", flag: "🇩🇪", worldCup: 1990, position: "mei", altPositions: ["ca", "mc"], overall: 81 },
   { id: "hermann-ger-90", name: "Günter Hermann", country: "Alemanha", flag: "🇩🇪", worldCup: 1990, position: "vol", altPositions: ["mc"], overall: 76 },
   { id: "kopke-ger-90", name: "Andreas Köpke", country: "Alemanha", flag: "🇩🇪", worldCup: 1990, position: "gol", altPositions: [], overall: 81 },
-
   // 1994
-  
   { id: "illgner-ger-94", name: "Bodo Illgner", country: "Alemanha", flag: "🇩🇪", worldCup: 1994, position: "gol", altPositions: [], overall: 85 },
   { id: "strunz-ger-94", name: "Thomas Strunz", country: "Alemanha", flag: "🇩🇪", worldCup: 1994, position: "md", altPositions: ["mc", "ld"], overall: 79 },
   { id: "brehme-ger-94", name: "Andreas Brehme", country: "Alemanha", flag: "🇩🇪", worldCup: 1994, position: "le", altPositions: ["le"], overall: 82 },
@@ -3282,9 +3005,7 @@ const PLAYERS = [
   { id: "effenberg-ger-94", name: "Stefan Effenberg", country: "Alemanha", flag: "🇩🇪", worldCup: 1994, position: "mc", altPositions: ["vol", "mei"], overall: 84 },
   { id: "basler-ger-94", name: "Mario Basler", country: "Alemanha", flag: "🇩🇪", worldCup: 1994, position: "md", altPositions: ["pd", "mei"], overall: 81 },
   { id: "kahn-ger-94", name: "Oliver Kahn", country: "Alemanha", flag: "🇩🇪", worldCup: 1994, position: "gol", altPositions: [], overall: 82 },
-
   // 1998
-  
   { id: "kopke-ger-98", name: "Andreas Köpke", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "gol", altPositions: [], overall: 82 },
   { id: "worns-ger-98", name: "Christian Wörns", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "zag", altPositions: ["ld"], overall: 80 },
   { id: "heinrich-ger-98", name: "Jörg Heinrich", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "me", altPositions: ["le", "md"], overall: 79 },
@@ -3296,7 +3017,7 @@ const PLAYERS = [
   { id: "kirsten-ger-98", name: "Ulf Kirsten", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "ca", altPositions: [], overall: 82 },
   { id: "hassler-ger-98", name: "Thomas Häßler", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "mei", altPositions: ["md"], overall: 82 },
   { id: "marschall-ger-98", name: "Olaf Marschall", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "ca", altPositions: [], overall: 78 },
-  { id: "kahn-ger-98", name: "Oliver Kahn", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "gol", altPositions: [], overall: 88 },
+  { id: "kahn-ger-98", name: "Oliver Kahn", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "gol", altPositions: [], overall: 90 },
   { id: "jeremies-ger-98", name: "Jens Jeremies", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "vol", altPositions: ["mc"], overall: 79 },
   { id: "babbel-ger-98", name: "Markus Babbel", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "zag", altPositions: ["ld"], overall: 81 },
   { id: "freund-ger-98", name: "Steffen Freund", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "vol", altPositions: ["mc"], overall: 78 },
@@ -3307,10 +3028,8 @@ const PLAYERS = [
   { id: "bierhoff-ger-98", name: "Oliver Bierhoff", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "ca", altPositions: [], overall: 83 },
   { id: "tarnat-ger-98", name: "Michael Tarnat", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "le", altPositions: ["me"], overall: 78 },
   { id: "lehmann-ger-98", name: "Jens Lehmann", country: "Alemanha", flag: "🇩🇪", worldCup: 1998, position: "gol", altPositions: [], overall: 81 },
-  
   // 2002
-  
-  { id: "kahn-ger-02", name: "Oliver Kahn", country: "Alemanha", flag: "🇩🇪", worldCup: 2002, position: "gol", altPositions: [], overall: 91 },
+  { id: "kahn-ger-02", name: "Oliver Kahn", country: "Alemanha", flag: "🇩🇪", worldCup: 2002, position: "gol", altPositions: [], overall: 93 },
   { id: "linke-ger-02", name: "Thomas Linke", country: "Alemanha", flag: "🇩🇪", worldCup: 2002, position: "zag", altPositions: [], overall: 80 },
   { id: "rehmer-ger-02", name: "Marko Rehmer", country: "Alemanha", flag: "🇩🇪", worldCup: 2002, position: "zag", altPositions: ["ld"], overall: 78 },
   { id: "baumann-ger-02", name: "Frank Baumann", country: "Alemanha", flag: "🇩🇪", worldCup: 2002, position: "zag", altPositions: ["vol"], overall: 77 },
@@ -3333,9 +3052,7 @@ const PLAYERS = [
   { id: "metzelder-ger-02", name: "Christoph Metzelder", country: "Alemanha", flag: "🇩🇪", worldCup: 2002, position: "zag", altPositions: [], overall: 79 },
   { id: "frings-ger-02", name: "Torsten Frings", country: "Alemanha", flag: "🇩🇪", worldCup: 2002, position: "ld", altPositions: ["md", "mc"], overall: 81 },
   { id: "butt-ger-02", name: "Hans-Jörg Butt", country: "Alemanha", flag: "🇩🇪", worldCup: 2002, position: "gol", altPositions: [], overall: 78 },
-  
   // 2006
-  
   { id: "lehmann-ger-06", name: "Jens Lehmann", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "gol", altPositions: [], overall: 85 },
   { id: "jansen-ger-06", name: "Marcell Jansen", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "le", altPositions: ["me"], overall: 78 },
   { id: "friedrich-ger-06", name: "Arne Friedrich", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "ld", altPositions: ["zag"], overall: 80 },
@@ -3346,7 +3063,7 @@ const PLAYERS = [
   { id: "frings-ger-06", name: "Torsten Frings", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "vol", altPositions: ["mc"], overall: 84 },
   { id: "hanke-ger-06", name: "Mike Hanke", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "ca", altPositions: [], overall: 76 },
   { id: "neuville-ger-06", name: "Oliver Neuville", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "ca", altPositions: ["pe"], overall: 78 },
-  { id: "klose-ger-06", name: "Miroslav Klose", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "ca", altPositions: ["ca"], overall: 86 },
+  { id: "klose-ger-06", name: "Miroslav Klose", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "ca", altPositions: ["ca"], overall: 89 },
   { id: "kahn-ger-06", name: "Oliver Kahn", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "gol", altPositions: [], overall: 84 },
   { id: "ballack-ger-06", name: "Michael Ballack", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "mc", altPositions: ["mei"], overall: 89 },
   { id: "hitzlsperger-ger-06", name: "Thomas Hitzlsperger", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "mc", altPositions: ["vol"], overall: 79 },
@@ -3358,41 +3075,37 @@ const PLAYERS = [
   { id: "metzelder-ger-06", name: "Christoph Metzelder", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "zag", altPositions: [], overall: 79 },
   { id: "odonkor-ger-06", name: "David Odonkor", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "md", altPositions: ["pd"], overall: 75 },
   { id: "hildebrand-ger-06", name: "Timo Hildebrand", country: "Alemanha", flag: "🇩🇪", worldCup: 2006, position: "gol", altPositions: [], overall: 79 },
-  
   // 2014
-  
-  { id: "neuer-ger-14", name: "Manuel Neuer", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "gol", altPositions: [], overall: 90 },
+  { id: "neuer-ger-14", name: "Manuel Neuer", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "gol", altPositions: [], overall: 96 },
   { id: "grosskreutz-ger-14", name: "Kevin Großkreutz", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "ld", altPositions: ["le", "md"], overall: 77 },
   { id: "ginter-ger-14", name: "Matthias Ginter", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "zag", altPositions: ["vol"], overall: 75 },
   { id: "howedes-ger-14", name: "Benedikt Höwedes", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "zag", altPositions: ["le", "ld"], overall: 81 },
   { id: "hummels-ger-14", name: "Mats Hummels", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "zag", altPositions: [], overall: 86 },
   { id: "khedira-ger-14", name: "Sami Khedira", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "vol", altPositions: ["mc"], overall: 84 },
   { id: "schweinsteiger-ger-14", name: "Bastian Schweinsteiger", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "mc", altPositions: ["vol"], overall: 86 },
-  { id: "ozil-ger-14", name: "Mesut Özil", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "mei", altPositions: ["pe"], overall: 87 },
+  { id: "ozil-ger-14", name: "Mesut Özil", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "mei", altPositions: ["pe"], overall: 93 },
   { id: "schurrle-ger-14", name: "André Schürrle", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "pe", altPositions: ["pd", "ca"], overall: 81 },
   { id: "podolski-ger-14", name: "Lukas Podolski", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "pe", altPositions: ["ca"], overall: 80 },
   { id: "klose-ger-14", name: "Miroslav Klose", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "ca", altPositions: [], overall: 81 },
   { id: "zieler-ger-14", name: "Ron-Robert Zieler", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "gol", altPositions: [], overall: 77 },
-  { id: "muller-ger-14", name: "Thomas Müller", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "pd", altPositions: ["ca", "mei"], overall: 86 },
+  { id: "muller-ger-14", name: "Thomas Müller", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "pd", altPositions: ["ca", "mei"], overall: 89 },
   { id: "draxler-ger-14", name: "Julian Draxler", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "pe", altPositions: ["mei"], overall: 80 },
   { id: "durm-ger-14", name: "Erik Durm", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "le", altPositions: ["ld"], overall: 76 },
   { id: "lahm-ger-14", name: "Philipp Lahm", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "ld", altPositions: ["vol", "le"], overall: 89 },
   { id: "mertesacker-ger-14", name: "Per Mertesacker", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "zag", altPositions: [], overall: 83 },
-  { id: "kroos-ger-14", name: "Toni Kroos", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "mc", altPositions: ["mei", "vol"], overall: 85 },
+  { id: "kroos-ger-14", name: "Toni Kroos", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "mc", altPositions: ["mei", "vol"], overall: 95 },
   { id: "gotze-ger-14", name: "Mario Götze", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "mei", altPositions: ["ca", "pe"], overall: 85 },
   { id: "boateng-ger-14", name: "Jérôme Boateng", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "zag", altPositions: ["ld"], overall: 84 },
   { id: "mustafi-ger-14", name: "Shkodran Mustafi", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "zag", altPositions: ["ld"], overall: 76 },
   { id: "weidenfeller-ger-14", name: "Roman Weidenfeller", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "gol", altPositions: [], overall: 80 },
   { id: "kramer-ger-14", name: "Christoph Kramer", country: "Alemanha", flag: "🇩🇪", worldCup: 2014, position: "vol", altPositions: ["mc"], overall: 77 },
-  
   // 2026
-  
-  { id: "neuer-ger-26", name: "Manuel Neuer", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "gol", altPositions: [], overall: 85 },
-  { id: "rudiger-ger-26", name: "Antonio Rüdiger", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "zag", altPositions: [], overall: 87 },
+  { id: "neuer-ger-26", name: "Manuel Neuer", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "gol", altPositions: [], overall: 86 },
+  { id: "rudiger-ger-26", name: "Antonio Rüdiger", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "zag", altPositions: [], overall: 88 },
   { id: "anton-ger-26", name: "Waldemar Anton", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "zag", altPositions: [], overall: 81 },
   { id: "tah-ger-26", name: "Jonathan Tah", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "zag", altPositions: [], overall: 83 },
   { id: "pavlovic-ger-26", name: "Aleksandar Pavlović", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 82 },
-  { id: "kimmich-ger-26", name: "Joshua Kimmich", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "ld", altPositions: ["vol"], overall: 86 },
+  { id: "kimmich-ger-26", name: "Joshua Kimmich", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "ld", altPositions: ["vol"], overall: 88 },
   { id: "havertz-ger-26", name: "Kai Havertz", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "ca", altPositions: ["mei"], overall: 85 },
   { id: "goretzka-ger-26", name: "Leon Goretzka", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "mc", altPositions: ["vol"], overall: 83 },
   { id: "leweling-ger-26", name: "Jamie Leweling", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "pd", altPositions: ["pe"], overall: 79 },
@@ -3413,8 +3126,8 @@ const PLAYERS = [
   { id: "thiaw-ger-26", name: "Malick Thiaw", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "zag", altPositions: [], overall: 79 },
   { id: "karl-ger-26", name: "Lennart Karl", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "mei", altPositions: ["mc"], overall: 72 },
   { id: "undav-ger-26", name: "Deniz Undav", country: "Alemanha", flag: "🇩🇪", worldCup: 2026, position: "ca", altPositions: ["ca"], overall: 81 },
-  
-  // ===== GHA (Gana) =====
+
+  // ===== Gana =====
   // 2010
   { id: "daniel-agyei-gha-10", name: "Daniel Agyei", country: "Gana", flag: "🇬🇭", worldCup: 2010, position: "gol", altPositions: [], overall: 65 },
   { id: "hans-sarpei-gha-10", name: "Hans Sarpei", country: "Gana", flag: "🇬🇭", worldCup: 2010, position: "le", altPositions: ["ld"], overall: 72 },
@@ -3462,7 +3175,8 @@ const PLAYERS = [
   { id: "john-boye-gha-14", name: "John Boye", country: "Gana", flag: "🇬🇭", worldCup: 2014, position: "zag", altPositions: [], overall: 74 },
   { id: "mubarak-wakaso-gha-14", name: "Mubarak Wakaso", country: "Gana", flag: "🇬🇭", worldCup: 2014, position: "mc", altPositions: ["me"], overall: 74 },
   { id: "harrison-afful-gha-14", name: "Harrison Afful", country: "Gana", flag: "🇬🇭", worldCup: 2014, position: "ld", altPositions: ["le"], overall: 72 },
-  // ===== GRE (Grécia) =====
+
+  // ===== Grécia =====
   // 2010
   { id: "chalkias-gre-10", name: "Kostas Chalkias", country: "Grécia", flag: "🇬🇷", worldCup: 2010, position: "gol", altPositions: [], overall: 74 },
   { id: "seitaridis-gre-10", name: "Giourkas Seitaridis", country: "Grécia", flag: "🇬🇷", worldCup: 2010, position: "ld", altPositions: ["ld"], overall: 74 },
@@ -3511,7 +3225,8 @@ const PLAYERS = [
   { id: "katsouranis-gre-14", name: "Kostas Katsouranis", country: "Grécia", flag: "🇬🇷", worldCup: 2014, position: "vol", altPositions: ["mc", "zag"], overall: 75 },
   { id: "samaris-gre-14", name: "Andreas Samaris", country: "Grécia", flag: "🇬🇷", worldCup: 2014, position: "mc", altPositions: ["vol"], overall: 74 },
   { id: "tachtsidis-gre-14", name: "Panagiotis Tachtsidis", country: "Grécia", flag: "🇬🇷", worldCup: 2014, position: "vol", altPositions: ["mc"], overall: 73 },
-  // ===== HUN (Hungria) =====
+
+  // ===== Hungria =====
   // 1954
   { id: "gyula-grosics-hun-54", name: "Gyula Grosics", country: "Hungria", flag: "🇭🇺", worldCup: 1954, position: "gol", altPositions: [], overall: 88 },
   { id: "jeno-buzanszky-hun-54", name: "Jenő Buzánszky", country: "Hungria", flag: "🇭🇺", worldCup: 1954, position: "ld", altPositions: ["ld"], overall: 85 },
@@ -3522,7 +3237,7 @@ const PLAYERS = [
   { id: "jozsef-toth-hun-54", name: "József Tóth", country: "Hungria", flag: "🇭🇺", worldCup: 1954, position: "pd", altPositions: ["md"], overall: 82 },
   { id: "sandor-kocsis-hun-54", name: "Sándor Kocsis", country: "Hungria", flag: "🇭🇺", worldCup: 1954, position: "ca", altPositions: ["ca"], overall: 91 },
   { id: "nandor-hidegkuti-hun-54", name: "Nándor Hidegkuti", country: "Hungria", flag: "🇭🇺", worldCup: 1954, position: "ca", altPositions: ["mei", "ca"], overall: 89 },
-  { id: "ferenc-puskas-hun-54", name: "Ferenc Puskás", country: "Hungria", flag: "🇭🇺", worldCup: 1954, position: "ca", altPositions: ["ca", "mei"], overall: 94 },
+  { id: "ferenc-puskas-hun-54", name: "Ferenc Puskás", country: "Hungria", flag: "🇭🇺", worldCup: 1954, position: "ca", altPositions: ["ca", "mei"], overall: 96 },
   { id: "zoltan-czibor-hun-54", name: "Zoltán Czibor", country: "Hungria", flag: "🇭🇺", worldCup: 1954, position: "pe", altPositions: ["me"], overall: 88 },
   { id: "bela-karpati-hun-54", name: "Béla Kárpáti", country: "Hungria", flag: "🇭🇺", worldCup: 1954, position: "zag", altPositions: [], overall: 78 },
   { id: "pal-varhidi-hun-54", name: "Pál Várhidi", country: "Hungria", flag: "🇭🇺", worldCup: 1954, position: "zag", altPositions: ["le"], overall: 77 },
@@ -3604,7 +3319,8 @@ const PLAYERS = [
   { id: "antal-nagy-1944-hun-66", name: "Antal Nagy", country: "Hungria", flag: "🇭🇺", worldCup: 1966, position: "ca", altPositions: ["ca"], overall: 76 },
   { id: "jozsef-gelei-hun-66", name: "József Gelei", country: "Hungria", flag: "🇭🇺", worldCup: 1966, position: "gol", altPositions: [], overall: 77 },
   { id: "istvan-geczi-hun-66", name: "István Géczi", country: "Hungria", flag: "🇭🇺", worldCup: 1966, position: "gol", altPositions: [], overall: 76 },
-  // ===== IRL (Irlanda) =====
+
+  // ===== Irlanda =====
   // 1990
   { id: "packie-bonner-irl-90", name: "Packie Bonner", country: "Irlanda", flag: "🇮🇪", worldCup: 1990, position: "gol", altPositions: [], overall: 82 },
   { id: "chris-morris-irl-90", name: "Chris Morris", country: "Irlanda", flag: "🇮🇪", worldCup: 1990, position: "ld", altPositions: ["ld"], overall: 76 },
@@ -3651,7 +3367,8 @@ const PLAYERS = [
   { id: "steven-reid-irl-02", name: "Steven Reid", country: "Irlanda", flag: "🇮🇪", worldCup: 2002, position: "md", altPositions: ["mc"], overall: 77 },
   { id: "lee-carsley-irl-02", name: "Lee Carsley", country: "Irlanda", flag: "🇮🇪", worldCup: 2002, position: "vol", altPositions: ["mc"], overall: 77 },
   { id: "alan-kelly-irl-02", name: "Alan Kelly", country: "Irlanda", flag: "🇮🇪", worldCup: 2002, position: "gol", altPositions: [], overall: 74 },
-  // ===== ITA (Itália) =====
+
+  // ===== Itália =====
   // 1950
   { id: "giuseppe-moro-ita-50", name: "Giuseppe Moro", country: "Itália", flag: "🇮🇹", worldCup: 1950, position: "gol", altPositions: [], overall: 78 },
   { id: "lucidio-sentimenti-ita-50", name: "Lucidio Sentimenti", country: "Itália", flag: "🇮🇹", worldCup: 1950, position: "gol", altPositions: [], overall: 75 },
@@ -3805,7 +3522,7 @@ const PLAYERS = [
   { id: "paolo-conti-ita-78", name: "Paolo Conti", country: "Itália", flag: "🇮🇹", worldCup: 1978, position: "gol", altPositions: [], overall: 74 },
   { id: "patrizio-sala-ita-78", name: "Patrizio Sala", country: "Itália", flag: "🇮🇹", worldCup: 1978, position: "mc", altPositions: [], overall: 76 },
   { id: "marco-tardelli-ita-78", name: "Marco Tardelli", country: "Itália", flag: "🇮🇹", worldCup: 1978, position: "mc", altPositions: ["vol"], overall: 86 },
-  { id: "renato-zaccarelli-ita-78", name: "Renato Zaccarelli", country: "Itália", flag: "🇮🇹", position: "mc", altPositions: [], overall: 79, },
+  { id: "renato-zaccarelli-ita-78", name: "Renato Zaccarelli", country: "Itália", flag: "🇮🇹", worldCup: 1978, position: "mc", altPositions: [], overall: 79 },
   { id: "franco-causio-ita-78", name: "Franco Causio", country: "Itália", flag: "🇮🇹", worldCup: 1978, position: "md", altPositions: ["pd"], overall: 83 },
   { id: "claudio-sala-ita-78", name: "Claudio Sala", country: "Itália", flag: "🇮🇹", worldCup: 1978, position: "md", altPositions: [], overall: 78 },
   { id: "roberto-bettega-ita-78", name: "Roberto Bettega", country: "Itália", flag: "🇮🇹", worldCup: 1978, position: "ca", altPositions: [], overall: 86 },
@@ -3908,9 +3625,9 @@ const PLAYERS = [
   // 1998
   { id: "francesco-toldo-ita-98", name: "Francesco Toldo", country: "Itália", flag: "🇮🇹", worldCup: 1998, position: "gol", altPositions: [], overall: 82 },
   { id: "gianluca-pagliuca-ita-98", name: "Gianluca Pagliuca", country: "Itália", flag: "🇮🇹", worldCup: 1998, position: "gol", altPositions: [], overall: 83 },
-  { id: "gianluigi-buffon-ita-98", name: "Gianluigi Buffon", country: "Itália", flag: "🇮🇹", worldCup: 1998, position: "gol", altPositions: [], overall: 82 },
+  { id: "gianluigi-buffon-ita-98", name: "Gianluigi Buffon", country: "Itália", flag: "🇮🇹", worldCup: 1998, position: "gol", altPositions: [], overall: 84 },
   { id: "giuseppe-bergomi-ita-98", name: "Giuseppe Bergomi", country: "Itália", flag: "🇮🇹", worldCup: 1998, position: "zag", altPositions: [], overall: 78 },
-  { id: "paolo-maldini-ita-98", name: "Paolo Maldini", country: "Itália", flag: "🇮🇹", worldCup: 1998, position: "le", altPositions: ["zag"], overall: 90 },
+  { id: "paolo-maldini-ita-98", name: "Paolo Maldini", country: "Itália", flag: "🇮🇹", worldCup: 1998, position: "le", altPositions: ["zag"], overall: 91 },
   { id: "fabio-cannavaro-ita-98", name: "Fabio Cannavaro", country: "Itália", flag: "🇮🇹", worldCup: 1998, position: "zag", altPositions: [], overall: 85 },
   { id: "alessandro-costacurta-ita-98", name: "Alessandro Costacurta", country: "Itália", flag: "🇮🇹", worldCup: 1998, position: "zag", altPositions: [], overall: 83 },
   { id: "alessandro-nesta-ita-98", name: "Alessandro Nesta", country: "Itália", flag: "🇮🇹", worldCup: 1998, position: "zag", altPositions: [], overall: 86 },
@@ -3929,9 +3646,9 @@ const PLAYERS = [
   { id: "enrico-chiesa-ita-98", name: "Enrico Chiesa", country: "Itália", flag: "🇮🇹", worldCup: 1998, position: "ca", altPositions: [], overall: 81 },
   { id: "christian-vieri-ita-98", name: "Christian Vieri", country: "Itália", flag: "🇮🇹", worldCup: 1998, position: "ca", altPositions: [], overall: 88 },
   // 2002
-  { id: "gianluigi-buffon-ita-02", name: "Gianluigi Buffon", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "gol", altPositions: [], overall: 88 },
+  { id: "gianluigi-buffon-ita-02", name: "Gianluigi Buffon", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "gol", altPositions: [], overall: 89 },
   { id: "christian-panucci-ita-02", name: "Christian Panucci", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "ld", altPositions: ["zag"], overall: 80 },
-  { id: "paolo-maldini-ita-02", name: "Paolo Maldini", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "zag", altPositions: ["le"], overall: 87 },
+  { id: "paolo-maldini-ita-02", name: "Paolo Maldini", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "zag", altPositions: ["le"], overall: 88 },
   { id: "francesco-coco-ita-02", name: "Francesco Coco", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "le", altPositions: [], overall: 77 },
   { id: "fabio-cannavaro-ita-02", name: "Fabio Cannavaro", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "zag", altPositions: [], overall: 89 },
   { id: "alessandro-nesta-ita-02", name: "Alessandro Nesta", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "zag", altPositions: [], overall: 90 },
@@ -3942,7 +3659,7 @@ const PLAYERS = [
   { id: "damiano-tommasi-ita-02", name: "Damiano Tommasi", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "mc", altPositions: ["vol"], overall: 80 },
   { id: "gennaro-gattuso-ita-02", name: "Gennaro Gattuso", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "vol", altPositions: ["mc"], overall: 82 },
   { id: "angelo-di-livio-ita-02", name: "Angelo Di Livio", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "md", altPositions: ["me"], overall: 77 },
-  { id: "francesco-totti-ita-02", name: "Francesco Totti", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "mei", altPositions: ["ca", "ca"], overall: 90 },
+  { id: "francesco-totti-ita-02", name: "Francesco Totti", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "mei", altPositions: ["ca", "ca"], overall: 95 },
   { id: "cristiano-don-ita-02", name: "Cristiano Doni", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "mei", altPositions: ["mc"], overall: 79 },
   { id: "gianluca-zambrotta-ita-02", name: "Gianluca Zambrotta", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "me", altPositions: ["md", "le"], overall: 83 },
   { id: "alessandro-del-piero-ita-02", name: "Alessandro Del Piero", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "ca", altPositions: ["ca"], overall: 89 },
@@ -3952,7 +3669,7 @@ const PLAYERS = [
   { id: "marco-delvecchio-ita-02", name: "Marco Delvecchio", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "ca", altPositions: [], overall: 80 },
   { id: "francesco-antonioli-ita-02", name: "Francesco Antonioli", country: "Itália", flag: "🇮🇹", worldCup: 2002, position: "gol", altPositions: [], overall: 77 },
   // 2006
-  { id: "gianluigi-buffon-ita-06", name: "Gianluigi Buffon", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "gol", altPositions: [], overall: 94 },
+  { id: "gianluigi-buffon-ita-06", name: "Gianluigi Buffon", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "gol", altPositions: [], overall: 96 },
   { id: "cristian-zaccardo-ita-06", name: "Cristian Zaccardo", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "ld", altPositions: [], overall: 78 },
   { id: "fabio-grosso-ita-06", name: "Fabio Grosso", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "le", altPositions: [], overall: 81 },
   { id: "daniele-de-rossi-ita-06", name: "Daniele De Rossi", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "vol", altPositions: ["mc"], overall: 84 },
@@ -3961,7 +3678,7 @@ const PLAYERS = [
   { id: "alessandro-del-piero-ita-06", name: "Alessandro Del Piero", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "ca", altPositions: ["mei", "ca"], overall: 86 },
   { id: "gennaro-gattuso-ita-06", name: "Gennaro Gattuso", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "vol", altPositions: ["mc"], overall: 86 },
   { id: "luca-toni-ita-06", name: "Luca Toni", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "ca", altPositions: [], overall: 89 },
-  { id: "francesco-totti-ita-06", name: "Francesco Totti", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "mei", altPositions: ["ca", "ca"], overall: 90 },
+  { id: "francesco-totti-ita-06", name: "Francesco Totti", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "mei", altPositions: ["ca", "ca"], overall: 92 },
   { id: "alberto-gilardino-ita-06", name: "Alberto Gilardino", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "ca", altPositions: [], overall: 83 },
   { id: "angelo-peruzzi-ita-06", name: "Angelo Peruzzi", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "gol", altPositions: [], overall: 82 },
   { id: "alessandro-nesta-ita-06", name: "Alessandro Nesta", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "zag", altPositions: [], overall: 91 },
@@ -3975,7 +3692,8 @@ const PLAYERS = [
   { id: "andrea-pirlo-ita-06", name: "Andrea Pirlo", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "vol", altPositions: ["mc"], overall: 91 },
   { id: "massimo-oddo-ita-06", name: "Massimo Oddo", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "ld", altPositions: [], overall: 80 },
   { id: "marco-materazzi-ita-06", name: "Marco Materazzi", country: "Itália", flag: "🇮🇹", worldCup: 2006, position: "zag", altPositions: [], overall: 82 },
-  // ===== JPN (Japão) =====
+
+  // ===== Japão =====
   // 2002
   { id: "yoshikatsu-kawaguchi-jpn-02", name: "Yoshikatsu Kawaguchi", country: "Japão", flag: "🇯🇵", worldCup: 2002, position: "gol", altPositions: [], overall: 78 },
   { id: "yutaka-akita-jpn-02", name: "Yutaka Akita", country: "Japão", flag: "🇯🇵", worldCup: 2002, position: "zag", altPositions: [], overall: 74 },
@@ -4050,7 +3768,8 @@ const PLAYERS = [
   { id: "yuki-soma-jpn-22", name: "Yuki Soma", country: "Japão", flag: "🇯🇵", worldCup: 2022, position: "me", altPositions: ["pe", "le"], overall: 72 },
   { id: "daizen-maeda-jpn-22", name: "Daizen Maeda", country: "Japão", flag: "🇯🇵", worldCup: 2022, position: "ca", altPositions: ["pe", "me"], overall: 76 },
   { id: "hiroki-ito-jpn-22", name: "Hiroki Ito", country: "Japão", flag: "🇯🇵", worldCup: 2022, position: "zag", altPositions: ["le"], overall: 76 },
-  // ===== KOR (Coreia do Sul) =====
+
+  // ===== Coreia do Sul =====
   // 2002
   { id: "lee-woon-jae-kor-02", name: "Lee Woon-jae", country: "Coreia do Sul", flag: "🇰🇷", worldCup: 2002, position: "gol", altPositions: [], overall: 80 },
   { id: "hyun-young-min-kor-02", name: "Hyun Young-min", country: "Coreia do Sul", flag: "🇰🇷", worldCup: 2002, position: "le", altPositions: ["le"], overall: 72 },
@@ -4130,7 +3849,7 @@ const PLAYERS = [
   { id: "kim-min-jae-kor-22", name: "Kim Min-jae", country: "Coreia do Sul", flag: "🇰🇷", worldCup: 2022, position: "zag", altPositions: [], overall: 83 },
   { id: "jung-woo-young-kor-22", name: "Jung Woo-young", country: "Coreia do Sul", flag: "🇰🇷", worldCup: 2022, position: "vol", altPositions: ["mc"], overall: 73 },
   { id: "hwang-in-beom-kor-22", name: "Hwang In-beom", country: "Coreia do Sul", flag: "🇰🇷", worldCup: 2022, position: "mc", altPositions: ["vol", "mei"], overall: 76 },
-  { id: "son-heung-min-kor-22", name: "Son Heung-min", country: "Coreia do Sul", flag: "🇰🇷", worldCup: 2022, position: "pe", altPositions: ["me", "ca"], overall: 89 },
+  { id: "son-heung-min-kor-22", name: "Son Heung-min", country: "Coreia do Sul", flag: "🇰🇷", worldCup: 2022, position: "pe", altPositions: ["me", "ca"], overall: 91 },
   { id: "paik-seung-ho-kor-22", name: "Paik Seung-ho", country: "Coreia do Sul", flag: "🇰🇷", worldCup: 2022, position: "mc", altPositions: ["vol"], overall: 72 },
   { id: "cho-gue-sung-kor-22", name: "Cho Gue-sung", country: "Coreia do Sul", flag: "🇰🇷", worldCup: 2022, position: "ca", altPositions: [], overall: 74 },
   { id: "lee-jae-sung-kor-22", name: "Lee Jae-sung", country: "Coreia do Sul", flag: "🇰🇷", worldCup: 2022, position: "mei", altPositions: ["mc", "md"], overall: 76 },
@@ -4150,7 +3869,8 @@ const PLAYERS = [
   { id: "cho-yu-min-kor-22", name: "Cho Yu-min", country: "Coreia do Sul", flag: "🇰🇷", worldCup: 2022, position: "zag", altPositions: [], overall: 70 },
   { id: "jeong-woo-yeong-kor-22", name: "Jeong Woo-yeong", country: "Coreia do Sul", flag: "🇰🇷", worldCup: 2022, position: "md", altPositions: ["me", "mei"], overall: 75 },
   { id: "song-min-kyu-kor-22", name: "Song Min-kyu", country: "Coreia do Sul", flag: "🇰🇷", worldCup: 2022, position: "me", altPositions: ["pe"], overall: 72 },
-  // ===== MAR (Marrocos) =====
+
+  // ===== Marrocos =====
   // 1986
   { id: "ezzaki-badou-mar-86", name: "Ezzaki Badou", country: "Marrocos", flag: "🇲🇦", worldCup: 1986, position: "gol", altPositions: [], overall: 84 },
   { id: "labid-khalifa-mar-86", name: "Labid Khalifa", country: "Marrocos", flag: "🇲🇦", worldCup: 1986, position: "ld", altPositions: ["ld"], overall: 75 },
@@ -4225,7 +3945,8 @@ const PLAYERS = [
   { id: "badr-benoun-mar-22", name: "Badr Benoun", country: "Marrocos", flag: "🇲🇦", worldCup: 2022, position: "zag", altPositions: [], overall: 74 },
   { id: "yahia-attiyat-allah-mar-22", name: "Yahia Attiyat Allah", country: "Marrocos", flag: "🇲🇦", worldCup: 2022, position: "le", altPositions: ["le"], overall: 74 },
   { id: "yahya-jabrane-mar-22", name: "Yahya Jabrane", country: "Marrocos", flag: "🇲🇦", worldCup: 2022, position: "vol", altPositions: ["mc"], overall: 73 },
-  // ===== MEX (México) =====
+
+  // ===== México =====
   // 1950
   { id: "antonio-carbajal-mex-50", name: "Antonio Carbajal", country: "México", flag: "🇲🇽", worldCup: 1950, position: "gol", altPositions: [], overall: 84 },
   { id: "raul-cordoba-mex-50", name: "Raúl Córdoba", country: "México", flag: "🇲🇽", worldCup: 1950, position: "gol", altPositions: [], overall: 73 },
@@ -4434,7 +4155,8 @@ const PLAYERS = [
   { id: "adolfo-bautista-mex-10", name: "Adolfo Bautista", country: "México", flag: "🇲🇽", worldCup: 2010, position: "mei", altPositions: ["ca"], overall: 74 },
   { id: "alberto-medina-mex-10", name: "Alberto Medina", country: "México", flag: "🇲🇽", worldCup: 2010, position: "pd", altPositions: ["md"], overall: 73 },
   { id: "luis-ernesto-michel-mex-10", name: "Luis Ernesto Michel", country: "México", flag: "🇲🇽", worldCup: 2010, position: "gol", altPositions: [], overall: 75 },
-  // ===== NED (Holanda) =====
+
+  // ===== Holanda =====
   // 1974
   { id: "jan-jongbloed-ned-74", name: "Jan Jongbloed", country: "Holanda", flag: "🇳🇱", worldCup: 1974, position: "gol", altPositions: [], overall: 83 },
   { id: "piet-schrijvers-ned-74", name: "Piet Schrijvers", country: "Holanda", flag: "🇳🇱", worldCup: 1974, position: "gol", altPositions: [], overall: 80 },
@@ -4624,7 +4346,8 @@ const PLAYERS = [
   { id: "donyell-malen-ned-26", name: "Donyell Malen", country: "Holanda", flag: "🇳🇱", worldCup: 2026, position: "pd", altPositions: ["ca"], overall: 82 },
   { id: "brian-brobbey-ned-26", name: "Brian Brobbey", country: "Holanda", flag: "🇳🇱", worldCup: 2026, position: "ca", altPositions: [], overall: 81 },
   { id: "crysencio-summerville-ned-26", name: "Crysencio Summerville", country: "Holanda", flag: "🇳🇱", worldCup: 2026, position: "pe", altPositions: ["pd"], overall: 80 },
-  // ===== NGA (Nigéria) =====
+
+  // ===== Nigéria =====
   // 1994
   { id: "peter-rufai-nga-94", name: "Peter Rufai", country: "Nigéria", flag: "🇳🇬", worldCup: 1994, position: "gol", altPositions: [], overall: 78 },
   { id: "augustine-eguavoen-nga-94", name: "Augustine Eguavoen", country: "Nigéria", flag: "🇳🇬", worldCup: 1994, position: "ld", altPositions: ["zag"], overall: 77 },
@@ -4718,7 +4441,8 @@ const PLAYERS = [
   { id: "chigozie-agbim-nga-14", name: "Chigozie Agbim", country: "Nigéria", flag: "🇳🇬", worldCup: 2014, position: "gol", altPositions: [], overall: 68 },
   { id: "kenneth-omeruo-nga-14", name: "Kenneth Omeruo", country: "Nigéria", flag: "🇳🇬", worldCup: 2014, position: "zag", altPositions: [], overall: 74 },
   { id: "shola-ameobi-nga-14", name: "Shola Ameobi", country: "Nigéria", flag: "🇳🇬", worldCup: 2014, position: "ca", altPositions: [], overall: 72 },
-  // ===== NIR (Irlanda do Norte) =====
+
+  // ===== Irlanda do Norte =====
   // 1958
   { id: "harry-gregg-nir-58", name: "Harry Gregg", country: "Irlanda do Norte", flag: "🇳🇮", worldCup: 1958, position: "gol", altPositions: [], overall: 84 },
   { id: "willie-cunningham-nir-58", name: "Willie Cunningham", country: "Irlanda do Norte", flag: "🇳🇮", worldCup: 1958, position: "zag", altPositions: ["le"], overall: 76 },
@@ -4742,7 +4466,8 @@ const PLAYERS = [
   { id: "sammy-chapman-nir-58", name: "Sammy Chapman", country: "Irlanda do Norte", flag: "🇳🇮", worldCup: 1958, position: "mc", altPositions: [], overall: 69 },
   { id: "tommy-hamill-nir-58", name: "Tommy Hamill", country: "Irlanda do Norte", flag: "🇳🇮", worldCup: 1958, position: "ld", altPositions: [], overall: 69 },
   { id: "bobby-trainor-nir-58", name: "Bobby Trainor", country: "Irlanda do Norte", flag: "🇳🇮", worldCup: 1958, position: "ca", altPositions: [], overall: 68 },
-  // ===== PAR (Paraguai) =====
+
+  // ===== Paraguai =====
   // 1950
   { id: "pablo-centurion-par-50", name: "Pablo Centurión", country: "Paraguai", flag: "🇵🇾", worldCup: 1950, position: "gol", altPositions: [], overall: 73 },
   { id: "marcelino-vargas-par-50", name: "Marcelino Vargas", country: "Paraguai", flag: "🇵🇾", worldCup: 1950, position: "gol", altPositions: [], overall: 70 },
@@ -4859,7 +4584,8 @@ const PLAYERS = [
   { id: "antolin-alcaraz-par-10", name: "Antolín Alcaraz", country: "Paraguai", flag: "🇵🇾", worldCup: 2010, position: "zag", altPositions: [], overall: 77 },
   { id: "aldo-bobadilla-par-10", name: "Aldo Bobadilla", country: "Paraguai", flag: "🇵🇾", worldCup: 2010, position: "gol", altPositions: [], overall: 72 },
   { id: "rodolfo-gamarra-par-10", name: "Rodolfo Gamarra", country: "Paraguai", flag: "🇵🇾", worldCup: 2010, position: "pd", altPositions: ["ca"], overall: 71 },
-  // ===== PER (Peru) =====
+
+  // ===== Peru =====
   // 1970
   { id: "luis-rubinos-per-70", name: "Luis Rubiños", country: "Peru", flag: "🇵🇪", worldCup: 1970, position: "gol", altPositions: [], overall: 76 },
   { id: "eloy-campos-per-70", name: "Eloy Campos", country: "Peru", flag: "🇵🇪", worldCup: 1970, position: "ld", altPositions: [], overall: 73 },
@@ -4906,7 +4632,8 @@ const PLAYERS = [
   { id: "hugo-sotil-per-78", name: "Hugo Sotil", country: "Peru", flag: "🇵🇪", worldCup: 1978, position: "ca", altPositions: ["ca"], overall: 79 },
   { id: "ramon-quiroga-per-78", name: "Ramón Quiroga", country: "Peru", flag: "🇵🇪", worldCup: 1978, position: "gol", altPositions: [], overall: 78 },
   { id: "roberto-rojas-per-78", name: "Roberto Rojas", country: "Peru", flag: "🇵🇪", worldCup: 1978, position: "gol", altPositions: [], overall: 72 },
-  // ===== POL (Polônia) =====
+
+  // ===== Polônia =====
   // 1974
   { id: "jan-tomaszewski-pol-74", name: "Jan Tomaszewski", country: "Polônia", flag: "🇵🇱", worldCup: 1974, position: "gol", altPositions: [], overall: 87 },
   { id: "andrzej-fischer-pol-74", name: "Andrzej Fischer", country: "Polônia", flag: "🇵🇱", worldCup: 1974, position: "gol", altPositions: [], overall: 72 },
@@ -4999,7 +4726,8 @@ const PLAYERS = [
   { id: "zbigniew-boniek-pol-86", name: "Zbigniew Boniek", country: "Polônia", flag: "🇵🇱", worldCup: 1986, position: "mei", altPositions: ["ca", "mc"], overall: 87 },
   { id: "dariusz-dziekanowski-pol-86", name: "Dariusz Dziekanowski", country: "Polônia", flag: "🇵🇱", worldCup: 1986, position: "ca", altPositions: ["mei"], overall: 80 },
   { id: "jan-furtok-pol-86", name: "Jan Furtok", country: "Polônia", flag: "🇵🇱", worldCup: 1986, position: "ca", altPositions: [], overall: 76 },
-  // ===== POR (Portugal) =====
+
+  // ===== Portugal =====
   // 1966
   { id: "americo-lopes-por-66", name: "Américo Lopes", country: "Portugal", flag: "🇵🇹", worldCup: 1966, position: "gol", altPositions: [], overall: 74 },
   { id: "joaquim-carvalho-por-66", name: "Joaquim Carvalho", country: "Portugal", flag: "🇵🇹", worldCup: 1966, position: "gol", altPositions: [], overall: 73 },
@@ -5030,7 +4758,7 @@ const PLAYERS = [
   { id: "ricardo-costa-por-06", name: "Ricardo Costa", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "zag", altPositions: [], overall: 76 },
   { id: "fernando-meira-por-06", name: "Fernando Meira", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "zag", altPositions: ["vol"], overall: 80 },
   { id: "costinha-por-06", name: "Costinha", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "vol", altPositions: [], overall: 78 },
-  { id: "luis-figo-por-06", name: "Luís Figo", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "pd", altPositions: ["mei"], overall: 87 },
+  { id: "luis-figo-por-06", name: "Luís Figo", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "pd", altPositions: ["mei"], overall: 89 },
   { id: "petit-por-06", name: "Petit", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "vol", altPositions: ["mc"], overall: 80 },
   { id: "pauleta-por-06", name: "Pauleta", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "ca", altPositions: [], overall: 83 },
   { id: "hugo-viana-por-06", name: "Hugo Viana", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "mc", altPositions: ["mei"], overall: 78 },
@@ -5040,7 +4768,7 @@ const PLAYERS = [
   { id: "nuno-valente-por-06", name: "Nuno Valente", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "le", altPositions: [], overall: 78 },
   { id: "luis-boa-morte-por-06", name: "Luís Boa Morte", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "me", altPositions: ["pe"], overall: 78 },
   { id: "ricardo-carvalho-por-06", name: "Ricardo Carvalho", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "zag", altPositions: [], overall: 88 },
-  { id: "cristiano-ronaldo-por-06", name: "Cristiano Ronaldo", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "pd", altPositions: ["pe"], overall: 87 },
+  { id: "cristiano-ronaldo-por-06", name: "Cristiano Ronaldo", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "pd", altPositions: ["pe"], overall: 90 },
   { id: "maniche-por-06", name: "Maniche", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "mc", altPositions: ["vol"], overall: 82 },
   { id: "tiago-por-06", name: "Tiago", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "mc", altPositions: ["mei"], overall: 81 },
   { id: "deco-por-06", name: "Deco", country: "Portugal", flag: "🇵🇹", worldCup: 2006, position: "mei", altPositions: ["mc"], overall: 88 },
@@ -5054,11 +4782,11 @@ const PLAYERS = [
   { id: "manuel-fernandes-por-18", name: "Manuel Fernandes", country: "Portugal", flag: "🇵🇹", worldCup: 2018, position: "mc", altPositions: ["mei"], overall: 79 },
   { id: "raphael-guerreiro-por-18", name: "Raphaël Guerreiro", country: "Portugal", flag: "🇵🇹", worldCup: 2018, position: "le", altPositions: ["me"], overall: 81 },
   { id: "jose-fonte-por-18", name: "José Fonte", country: "Portugal", flag: "🇵🇹", worldCup: 2018, position: "zag", altPositions: [], overall: 78 },
-  { id: "cristiano-ronaldo-por-18", name: "Cristiano Ronaldo", country: "Portugal", flag: "🇵🇹", worldCup: 2018, position: "ca", altPositions: ["pe"], overall: 94 },
+  { id: "cristiano-ronaldo-por-18", name: "Cristiano Ronaldo", country: "Portugal", flag: "🇵🇹", worldCup: 2018, position: "ca", altPositions: ["pe"], overall: 97 },
   { id: "joao-moutinho-por-18", name: "João Moutinho", country: "Portugal", flag: "🇵🇹", worldCup: 2018, position: "mc", altPositions: ["vol"], overall: 82 },
   { id: "andre-silva-por-18", name: "André Silva", country: "Portugal", flag: "🇵🇹", worldCup: 2018, position: "ca", altPositions: [], overall: 79 },
   { id: "joao-mario-por-18", name: "João Mário", country: "Portugal", flag: "🇵🇹", worldCup: 2018, position: "md", altPositions: ["mc"], overall: 79 },
-  { id: "bernardo-silva-por-18", name: "Bernardo Silva", country: "Portugal", flag: "🇵🇹", worldCup: 2018, position: "pd", altPositions: ["mei"], overall: 85 },
+  { id: "bernardo-silva-por-18", name: "Bernardo Silva", country: "Portugal", flag: "🇵🇹", worldCup: 2018, position: "pd", altPositions: ["mei"], overall: 86 },
   { id: "anthony-lopes-por-18", name: "Anthony Lopes", country: "Portugal", flag: "🇵🇹", worldCup: 2018, position: "gol", altPositions: [], overall: 83 },
   { id: "ruben-dias-por-18", name: "Rúben Dias", country: "Portugal", flag: "🇵🇹", worldCup: 2018, position: "zag", altPositions: [], overall: 78 },
   { id: "william-carvalho-por-18", name: "William Carvalho", country: "Portugal", flag: "🇵🇹", worldCup: 2018, position: "vol", altPositions: [], overall: 83 },
@@ -5078,7 +4806,7 @@ const PLAYERS = [
   { id: "ruben-dias-por-22", name: "Rúben Dias", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "zag", altPositions: [], overall: 88 },
   { id: "raphael-guerreiro-por-22", name: "Raphaël Guerreiro", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "le", altPositions: ["me"], overall: 82 },
   { id: "joao-palhinha-por-22", name: "João Palhinha", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "vol", altPositions: [], overall: 81 },
-  { id: "cristiano-ronaldo-por-22", name: "Cristiano Ronaldo", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "ca", altPositions: [], overall: 87 },
+  { id: "cristiano-ronaldo-por-22", name: "Cristiano Ronaldo", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "ca", altPositions: ["pe"], overall: 90 },
   { id: "bruno-fernandes-por-22", name: "Bruno Fernandes", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "mei", altPositions: ["mc"], overall: 86 },
   { id: "andre-silva-por-22", name: "André Silva", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "ca", altPositions: [], overall: 82 },
   { id: "bernardo-silva-por-22", name: "Bernardo Silva", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "mei", altPositions: ["pd", "mc"], overall: 88 },
@@ -5090,7 +4818,7 @@ const PLAYERS = [
   { id: "vitinha-por-22", name: "Vitinha", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "mc", altPositions: ["mei"], overall: 79 },
   { id: "joao-mario-por-22", name: "João Mário", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "md", altPositions: ["mc"], overall: 79 },
   { id: "ruben-neves-por-22", name: "Rúben Neves", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "vol", altPositions: ["mc"], overall: 82 },
-  { id: "nuno-mendes-por-22", name: "Nuno Mendes", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "le", altPositions: ["le"], overall: 80 },
+  { id: "nuno-mendes-por-22", name: "Nuno Mendes", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "le", altPositions: ["le"], overall: 82 },
   { id: "joao-cancelo-por-22", name: "João Cancelo", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "ld", altPositions: ["le"], overall: 88 },
   { id: "ricardo-horta-por-22", name: "Ricardo Horta", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "pe", altPositions: ["pd", "mei"], overall: 81 },
   { id: "diogo-costa-por-22", name: "Diogo Costa", country: "Portugal", flag: "🇵🇹", worldCup: 2022, position: "gol", altPositions: [], overall: 79 },
@@ -5105,11 +4833,11 @@ const PLAYERS = [
   { id: "tomas-araujo-por-26", name: "Tomás Araújo", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "zag", altPositions: [], overall: 78 },
   { id: "diogo-dalot-por-26", name: "Diogo Dalot", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "ld", altPositions: ["le"], overall: 82 },
   { id: "matheus-nunes-por-26", name: "Matheus Nunes", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "mc", altPositions: ["mei"], overall: 81 },
-  { id: "cristiano-ronaldo-por-26", name: "Cristiano Ronaldo", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "ca", altPositions: [], overall: 84 },
-  { id: "bruno-fernandes-por-26", name: "Bruno Fernandes", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "mei", altPositions: ["mc"], overall: 87 },
+  { id: "cristiano-ronaldo-por-26", name: "Cristiano Ronaldo", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "ca", altPositions: ["pe"], overall: 86 },
+  { id: "bruno-fernandes-por-26", name: "Bruno Fernandes", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "mei", altPositions: ["mc"], overall: 89 },
   { id: "goncalo-ramos-por-26", name: "Gonçalo Ramos", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "ca", altPositions: [], overall: 81 },
-  { id: "bernardo-silva-por-26", name: "Bernardo Silva", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "mei", altPositions: ["pd", "mc"], overall: 87 },
-  { id: "joao-felix-por-26", name: "João Félix", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "ca", altPositions: ["pe"], overall: 82 },
+  { id: "bernardo-silva-por-26", name: "Bernardo Silva", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "mei", altPositions: ["pd", "mc"], overall: 89 },
+  { id: "joao-felix-por-26", name: "João Félix", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "ca", altPositions: ["pe"], overall: 83 },
   { id: "jose-sa-por-26", name: "José Sá", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "gol", altPositions: [], overall: 80 },
   { id: "renato-veiga-por-26", name: "Renato Veiga", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "zag", altPositions: ["vol"], overall: 77 },
   { id: "goncalo-inacio-por-26", name: "Gonçalo Inácio", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "zag", altPositions: [], overall: 82 },
@@ -5121,11 +4849,12 @@ const PLAYERS = [
   { id: "joao-cancelo-por-26", name: "João Cancelo", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "ld", altPositions: ["le"], overall: 85 },
   { id: "ruben-neves-por-26", name: "Rúben Neves", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 81 },
   { id: "rui-silva-por-26", name: "Rui Silva", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "gol", altPositions: [], overall: 79 },
-  { id: "vitinha-por-26", name: "Vitinha", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "mc", altPositions: ["mei"], overall: 84 },
+  { id: "vitinha-por-26", name: "Vitinha", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "mc", altPositions: ["mei"], overall: 91 },
   { id: "samu-costa-por-26", name: "Samu Costa", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "vol", altPositions: ["mc"], overall: 77 },
-  { id: "nuno-mendes-por-26", name: "Nuno Mendes", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "le", altPositions: [], overall: 83 },
+  { id: "nuno-mendes-por-26", name: "Nuno Mendes", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "le", altPositions: [], overall: 89 },
   { id: "francisco-conceicao-por-26", name: "Francisco Conceição", country: "Portugal", flag: "🇵🇹", worldCup: 2026, position: "pd", altPositions: [], overall: 79 },
-  // ===== ROU (Romênia) =====
+
+  // ===== Romênia =====
   // 1970
   { id: "necula-raducanu-rou-70", name: "Necula Răducanu", country: "Romênia", flag: "🇷🇴", worldCup: 1970, position: "gol", altPositions: [], overall: 73 },
   { id: "lajos-satmareanu-rou-70", name: "Lajos Sătmăreanu", country: "Romênia", flag: "🇷🇴", worldCup: 1970, position: "ld", altPositions: [], overall: 74 },
@@ -5195,7 +4924,8 @@ const PLAYERS = [
   { id: "ovidiu-stinga-rou-94", name: "Ovidiu Stîngă", country: "Romênia", flag: "🇷🇴", worldCup: 1994, position: "mc", altPositions: [], overall: 74 },
   { id: "marian-ivan-rou-94", name: "Marian Ivan", country: "Romênia", flag: "🇷🇴", worldCup: 1994, position: "ca", altPositions: [], overall: 72 },
   { id: "stefan-preda-rou-94", name: "Ștefan Preda", country: "Romênia", flag: "🇷🇴", worldCup: 1994, position: "gol", altPositions: [], overall: 71 },
-  // ===== RUS (Rússia) =====
+
+  // ===== Rússia =====
   // 2018
   { id: "igor-akinfeev-rus-18", name: "Igor Akinfeev", country: "Rússia", flag: "🇷🇺", worldCup: 2018, position: "gol", altPositions: [], overall: 80 },
   { id: "mario-fernandes-rus-18", name: "Mário Fernandes", country: "Rússia", flag: "🇷🇺", worldCup: 2018, position: "ld", altPositions: [], overall: 80 },
@@ -5220,7 +4950,8 @@ const PLAYERS = [
   { id: "aleksandr-yerokhin-rus-18", name: "Aleksandr Yerokhin", country: "Rússia", flag: "🇷🇺", worldCup: 2018, position: "mc", altPositions: ["mei"], overall: 74 },
   { id: "artem-dzyuba-rus-18", name: "Artem Dzyuba", country: "Rússia", flag: "🇷🇺", worldCup: 2018, position: "ca", altPositions: [], overall: 78 },
   { id: "igor-smolnikov-rus-18", name: "Igor Smolnikov", country: "Rússia", flag: "🇷🇺", worldCup: 2018, position: "ld", altPositions: [], overall: 75 },
-  // ===== SCO (Escócia) =====
+
+  // ===== Escócia =====
   // 1954
   { id: "fred-martin-sco-54", name: "Fred Martin", country: "Escócia", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿", worldCup: 1954, position: "gol", altPositions: [], overall: 71 },
   { id: "willie-cunningham-sco-54", name: "Willie Cunningham", country: "Escócia", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿", worldCup: 1954, position: "ld", altPositions: [], overall: 68 },
@@ -5313,7 +5044,8 @@ const PLAYERS = [
   { id: "david-provan-sco-82", name: "David Provan", country: "Escócia", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿", worldCup: 1982, position: "pd", altPositions: ["md"], overall: 77 },
   { id: "george-burley-sco-82", name: "George Burley", country: "Escócia", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿", worldCup: 1982, position: "ld", altPositions: [], overall: 74 },
   { id: "jim-leighton-sco-82", name: "Jim Leighton", country: "Escócia", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿", worldCup: 1982, position: "gol", altPositions: [], overall: 77 },
-  // ===== SEN (Senegal) =====
+
+  // ===== Senegal =====
   // 2002
   { id: "tony-sylva-sen-02", name: "Tony Sylva", country: "Senegal", flag: "🇸🇳", worldCup: 2002, position: "gol", altPositions: [], overall: 79 },
   { id: "omar-daf-sen-02", name: "Omar Daf", country: "Senegal", flag: "🇸🇳", worldCup: 2002, position: "le", altPositions: [], overall: 75 },
@@ -5361,7 +5093,8 @@ const PLAYERS = [
   { id: "ismaila-sarr-sen-22", name: "Ismaïla Sarr", country: "Senegal", flag: "🇸🇳", worldCup: 2022, position: "pd", altPositions: ["ca"], overall: 79 },
   { id: "famara-diedhiou-sen-22", name: "Famara Diédhiou", country: "Senegal", flag: "🇸🇳", worldCup: 2022, position: "ca", altPositions: [], overall: 74 },
   { id: "bamba-dieng-sen-22", name: "Bamba Dieng", country: "Senegal", flag: "🇸🇳", worldCup: 2022, position: "ca", altPositions: ["pe"], overall: 74 },
-  // ===== SRB (Sérvia) =====
+
+  // ===== Sérvia =====
   // 2022
   { id: "marko-dmitrovic-srb-22", name: "Marko Dmitrović", country: "Sérvia", flag: "🇷🇸", worldCup: 2022, position: "gol", altPositions: [], overall: 77 },
   { id: "strahinja-pavlovic-srb-22", name: "Strahinja Pavlović", country: "Sérvia", flag: "🇷🇸", worldCup: 2022, position: "zag", altPositions: [], overall: 77 },
@@ -5389,7 +5122,8 @@ const PLAYERS = [
   { id: "ivan-ilic-srb-22", name: "Ivan Ilić", country: "Sérvia", flag: "🇷🇸", worldCup: 2022, position: "mc", altPositions: ["vol"], overall: 75 },
   { id: "filip-mladenovic-srb-22", name: "Filip Mladenović", country: "Sérvia", flag: "🇷🇸", worldCup: 2022, position: "le", altPositions: ["me"], overall: 74 },
   { id: "marko-grujic-srb-22", name: "Marko Grujić", country: "Sérvia", flag: "🇷🇸", worldCup: 2022, position: "mc", altPositions: ["vol"], overall: 77 },
-  // ===== SUI (Suíça) =====
+
+  // ===== Suíça =====
   // 1950
   { id: "georges-stuber-sui-50", name: "Georges Stuber", country: "Suíça", flag: "🇨🇭", worldCup: 1950, position: "gol", altPositions: [], overall: 71 },
   { id: "eugen-corrodi-sui-50", name: "Eugen Corrodi", country: "Suíça", flag: "🇨🇭", worldCup: 1950, position: "gol", altPositions: [], overall: 69 },
@@ -5508,7 +5242,8 @@ const PLAYERS = [
   { id: "roman-burki-sui-18", name: "Roman Bürki", country: "Suíça", flag: "🇨🇭", worldCup: 2018, position: "gol", altPositions: [], overall: 83 },
   { id: "fabian-schar-sui-18", name: "Fabian Schär", country: "Suíça", flag: "🇨🇭", worldCup: 2018, position: "zag", altPositions: [], overall: 77 },
   { id: "xherdan-shaqiri-sui-18", name: "Xherdan Shaqiri", country: "Suíça", flag: "🇨🇭", worldCup: 2018, position: "pd", altPositions: ["mei"], overall: 82 },
-  // ===== SWE (Suécia) =====
+
+  // ===== Suécia =====
   // 1950
   { id: "kalle-svensson-swe-50", name: "Kalle Svensson", country: "Suécia", flag: "🇸🇪", worldCup: 1950, position: "gol", altPositions: [], overall: 78 },
   { id: "torsten-lindberg-swe-50", name: "Torsten Lindberg", country: "Suécia", flag: "🇸🇪", worldCup: 1950, position: "gol", altPositions: [], overall: 72 },
@@ -5624,7 +5359,8 @@ const PLAYERS = [
   { id: "jimmy-durmaz-swe-18", name: "Jimmy Durmaz", country: "Suécia", flag: "🇸🇪", worldCup: 2018, position: "me", altPositions: ["md"], overall: 75 },
   { id: "isaac-kiese-thelin-swe-18", name: "Isaac Kiese Thelin", country: "Suécia", flag: "🇸🇪", worldCup: 2018, position: "ca", altPositions: [], overall: 73 },
   { id: "kristoffer-nordfeldt-swe-18", name: "Kristoffer Nordfeldt", country: "Suécia", flag: "🇸🇪", worldCup: 2018, position: "gol", altPositions: [], overall: 73 },
-  // ===== TCH (Tchecoslováquia) =====
+
+  // ===== Tchecoslováquia =====
   // 1954
   { id: "theodor-reimann-tch-54", name: "Theodor Reimann", country: "Tchecoslováquia", flag: "🇨🇸", worldCup: 1954, position: "gol", altPositions: [], overall: 68 },
   { id: "frantisek-safranek-tch-54", name: "František Šafránek", country: "Tchecoslováquia", flag: "🇨🇸", worldCup: 1954, position: "zag", altPositions: [], overall: 71 },
@@ -5671,7 +5407,8 @@ const PLAYERS = [
   { id: "jaroslav-borovicka-tch-62", name: "Jaroslav Borovička", country: "Tchecoslováquia", flag: "🇨🇸", worldCup: 1962, position: "mc", altPositions: [], overall: 76 },
   { id: "pavel-kouba-tch-62", name: "Pavel Kouba", country: "Tchecoslováquia", flag: "🇨🇸", worldCup: 1962, position: "gol", altPositions: [], overall: 72 },
   { id: "jozef-bomba-tch-62", name: "Jozef Bomba", country: "Tchecoslováquia", flag: "🇨🇸", worldCup: 1962, position: "zag", altPositions: [], overall: 73 },
-  // ===== TUR (Turquia) =====
+
+  // ===== Turquia =====
   // 1954
   { id: "turgay-seren-tur-54", name: "Turgay Şeren", country: "Turquia", flag: "🇹🇷", worldCup: 1954, position: "gol", altPositions: [], overall: 78 },
   { id: "ridvan-bolatli-tur-54", name: "Rıdvan Bolatlı", country: "Turquia", flag: "🇹🇷", worldCup: 1954, position: "ld", altPositions: [], overall: 69 },
@@ -5719,7 +5456,8 @@ const PLAYERS = [
   { id: "emre-belozoglu-tur-02", name: "Emre Belözoğlu", country: "Turquia", flag: "🇹🇷", worldCup: 2002, position: "mc", altPositions: ["vol"], overall: 83 },
   { id: "umit-davala-tur-02", name: "Ümit Davala", country: "Turquia", flag: "🇹🇷", worldCup: 2002, position: "md", altPositions: ["ld"], overall: 79 },
   { id: "zafer-ozgultekin-tur-02", name: "Zafer Özgültekin", country: "Turquia", flag: "🇹🇷", worldCup: 2002, position: "gol", altPositions: [], overall: 70 },
-  // ===== UKR (Ucrânia) =====
+
+  // ===== Ucrânia =====
   // 2006
   { id: "oleksandr-shovkovskyi-ukr-06", name: "Oleksandr Shovkovskyi", country: "Ucrânia", flag: "🇺🇦", worldCup: 2006, position: "gol", altPositions: [], overall: 80 },
   { id: "andriy-nesmachniy-ukr-06", name: "Andriy Nesmachniy", country: "Ucrânia", flag: "🇺🇦", worldCup: 2006, position: "le", altPositions: [], overall: 76 },
@@ -5744,9 +5482,10 @@ const PLAYERS = [
   { id: "ruslan-rotan-ukr-06", name: "Ruslan Rotan", country: "Ucrânia", flag: "🇺🇦", worldCup: 2006, position: "me", altPositions: ["mc"], overall: 76 },
   { id: "viacheslav-sviderskyi-ukr-06", name: "Viacheslav Sviderskyi", country: "Ucrânia", flag: "🇺🇦", worldCup: 2006, position: "ld", altPositions: [], overall: 69 },
   { id: "bohdan-shust-ukr-06", name: "Bohdan Shust", country: "Ucrânia", flag: "🇺🇦", worldCup: 2006, position: "gol", altPositions: [], overall: 70 },
-  // ===== URS (União Soviética) =====
+
+  // ===== União Soviética =====
   // 1958
-  { id: "lev-yashin-urs-58", name: "Lev Yashin", country: "União Soviética", flag: "☭", worldCup: 1958, position: "gol", altPositions: [], overall: 92 },
+  { id: "lev-yashin-urs-58", name: "Lev Yashin", country: "União Soviética", flag: "☭", worldCup: 1958, position: "gol", altPositions: [], overall: 97 },
   { id: "vladimir-kesarev-urs-58", name: "Vladimir Kesarev", country: "União Soviética", flag: "☭", worldCup: 1958, position: "ld", altPositions: [], overall: 73 },
   { id: "konstantin-krizhevsky-urs-58", name: "Konstantin Krizhevsky", country: "União Soviética", flag: "☭", worldCup: 1958, position: "zag", altPositions: [], overall: 76 },
   { id: "boris-kuznetsov-urs-58", name: "Boris Kuznetsov", country: "União Soviética", flag: "☭", worldCup: 1958, position: "le", altPositions: [], overall: 75 },
@@ -5808,13 +5547,14 @@ const PLAYERS = [
   { id: "georgi-sichinava-urs-66", name: "Georgi Sichinava", country: "União Soviética", flag: "☭", worldCup: 1966, position: "mc", altPositions: [], overall: 76 },
   { id: "igor-chislenko-urs-66", name: "Igor Chislenko", country: "União Soviética", flag: "☭", worldCup: 1966, position: "ca", altPositions: [], overall: 83 },
   { id: "slava-metreveli-urs-66", name: "Slava Metreveli", country: "União Soviética", flag: "☭", worldCup: 1966, position: "ca", altPositions: [], overall: 81 },
-  { id: "galimzyan-khusainov-urs-66", name: "Galimzyan Khusainov", country: "União Soviética", flag: "☭", worldCup: 1966, official: 1966, position: "ca", altPositions: [], overall: 79, },
+  { id: "galimzyan-khusainov-urs-66", name: "Galimzyan Khusainov", country: "União Soviética", flag: "☭", worldCup: 1966, position: "ca", altPositions: [], overall: 79 },
   { id: "viktor-serebryanikov-urs-66", name: "Viktor Serebryanikov", country: "União Soviética", flag: "☭", worldCup: 1966, position: "mc", altPositions: ["ca"], overall: 79 },
   { id: "anatoliy-banishevskiy-urs-66", name: "Anatoliy Banishevskiy", country: "União Soviética", flag: "☭", worldCup: 1966, position: "ca", altPositions: [], overall: 80 },
   { id: "valeriy-porkujan-urs-66", name: "Valeriy Porkujan", country: "União Soviética", flag: "☭", worldCup: 1966, position: "ca", altPositions: [], overall: 77 },
   { id: "eduard-malofeyev-urs-66", name: "Eduard Malofeyev", country: "União Soviética", flag: "☭", worldCup: 1966, position: "ca", altPositions: [], overall: 78 },
   { id: "eduard-markarov-urs-66", name: "Eduard Markarov", country: "União Soviética", flag: "☭", worldCup: 1966, position: "ca", altPositions: [], overall: 76 },
-  // ===== URU (Uruguai) =====
+
+  // ===== Uruguai =====
   // 1950
   { id: "roque-maspoli-uru-50", name: "Roque Máspoli", country: "Uruguai", flag: "🇺🇾", worldCup: 1950, position: "gol", altPositions: [], overall: 85 },
   { id: "anibal-paz-uru-50", name: "Aníbal Paz", country: "Uruguai", flag: "🇺🇾", worldCup: 1950, position: "gol", altPositions: [], overall: 76 },
@@ -5977,7 +5717,8 @@ const PLAYERS = [
   { id: "alvaro-gonzalez-uru-14", name: "Álvaro González", country: "Uruguai", flag: "🇺🇾", worldCup: 2014, position: "mc", altPositions: ["md"], overall: 76 },
   { id: "edinson-cavani-uru-14", name: "Edinson Cavani", country: "Uruguai", flag: "🇺🇾", worldCup: 2014, position: "ca", altPositions: [], overall: 86 },
   { id: "martin-caceres-uru-14", name: "Martín Cáceres", country: "Uruguai", flag: "🇺🇾", worldCup: 2014, position: "ld", altPositions: ["zag", "le"], overall: 80 },
-  // ===== USA (Estados Unidos) =====
+
+  // ===== Estados Unidos =====
   // 1950
   { id: "frank-borghi-usa-50", name: "Frank Borghi", country: "Estados Unidos", flag: "🇺🇸", worldCup: 1950, position: "gol", altPositions: [], overall: 71 },
   { id: "gino-gardassanich-usa-50", name: "Gino Gardassanich", country: "Estados Unidos", flag: "🇺🇸", worldCup: 1950, position: "gol", altPositions: [], overall: 67 },
@@ -6044,7 +5785,8 @@ const PLAYERS = [
   { id: "landon-donovan-usa-02", name: "Landon Donovan", country: "Estados Unidos", flag: "🇺🇸", worldCup: 2002, position: "ca", altPositions: ["mei"], overall: 79 },
   { id: "tony-sanneh-usa-02", name: "Tony Sanneh", country: "Estados Unidos", flag: "🇺🇸", worldCup: 2002, position: "ld", altPositions: ["md"], overall: 77 },
   { id: "eddie-pope-usa-02", name: "Eddie Pope", country: "Estados Unidos", flag: "🇺🇸", worldCup: 2002, position: "zag", altPositions: [], overall: 78 },
-  // ===== WAL (País de Gales) =====
+
+  // ===== País de Gales =====
   // 1958
   { id: "jack-kelsey-wal-58", name: "Jack Kelsey", country: "País de Gales", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿", worldCup: 1958, position: "gol", altPositions: [], overall: 83 },
   { id: "stuart-williams-wal-58", name: "Stuart Williams", country: "País de Gales", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿", worldCup: 1958, position: "zag", altPositions: [], overall: 73 },
@@ -6068,7 +5810,8 @@ const PLAYERS = [
   { id: "john-elsworthy-wal-58", name: "John Elsworthy", country: "País de Gales", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿", worldCup: 1958, position: "mc", altPositions: [], overall: 70 },
   { id: "len-allchurch-wal-58", name: "Len Allchurch", country: "País de Gales", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿", worldCup: 1958, position: "ca", altPositions: [], overall: 74 },
   { id: "george-baker-wal-58", name: "George Baker", country: "País de Gales", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿", worldCup: 1958, position: "ca", altPositions: [], overall: 71 },
-  // ===== YUG (Iugoslávia) =====
+
+  // ===== Iugoslávia =====
   // 1950
   { id: "vladimir-beara-yug-50", name: "Vladimir Beara", country: "Iugoslávia", flag: "🇽🇰", worldCup: 1950, position: "gol", altPositions: [], overall: 87 },
   { id: "srdan-mrkusic-yug-50", name: "Srđan Mrkušić", country: "Iugoslávia", flag: "🇽🇰", worldCup: 1950, position: "gol", altPositions: [], overall: 76 },
@@ -6204,10 +5947,6 @@ const PLAYERS = [
   { id: "dejan-stankovic-yug-98", name: "Dejan Stanković", country: "Iugoslávia", flag: "🇽🇰", worldCup: 1998, position: "mc", altPositions: ["mei"], overall: 82 },
   { id: "perica-ognjenovic-yug-98", name: "Perica Ognjenović", country: "Iugoslávia", flag: "🇽🇰", worldCup: 1998, position: "pd", altPositions: ["ca"], overall: 77 },
   { id: "darko-kovacevic-yug-98", name: "Darko Kovačević", country: "Iugoslávia", flag: "🇽🇰", worldCup: 1998, position: "ca", altPositions: [], overall: 79 },
-  // ── Helpers ──────────────────────────────────────────────────────────────────
-  // Unique World Cups in database
-  // Index by worldCup + country
-  // Position compatibility (a position can fill which slots)
 ];
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
