@@ -1250,6 +1250,10 @@ input[type="text"]:focus { border-color: var(--accent); }
 .im-role.def { background: rgba(59,130,246,.18); color: var(--blue); }
 .im-secret { font-size: .7rem; color: var(--text3); }
 .im-tip { color: var(--text2); font-size: .85rem; margin-bottom: 12px; }
+/* Barra de contagem regressiva (prazo da escolha — multiplayer) */
+.im-timer { height: 7px; background: var(--bg3); border-radius: 5px; overflow: hidden; margin-bottom: 4px; }
+.im-timer-fill { height: 100%; width: 100%; border-radius: 5px; background: hsl(120,80%,48%); }
+.im-timer-lbl { font-size: .7rem; color: var(--text3); text-align: center; margin-bottom: 12px; }
 .im-actions-grid { display: flex; flex-direction: column; gap: 10px; }
 .im-action {
   display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px;

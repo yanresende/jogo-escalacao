@@ -95,7 +95,7 @@ function createInteractiveDriver(io, room, humans, opts) {
       };
       if (!session.pending) session.pending = new Map();
       session.pending.set(socketId, { role, side, finish });
-      io.to(socketId).emit('event_prompt', { matchId: m.key, minute: ms.clock, role });
+      io.to(socketId).emit('event_prompt', { matchId: m.key, minute: ms.clock, role, timeout: CHOICE_TIMEOUT_MS });
       const timer = setTimeout(() => finish(Events.botChooseAction(ms, role, side, session.rng)), CHOICE_TIMEOUT_MS);
     });
   }
@@ -115,7 +115,7 @@ function createInteractiveDriver(io, room, humans, opts) {
       };
       if (!session.penPending) session.penPending = new Map();
       session.penPending.set(socketId, { finish });
-      io.to(socketId).emit('pen_prompt', { matchId: m.key, mode, tally });
+      io.to(socketId).emit('pen_prompt', { matchId: m.key, mode, tally, timeout: CHOICE_TIMEOUT_MS });
       const timer = setTimeout(() => finish(Events.botChooseDirection(session.rng)), CHOICE_TIMEOUT_MS);
     });
   }

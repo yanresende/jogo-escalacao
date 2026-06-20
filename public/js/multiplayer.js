@@ -47,7 +47,7 @@ function initSocket() {
   socket.on('match_clock', (d) => { if (typeof imMpClock === 'function') imMpClock(d); });
   socket.on('event_prompt', (d) => {
     if (typeof imAskAction !== 'function') return;
-    imAskAction(d.role, d.minute).then(key => {
+    imAskAction(d.role, d.minute, null, d.timeout).then(key => {
       socket.emit('event_choice', { matchId: d.matchId, action: key });
       if (typeof imWaiting === 'function') imWaiting('Escolha enviada — aguardando o lance…');
     });
@@ -56,7 +56,7 @@ function initSocket() {
   socket.on('pen_prompt', (d) => {
     if (typeof imAskDirection !== 'function') return;
     const text = d.mode === 'kick' ? 'Onde bater?' : 'Onde defender? (adversário vai bater)';
-    imAskDirection(text, d.tally || '').then(dir => {
+    imAskDirection(text, d.tally || '', d.timeout).then(dir => {
       socket.emit('pen_choice', { matchId: d.matchId, dir });
       if (typeof imWaiting === 'function') imWaiting('Cobrança enviada — aguardando…');
     });

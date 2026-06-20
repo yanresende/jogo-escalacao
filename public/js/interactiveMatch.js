@@ -33,18 +33,51 @@ function imEnsureModal() {
   return document.getElementById('im-modal');
 }
 function imShowModal(html) {
+  imClearTimer(); // qualquer modal novo cancela a contagem regressiva anterior
   const modal = imEnsureModal();
   modal.innerHTML = html;
   document.getElementById('im-modal-backdrop').classList.remove('hidden');
   return modal;
 }
 function imHideModal() {
+  imClearTimer();
   const b = document.getElementById('im-modal-backdrop');
   if (b) b.classList.add('hidden');
 }
 
+// ── Barra de contagem regressiva (prazo da escolha no multiplayer) ──
+let _imCountdown = null; // { raf } da animação atual
+function imClearTimer() {
+  if (_imCountdown) { cancelAnimationFrame(_imCountdown.raf); _imCountdown = null; }
+}
+// Anima #im-timer-fill de 100%→0% em totalMs, com cor verde→amarelo→vermelho.
+function imStartTimer(totalMs) {
+  const fill = document.getElementById('im-timer-fill');
+  if (!fill || !totalMs) return;
+  const start = performance.now();
+  const tick = (now) => {
+    const frac = Math.max(0, 1 - (now - start) / totalMs);
+    fill.style.width = (frac * 100) + '%';
+    fill.style.background = `hsl(${Math.round(frac * 120)}, 80%, 48%)`; // 120=verde → 0=vermelho
+    if (frac <= 0) {
+      _imCountdown = null;
+      const lbl = document.getElementById('im-timer-lbl');
+      if (lbl) lbl.textContent = '⏱ Tempo esgotado — escolha automática';
+      return;
+    }
+    _imCountdown = { raf: requestAnimationFrame(tick) };
+  };
+  _imCountdown = { raf: requestAnimationFrame(tick) };
+}
+// Markup da barra (vazio em modo solo, onde não há prazo).
+function imTimerBar(timeout) {
+  if (!timeout) return '';
+  return `<div class="im-timer"><div class="im-timer-fill" id="im-timer-fill"></div></div>
+          <div class="im-timer-lbl" id="im-timer-lbl">⏱ Escolha em até ${Math.round(timeout / 1000)}s</div>`;
+}
+
 // Pergunta uma ação ao humano (atacante ou defensor). Resolve com a key escolhida.
-function imAskAction(role, minute, ms) {
+function imAskAction(role, minute, ms, timeout) {
   return new Promise(resolve => {
     const isAtk = role === 'attacker';
     const actions = isAtk ? Events.ATK_ACTIONS : Events.DEF_ACTIONS;
@@ -66,11 +99,13 @@ function imAskAction(role, minute, ms) {
         <div class="im-secret">🔒 Escolha secreta</div>
       </div>
       <p class="im-tip">${tip}</p>
+      ${imTimerBar(timeout)}
       <div class="im-actions-grid">${buttons}</div>
     `);
     modal.querySelectorAll('.im-action').forEach(btn => {
-      btn.addEventListener('click', () => resolve(btn.dataset.key), { once: true });
+      btn.addEventListener('click', () => { imClearTimer(); resolve(btn.dataset.key); }, { once: true });
     });
+    imStartTimer(timeout);
   });
 }
 
@@ -116,7 +151,7 @@ function imShowEventReveal(d, opts) {
 }
 
 // Pergunta uma direção (esquerda/meio/direita) ao humano. prompt = texto.
-function imAskDirection(promptText, tally) {
+function imAskDirection(promptText, tally, timeout) {
   return new Promise(resolve => {
     const dirs = [
       { key: 'esquerda', label: 'Esquerda', icon: '◀' },
@@ -134,11 +169,13 @@ function imAskDirection(promptText, tally) {
         <div class="im-pens-tally">${tally}</div>
       </div>
       <p class="im-tip">${promptText}</p>
+      ${imTimerBar(timeout)}
       <div class="im-dir-grid">${buttons}</div>
     `);
     document.querySelectorAll('.im-dir').forEach(btn => {
-      btn.addEventListener('click', () => resolve(btn.dataset.dir), { once: true });
+      btn.addEventListener('click', () => { imClearTimer(); resolve(btn.dataset.dir); }, { once: true });
     });
+    imStartTimer(timeout);
   });
 }
 
