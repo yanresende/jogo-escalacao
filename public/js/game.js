@@ -99,7 +99,12 @@ const state = {
   dailySeed:    null,
   eventsMode:   false,         // modo interativo (lances de decisão + pênaltis manuais)
   eventCount:   5,             // nº de lances interativos por partida
+  pity:         0,             // rolagens sem craque (S/A) — garante craque ao chegar em PITY_MAX
 };
+
+// Pity: após PITY_MAX rolagens sem nenhum jogador S/A compatível, a próxima rolagem
+// garante uma seleção com craque. NÃO se aplica ao modo Diário (sequência determinística).
+const PITY_MAX = 5;
 
 // Opções de simulação derivadas do estado atual (tática, capitão, slots, fases por modo).
 function currentSimOpts() {
@@ -149,6 +154,26 @@ function initDraft(formation) {
   state.penaltyOrder = null;
   state.dailySeq = null;
   state.dailyPtr = 0;
+  state.pity = 0;
+}
+
+// Melhor tier compatível com as posições abertas dentre os jogadores de uma seleção.
+// Retorna 'S' | 'A' | 'B' | 'C' | null (nenhum compatível).
+function bestCompatibleTier(squad, openPositions) {
+  let best = null;
+  const rank = { S: 4, A: 3, B: 2, C: 1 };
+  for (const p of squad.players) {
+    if (!openPositions.some(op => playerFitsSlot(p, op))) continue;
+    const t = getTier(p.overall);
+    if (!best || rank[t] > rank[best]) best = t;
+  }
+  return best;
+}
+
+// Uma seleção tem craque "garantível" se possui ao menos um S/A compatível com as vagas.
+function squadHasStar(squad, openPositions) {
+  const t = bestCompatibleTier(squad, openPositions);
+  return t === 'S' || t === 'A';
 }
 
 // Modos single-player que rodam o torneio de bots (grupos + mata-mata) localmente.
@@ -189,7 +214,21 @@ function rollDice() {
   );
   if (eligible.length === 0) return null;
 
-  const squad = eligible[Math.floor(Math.random() * eligible.length)];
+  // Pity garantido: se atingiu o limite de rolagens sem craque, restringe o sorteio
+  // a seleções que tenham um S/A compatível com as vagas (fallback: pool normal).
+  let pool = eligible;
+  const pityReady = state.pity >= PITY_MAX;
+  if (pityReady) {
+    const starred = eligible.filter(squad => squadHasStar(squad, openPositions));
+    if (starred.length) pool = starred;
+  }
+
+  const squad = pool[Math.floor(Math.random() * pool.length)];
+
+  // Atualiza o pity conforme o que saiu (craque zera, resto incrementa).
+  if (squadHasStar(squad, openPositions)) state.pity = 0;
+  else state.pity++;
+
   state.currentRoll = { squad, players: squad.players };
   return state.currentRoll;
 }
@@ -459,6 +498,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function onDiceClick() {
+  if (typeof ensureAudio === 'function') ensureAudio(); // desbloqueia áudio no gesto do clique
   const roll = rollDice();
   if (!roll) return;
   renderDraftPick(roll);

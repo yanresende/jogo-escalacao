@@ -28,7 +28,7 @@ function renderPlayerCard(player, opts) {
       <div class="fut-name">${shortName}</div>
       <div class="fut-meta">
         ${styleInfo ? `<span class="fut-style" title="${styleInfo.label}">${styleInfo.emoji} ${styleInfo.label}</span>` : ''}
-        <span class="fut-wc">Copa ${player.worldCup}</span>
+        ${opts.chemBadge ? opts.chemBadge : (opts.hideWorldCup ? '' : `<span class="fut-wc">Copa ${player.worldCup}</span>`)}
       </div>
     </div>`;
 }
@@ -118,6 +118,7 @@ function renderDraftScreen() {
   renderField();
   renderWildcards();
   hideDraftPick();
+  renderPityMeter();
   updateRerollBtns();
 }
 
@@ -312,30 +313,112 @@ function renderDraftPick(roll) {
   document.getElementById('pick-year').textContent = `Copa ${roll.squad.worldCup}`;
 
   hidePositionSelector();
+  renderPityMeter();
+  updateChemReadout();
 
   const openPositions = getOpenPositions();
+  const placed = state.slots.map(s => s.player).filter(Boolean);
   const list = document.getElementById('players-list');
   list.innerHTML = '';
 
   const sorted = [...roll.players].sort((a, b) => b.overall - a.overall);
+  const L = sorted.length;
+  const STEP = 65, MAXD = 1150, FLIP = 470;
+  const gen = ++_revealGen;
+
+  // Compatibilidade por carta (não escalado + cabe em alguma vaga aberta).
+  const compat = sorted.map(p =>
+    !state.slots.some(s => s.player && s.player.id === p.id)
+    && openPositions.some(op => playerFitsSlot(p, op))
+  );
+  // Melhor compatível (maior overall) dispara a reação de raridade ao ser revelado.
+  const bestCompatIdx = compat.findIndex(Boolean);
+  const reactTier = bestCompatIdx >= 0 ? getTier(sorted[bestCompatIdx].overall) : null;
+  let reactDelay = 0;
+
   sorted.forEach((player, idx) => {
-    const alreadyPicked = state.slots.some(s => s.player && s.player.id === player.id);
-    const compatible = !alreadyPicked && openPositions.some(op => playerFitsSlot(player, op));
+    const compatible = compat[idx];
     const card = document.createElement('div');
-    card.className = `player-card${compatible ? '' : ' incompatible'}`;
-    card.style.animationDelay = `${Math.min(idx * 40, 400)}ms`;
-    card.innerHTML = renderPlayerCard(player, { size: 'md' });
+    card.className = `player-card face-down${compatible ? '' : ' incompatible'}`;
+    const chem = compatible ? chemForCandidate(player, placed) : null;
+    const chemBadge = chem ? `<span class="chem-badge ${chem.cls}">${chem.text}</span>` : '';
+    card.innerHTML = `
+      <div class="card-flip">
+        <div class="card-back"><span class="card-back-shield">${roll.squad.flag || '⚽'}</span></div>
+        <div class="card-front">
+          ${renderPlayerCard(player, { size: 'md', chemBadge, hideWorldCup: true })}
+        </div>
+      </div>`;
     if (compatible) {
-      card.addEventListener('click', () => selectPickPlayer(player, card));
+      card.addEventListener('click', () => {
+        if (card.classList.contains('face-down')) return; // ainda virando — ignora
+        selectPickPlayer(player, card);
+      });
     }
     list.appendChild(card);
+
+    // Reveal "pack opening": vira de baixo (pior) p/ cima (melhor), suspense no craque.
+    const delay = Math.min((L - 1 - idx) * STEP, MAXD);
+    if (idx === bestCompatIdx) reactDelay = delay;
+    setTimeout(() => { if (gen === _revealGen) card.classList.remove('face-down'); }, delay + 30);
   });
+
+  if (reactTier === 'S' || reactTier === 'A') {
+    setTimeout(() => { if (gen === _revealGen) reactToPull(reactTier); }, reactDelay + FLIP);
+  }
 
   updateRerollBtns();
 }
 
+// Preview de química de um candidato vs. os jogadores já escalados (sinergia de estilos).
+function chemForCandidate(player, placed) {
+  if (!placed.length || typeof styleSynergy !== 'function' || typeof getStyle !== 'function') return null;
+  const myStyle = getStyle(player);
+  let score = 0;
+  for (const o of placed) score += styleSynergy(myStyle, getStyle(o));
+  if (score >= 2) return { cls: 'chem-strong', text: `🔗 +${score}` };
+  if (score === 1) return { cls: 'chem-weak', text: '🔗 +1' };
+  return { cls: 'chem-none', text: '⚠︎ sem química' };
+}
+
+// Readout "Química do time: NN%" no header do pick (a partir de 2 jogadores escalados).
+function updateChemReadout() {
+  const box = document.getElementById('chem-readout');
+  const val = document.getElementById('chem-readout-val');
+  if (!box || !val) return;
+  const placed = state.slots.filter(s => s.player);
+  if (placed.length < 2 || typeof calcChemistry !== 'function') { box.classList.add('hidden'); return; }
+  const ch = calcChemistry(placed.map(s => s.player), {
+    tactic: state.tactic, captainId: state.captainId, slots: placed.map(s => s.pos),
+  });
+  val.textContent = `${ch.chemistry}%`;
+  box.classList.remove('hidden');
+}
+
+// Medidor de pity (craque garantido). Oculto no modo Diário (sequência determinística).
+function renderPityMeter() {
+  const box = document.getElementById('pity-meter');
+  if (!box) return;
+  if (state.gameMode === 'daily') { box.classList.add('hidden'); return; }
+  const fill = document.getElementById('pity-fill');
+  const label = document.getElementById('pity-label');
+  const max = (typeof PITY_MAX !== 'undefined') ? PITY_MAX : 5;
+  const pity = Math.min(max, state.pity || 0);
+  if (fill) fill.style.width = `${(pity / max) * 100}%`;
+  if (pity >= max) {
+    box.classList.add('ready');
+    if (label) label.textContent = '⭐ Próxima rolagem garante um craque!';
+  } else {
+    box.classList.remove('ready');
+    const left = max - pity;
+    if (label) label.textContent = `⭐ Craque garantido em ${left} ${left > 1 ? 'rolagens' : 'rolagem'}`;
+  }
+  box.classList.remove('hidden');
+}
+
 // ── Position Selector ─────────────────────────────────────────
 let _selectedPickPlayer = null;
+let _revealGen = 0; // geração do reveal atual (cancela timeouts de rolagens antigas)
 
 function selectPickPlayer(player, cardEl) {
   if (_selectedPickPlayer?.id === player.id) {
@@ -738,6 +821,52 @@ function launchConfetti() {
   setTimeout(() => { if (layer) layer.innerHTML = ''; }, 4200);
 }
 
+// ── SFX (Web Audio) + reação de "pack opening" ───────────────
+let _audioCtx = null;
+function sfxEnabled() { return localStorage.getItem('sfxOff') !== '1'; }
+function ensureAudio() {
+  if (!sfxEnabled()) return null;
+  try {
+    if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (_audioCtx.state === 'suspended') _audioCtx.resume();
+  } catch (e) { _audioCtx = null; }
+  return _audioCtx;
+}
+function _tone(ctx, freq, start, dur, type, gain) {
+  const o = ctx.createOscillator(), g = ctx.createGain();
+  o.type = type || 'sine'; o.frequency.value = freq;
+  const t0 = ctx.currentTime + start;
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.linearRampToValueAtTime(gain || 0.15, t0 + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  o.connect(g); g.connect(ctx.destination);
+  o.start(t0); o.stop(t0 + dur + 0.02);
+}
+function playSfx(kind) {
+  const ctx = ensureAudio(); if (!ctx) return;
+  if (kind === 's') {                                   // fanfarra ascendente (S-tier)
+    [523, 659, 784, 1047].forEach((f, i) => _tone(ctx, f, i * 0.10, 0.32, 'triangle', 0.18));
+  } else if (kind === 'a') {                            // toque curto (A-tier)
+    [440, 660].forEach((f, i) => _tone(ctx, f, i * 0.08, 0.22, 'triangle', 0.13));
+  }
+}
+// Reação visual/sonora ao revelar o melhor jogador da rolagem.
+function reactToPull(tier) {
+  const flash = document.getElementById('pull-flash');
+  const panel = document.querySelector('.draft-pick-panel');
+  if (tier === 'S') {
+    if (flash) { flash.className = 'pull-flash show tier-s'; setTimeout(() => { flash.className = 'pull-flash'; }, 700); }
+    if (panel) { panel.classList.add('shake'); setTimeout(() => panel.classList.remove('shake'), 600); }
+    if (typeof launchConfetti === 'function') launchConfetti();
+    playSfx('s');
+    if (navigator.vibrate) navigator.vibrate([40, 30, 80]);
+  } else if (tier === 'A') {
+    if (flash) { flash.className = 'pull-flash show tier-a'; setTimeout(() => { flash.className = 'pull-flash'; }, 600); }
+    playSfx('a');
+    if (navigator.vibrate) navigator.vibrate(30);
+  }
+}
+
 // ── Animate simulation stage by stage ────────────────────────
 function animateSimulation(simResult) {
   const { results } = simResult;
@@ -782,6 +911,19 @@ function animateSimulation(simResult) {
 // Override the simulate button to animate
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-cancel-pick').addEventListener('click', hidePositionSelector);
+
+  // Toggle de som (persistido em localStorage)
+  const sfxBtn = document.getElementById('sfx-toggle');
+  if (sfxBtn) {
+    const sync = () => { sfxBtn.textContent = sfxEnabled() ? '🔊' : '🔇'; sfxBtn.classList.toggle('off', !sfxEnabled()); };
+    sync();
+    sfxBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      localStorage.setItem('sfxOff', sfxEnabled() ? '1' : '0');
+      sync();
+      if (sfxEnabled()) playSfx('a'); // feedback ao religar
+    });
+  }
 
   const viewToggle = document.getElementById('draft-view-toggle');
   if (viewToggle) viewToggle.addEventListener('click', () => {

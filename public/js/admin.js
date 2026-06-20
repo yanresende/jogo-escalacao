@@ -229,12 +229,14 @@
   $('btn-add').addEventListener('click', onAdd);
   $('btn-save').addEventListener('click', save);
   window.addEventListener('beforeunload', (e) => {
-    if (dirty.size || deletedDirty) { e.preventDefault(); e.returnValue = ''; }
+    if (dirty.size || deletedDirty || evDirty) { e.preventDefault(); e.returnValue = ''; }
   });
 
   populateFilters();
   render();
   renderDocs();
+  // initEventsEditor() é chamado no fim da IIFE (depois das declarações let/const
+  // do editor de eventos, para evitar a temporal dead zone).
 
   // ════════════════════════════════════════════════════════════
   //  DOCUMENTAÇÃO DA LÓGICA (texto fixo — números reais do engine.js)
@@ -379,4 +381,238 @@ golsContra  = Poisson(lambdaAtaque_dele_vs_defesa_minha)</span>
       </ul>
     `;
   }
+
+  // ════════════════════════════════════════════════════════════
+  //  EDITOR DO MODO INTERATIVO (events.js)
+  // ════════════════════════════════════════════════════════════
+  let evCfg = null, evDirty = false, evNextId = 1;
+
+  const RULE_META = {
+    STAMINA_START:     { label: 'Fôlego inicial',      desc: 'Fôlego de cada time no apito inicial.',               step: 1 },
+    STAMINA_LOW:       { label: 'Fôlego baixo',        desc: 'Abaixo disso, penalidade nos minutos finais.',        step: 1 },
+    STAMINA_DRAIN_MIN: { label: 'Desgaste por minuto', desc: 'Fôlego perdido passivamente a cada minuto.',          step: 0.05 },
+    LATE_MINUTE:       { label: 'Minuto "final"',      desc: 'A partir daqui vale a penalidade de fôlego.',         step: 1 },
+    MOMENTUM_MINUTES:  { label: 'Duração do momentum', desc: 'Minutos de jogo que o buff dura.',                    step: 1 },
+    MOMENTUM_BONUS:    { label: 'Bônus do momentum',   desc: 'Eficácia extra com momentum (0.05 = +5%).',           step: 0.01 },
+    STAMINA_PENALTY:   { label: 'Penalidade de fôlego',desc: 'Multiplicador com fôlego baixo no fim (0.85 = −15%).',step: 0.01 },
+    RED_PENALTY:       { label: 'Penalidade vermelho', desc: 'Perda de eficácia por expulsão (0.07 = −7%).',        step: 0.01 },
+    CRIT_FAIL_PROB:    { label: 'Chance de vermelho',  desc: 'Prob. de expulsão ao usar ação agressiva (0.14 = 14%).', step: 0.01 },
+  };
+
+  function initEventsEditor() {
+    const status = document.getElementById('ev-status');
+    if (typeof Events === 'undefined' || !Events.ATK_ACTIONS) { status.textContent = 'events.js não carregou.'; return; }
+    document.getElementById('ev-save').addEventListener('click', saveEvents);
+    document.getElementById('ev-reset').addEventListener('click', loadEvCfg);
+    const root = document.getElementById('ev-root');
+    root.addEventListener('input', onEvInput);
+    root.addEventListener('change', onEvChange);
+    root.addEventListener('click', onEvClick);
+    loadEvCfg();
+  }
+
+  function classifyAdv(cell) {
+    const eq = (x, y) => x && y && +x.ma === +y.ma && +x.md === +y.md;
+    if (eq(cell, Events.ADV_WIN)) return 'win';
+    if (eq(cell, Events.ADV_LOSE)) return 'lose';
+    return 'neu';
+  }
+
+  function loadEvCfg() {
+    evNextId = 1;
+    const mkAct = (a, def) => ({ _id: evNextId++, key: a.key, label: a.label, emoji: a.emoji || '', staminaCost: a.staminaCost, desc: a.desc || '', ...(def ? { aggressive: !!a.aggressive } : {}) });
+    const atk = Object.values(Events.ATK_ACTIONS).map(a => mkAct(a, false));
+    const def = Object.values(Events.DEF_ACTIONS).map(a => mkAct(a, true));
+    const matrix = {};
+    atk.forEach(at => {
+      matrix[at._id] = {};
+      def.forEach(df => {
+        const cell = Events.ADVANTAGE_MATRIX[at.key] && Events.ADVANTAGE_MATRIX[at.key][df.key];
+        matrix[at._id][df._id] = cell ? classifyAdv(cell) : 'neu';
+      });
+    });
+    const rules = {};
+    Object.keys(RULE_META).forEach(k => { rules[k] = Events[k]; });
+    evCfg = {
+      atkActions: atk, defActions: def, matrix,
+      adv: {
+        win:  { ma: Events.ADV_WIN.ma,  md: Events.ADV_WIN.md },
+        lose: { ma: Events.ADV_LOSE.ma, md: Events.ADV_LOSE.md },
+        neu:  { ma: Events.ADV_NEU.ma,  md: Events.ADV_NEU.md },
+      },
+      rules,
+    };
+    evDirty = false;
+    renderEvents();
+  }
+
+  function renderEvents() {
+    if (!evCfg) return;
+    document.getElementById('ev-root').innerHTML =
+      actionsBlock('atk', 'Ações de Ataque', evCfg.atkActions) +
+      actionsBlock('def', 'Ações de Defesa', evCfg.defActions) +
+      matrixBlock() + advBlock() + rulesBlock();
+    evStatus();
+  }
+
+  function actionsBlock(side, title, list) {
+    const cards = list.map(a => `
+      <div class="ev-card" data-id="${a._id}">
+        <button class="del-x" data-ev="del" data-side="${side}" data-id="${a._id}" title="Remover">✕</button>
+        <div class="row">
+          <input class="emoji" type="text" maxlength="4" data-ev="act" data-side="${side}" data-id="${a._id}" data-field="emoji" value="${esc(a.emoji)}" />
+          <input type="text" placeholder="Nome" data-ev="act" data-side="${side}" data-id="${a._id}" data-field="label" value="${esc(a.label)}" />
+        </div>
+        <div class="row"><label>key</label><input type="text" data-ev="act" data-side="${side}" data-id="${a._id}" data-field="key" value="${esc(a.key)}" /></div>
+        <div class="row"><label>fôlego</label><input type="number" min="0" max="30" data-ev="act" data-side="${side}" data-id="${a._id}" data-field="staminaCost" value="${a.staminaCost}" /></div>
+        <div class="row"><label>desc</label><input type="text" data-ev="act" data-side="${side}" data-id="${a._id}" data-field="desc" value="${esc(a.desc)}" /></div>
+        ${side === 'def' ? `<label class="agg"><input type="checkbox" data-ev="act" data-side="def" data-id="${a._id}" data-field="aggressive" ${a.aggressive ? 'checked' : ''} /> agressiva (risco de vermelho)</label>` : ''}
+      </div>`).join('');
+    return `<div class="ev-block"><h3>${title}</h3>
+      <p class="hint">As opções que o jogador vê no lance. Pode adicionar/remover — a UI do jogo renderiza dinamicamente.</p>
+      <div class="ev-cards">${cards}<button class="ev-add" data-ev="add" data-side="${side}">+ Adicionar ação</button></div></div>`;
+  }
+
+  function matrixBlock() {
+    const atk = evCfg.atkActions, def = evCfg.defActions;
+    const head = def.map(d => `<th>${esc(d.emoji)} ${esc(d.label)}</th>`).join('');
+    const rows = atk.map(a => {
+      const cells = def.map(d => {
+        const v = (evCfg.matrix[a._id] && evCfg.matrix[a._id][d._id]) || 'neu';
+        return `<td><select class="${v}" data-ev="mat" data-atk="${a._id}" data-def="${d._id}">
+          <option value="win"${v === 'win' ? ' selected' : ''}>⚔️ Atacante</option>
+          <option value="neu"${v === 'neu' ? ' selected' : ''}>= Neutro</option>
+          <option value="lose"${v === 'lose' ? ' selected' : ''}>🛡️ Defensor</option></select></td>`;
+      }).join('');
+      return `<tr><th class="rowhead">${esc(a.emoji)} ${esc(a.label)}</th>${cells}</tr>`;
+    }).join('');
+    return `<div class="ev-block"><h3>Matriz de Vantagem</h3>
+      <p class="hint">Linha = ação de ataque · coluna = ação de defesa. Quem leva a melhor no confronto.</p>
+      <table class="matrix"><thead><tr><th class="corner"></th>${head}</tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+
+  function advBlock() {
+    const grp = (g, lbl) => `<div class="ev-rule"><label>${lbl}</label>
+      <div class="pair">
+        <input type="number" step="0.01" data-ev="adv" data-grp="${g}" data-field="ma" value="${evCfg.adv[g].ma}" title="ma — multiplica o ataque" />
+        <input type="number" step="0.01" data-ev="adv" data-grp="${g}" data-field="md" value="${evCfg.adv[g].md}" title="md — multiplica a defesa" />
+      </div><div class="desc">ma (ataque) · md (defesa)</div></div>`;
+    return `<div class="ev-block"><h3>Multiplicadores da Matriz</h3>
+      <p class="hint">Quanto cada desfecho pesa. <code>ma</code> multiplica o ataque, <code>md</code> a defesa. &gt;1 favorece.</p>
+      <div class="ev-adv">${grp('win', '⚔️ Vantagem do atacante')}${grp('neu', '= Neutro')}${grp('lose', '🛡️ Vantagem do defensor')}</div></div>`;
+  }
+
+  function rulesBlock() {
+    const items = Object.keys(RULE_META).map(k => {
+      const m = RULE_META[k];
+      return `<div class="ev-rule"><label>${m.label} <code>${k}</code></label>
+        <input type="number" step="${m.step}" data-ev="rule" data-field="${k}" value="${evCfg.rules[k]}" />
+        <div class="desc">${m.desc}</div></div>`;
+    }).join('');
+    return `<div class="ev-block"><h3>Constantes de Regra</h3>
+      <p class="hint">Momentum, fôlego e cartão vermelho. Veja a aba Documentação para o efeito de cada uma.</p>
+      <div class="ev-rules">${items}</div></div>`;
+  }
+
+  function findAct(side, id) {
+    return (side === 'atk' ? evCfg.atkActions : evCfg.defActions).find(a => a._id === +id);
+  }
+  function evMark() { evDirty = true; evStatus(); }
+  function evStatus() {
+    const s = document.getElementById('ev-status');
+    if (!s || !evCfg) return;
+    s.innerHTML = `<b>${evCfg.atkActions.length}</b> ataque · <b>${evCfg.defActions.length}</b> defesa` +
+      (evDirty ? ' <span class="dirty">• alterações não salvas</span>' : ' • salvo');
+    document.getElementById('ev-save').disabled = !evDirty;
+  }
+
+  function onEvInput(e) {
+    const t = e.target, kind = t.dataset.ev;
+    if (kind === 'act') {
+      const a = findAct(t.dataset.side, t.dataset.id); if (!a) return;
+      const f = t.dataset.field;
+      if (f === 'staminaCost') a[f] = parseFloat(t.value) || 0;
+      else if (f === 'aggressive') a[f] = t.checked;
+      else a[f] = t.value;
+      evMark();
+    } else if (kind === 'adv') {
+      evCfg.adv[t.dataset.grp][t.dataset.field] = parseFloat(t.value) || 0; evMark();
+    } else if (kind === 'rule') {
+      evCfg.rules[t.dataset.field] = parseFloat(t.value); evMark();
+    } else if (kind === 'mat') {
+      evCfg.matrix[t.dataset.atk][t.dataset.def] = t.value; t.className = t.value; evMark();
+    }
+  }
+
+  function onEvChange(e) {
+    const t = e.target, kind = t.dataset.ev;
+    if (kind === 'mat') { evCfg.matrix[t.dataset.atk][t.dataset.def] = t.value; t.className = t.value; evMark(); }
+    else if (kind === 'act' && t.dataset.field === 'aggressive') { const a = findAct(t.dataset.side, t.dataset.id); if (a) { a.aggressive = t.checked; evMark(); } }
+    else if (kind === 'act' && ['key', 'label', 'emoji'].includes(t.dataset.field)) { renderEvents(); } // atualiza cabeçalhos da matriz
+  }
+
+  function onEvClick(e) {
+    const btn = e.target.closest('[data-ev]'); if (!btn) return;
+    if (btn.dataset.ev === 'add') addAction(btn.dataset.side);
+    else if (btn.dataset.ev === 'del') delAction(btn.dataset.side, btn.dataset.id);
+  }
+
+  function addAction(side) {
+    const base = side === 'atk'
+      ? { _id: evNextId++, key: '', label: '', emoji: '⚽', staminaCost: 7, desc: '' }
+      : { _id: evNextId++, key: '', label: '', emoji: '🧤', staminaCost: 6, desc: '', aggressive: false };
+    (side === 'atk' ? evCfg.atkActions : evCfg.defActions).push(base);
+    rebuildMatrixKeys(); evMark(); renderEvents();
+  }
+  function delAction(side, id) {
+    const list = side === 'atk' ? evCfg.atkActions : evCfg.defActions;
+    if (list.length <= 1) { toast('Precisa de ao menos 1 ação.', true); return; }
+    const idx = list.findIndex(a => a._id === +id); if (idx < 0) return;
+    list.splice(idx, 1);
+    rebuildMatrixKeys(); evMark(); renderEvents();
+  }
+  function rebuildMatrixKeys() {
+    const m = {};
+    evCfg.atkActions.forEach(at => {
+      m[at._id] = {};
+      evCfg.defActions.forEach(df => { m[at._id][df._id] = (evCfg.matrix[at._id] && evCfg.matrix[at._id][df._id]) || 'neu'; });
+    });
+    evCfg.matrix = m;
+  }
+
+  async function saveEvents() {
+    const keyRe = /^[a-z][a-z0-9_]*$/;
+    for (const [side, list] of [['Ataque', evCfg.atkActions], ['Defesa', evCfg.defActions]]) {
+      const seen = new Set();
+      for (const a of list) {
+        if (!keyRe.test(a.key)) return toast(`${side}: key inválida "${a.key}" (minúsculas, começa por letra)`, true);
+        if (seen.has(a.key)) return toast(`${side}: key duplicada "${a.key}"`, true);
+        seen.add(a.key);
+        if (!String(a.label).trim()) return toast(`${side}: "${a.key}" sem nome`, true);
+      }
+    }
+    const strip = (a, def) => ({ key: a.key, label: a.label, emoji: a.emoji, staminaCost: a.staminaCost, desc: a.desc, ...(def ? { aggressive: !!a.aggressive } : {}) });
+    const matrix = {};
+    evCfg.atkActions.forEach(at => {
+      matrix[at.key] = {};
+      evCfg.defActions.forEach(df => { matrix[at.key][df.key] = evCfg.matrix[at._id][df._id]; });
+    });
+    const payload = {
+      atkActions: evCfg.atkActions.map(a => strip(a, false)),
+      defActions: evCfg.defActions.map(a => strip(a, true)),
+      adv: evCfg.adv, matrix, rules: evCfg.rules,
+    };
+    document.getElementById('ev-save').disabled = true;
+    try {
+      const res = await fetch('/api/admin/events', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const data = await res.json();
+      if (!res.ok) { toast('Erro: ' + (data.error || res.status), true); document.getElementById('ev-save').disabled = false; return; }
+      evDirty = false; evStatus();
+      toast(`✅ Salvo: ${data.atk} ações de ataque e ${data.def} de defesa (backup em events.js.bak). Reinicie o servidor p/ valer no multiplayer.`);
+    } catch (e) {
+      toast('Falha de rede ao salvar.', true); document.getElementById('ev-save').disabled = false;
+    }
+  }
+
+  initEventsEditor();
 })();

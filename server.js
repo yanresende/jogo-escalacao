@@ -147,6 +147,120 @@ app.post('/api/admin/players', (req, res) => {
   }
 });
 
+// ── Painel admin: interações do MODO INTERATIVO (events.js) ──────────────────
+// Regenera o bloco contíguo de ATK_ACTIONS … DIRECTIONS no events.js (ações +
+// matriz de vantagem + multiplicadores + constantes de regra).
+const EVENTS_FILE = path.join(__dirname, 'public', 'js', 'events.js');
+const KEY_RE = /^[a-z][a-z0-9_]*$/;
+
+const _ejs = (s) => JSON.stringify(String(s));                 // string → literal JS
+const _enum = (n) => String(Number(n));                        // número “limpo”
+const _eaction = (a, def) => {
+  const parts = [
+    `key: ${_ejs(a.key)}`, `label: ${_ejs(a.label)}`, `emoji: ${_ejs(a.emoji)}`,
+    `staminaCost: ${_enum(a.staminaCost)}`, `desc: ${_ejs(a.desc)}`,
+  ];
+  if (def && a.aggressive) parts.push('aggressive: true');
+  return `${a.key}: { ${parts.join(', ')} },`;
+};
+const ADV_NAME = { win: 'ADV_WIN', lose: 'ADV_LOSE', neu: 'ADV_NEU' };
+
+function generateEventsBlock(cfg) {
+  const L = [];
+  L.push('  const ATK_ACTIONS = {');
+  for (const a of cfg.atkActions) L.push('    ' + _eaction(a, false));
+  L.push('  };');
+  L.push('  const DEF_ACTIONS = {');
+  for (const a of cfg.defActions) L.push('    ' + _eaction(a, true));
+  L.push('  };');
+  L.push('');
+  L.push('  // Multiplicadores da matriz de vantagem. ma = atacante, md = defensor (>1 favorece).');
+  L.push(`  const ADV_WIN  = { ma: ${_enum(cfg.adv.win.ma)}, md: ${_enum(cfg.adv.win.md)} };`);
+  L.push(`  const ADV_LOSE = { ma: ${_enum(cfg.adv.lose.ma)}, md: ${_enum(cfg.adv.lose.md)} };`);
+  L.push(`  const ADV_NEU  = { ma: ${_enum(cfg.adv.neu.ma)}, md: ${_enum(cfg.adv.neu.md)} };`);
+  L.push('');
+  L.push('  // Para cada ação de ataque, o desfecho contra cada ação de defesa.');
+  L.push('  const ADVANTAGE_MATRIX = {');
+  for (const atk of cfg.atkActions) {
+    const cells = cfg.defActions.map(d => {
+      const v = (cfg.matrix[atk.key] && cfg.matrix[atk.key][d.key]) || 'neu';
+      return `${d.key}: ${ADV_NAME[v]}`;
+    });
+    L.push(`    ${atk.key}: { ${cells.join(', ')} },`);
+  }
+  L.push('  };');
+  L.push('');
+  L.push('  // ── Constantes de regra ─────────────────────────────────────');
+  const r = cfg.rules;
+  const pad = (k) => (k + '                  ').slice(0, 18);
+  L.push(`  const ${pad('STAMINA_START')}= ${_enum(r.STAMINA_START)};`);
+  L.push(`  const ${pad('STAMINA_LOW')}= ${_enum(r.STAMINA_LOW)};   // gatilho de penalidade`);
+  L.push(`  const ${pad('STAMINA_DRAIN_MIN')}= ${_enum(r.STAMINA_DRAIN_MIN)}; // desgaste passivo por minuto`);
+  L.push(`  const ${pad('LATE_MINUTE')}= ${_enum(r.LATE_MINUTE)};   // "minutos finais"`);
+  L.push(`  const ${pad('MOMENTUM_MINUTES')}= ${_enum(r.MOMENTUM_MINUTES)};   // duração do buff (tempo de jogo)`);
+  L.push(`  const ${pad('MOMENTUM_BONUS')}= ${_enum(r.MOMENTUM_BONUS)}; // bônus de eficácia`);
+  L.push(`  const ${pad('STAMINA_PENALTY')}= ${_enum(r.STAMINA_PENALTY)}; // multiplicador c/ fôlego baixo no fim`);
+  L.push(`  const ${pad('RED_PENALTY')}= ${_enum(r.RED_PENALTY)}; // perda de eficácia por expulsão`);
+  L.push(`  const ${pad('CRIT_FAIL_PROB')}= ${_enum(r.CRIT_FAIL_PROB)}; // chance de vermelho em ação agressiva`);
+  L.push("  const DIRECTIONS = ['esquerda', 'meio', 'direita'];");
+  return L.join('\n');
+}
+
+function validateEvents(cfg) {
+  if (!cfg || typeof cfg !== 'object') return { error: 'payload inválido' };
+  const checkActions = (arr, kind) => {
+    if (!Array.isArray(arr) || arr.length < 1) return `${kind}: precisa de ao menos 1 ação`;
+    const seen = new Set();
+    for (const a of arr) {
+      if (!KEY_RE.test(a.key || '')) return `${kind}: key inválida "${a.key}" (use minúsculas/_, começando por letra)`;
+      if (seen.has(a.key)) return `${kind}: key duplicada "${a.key}"`;
+      seen.add(a.key);
+      if (!String(a.label || '').trim()) return `${kind} "${a.key}": label vazio`;
+      const sc = Number(a.staminaCost);
+      if (!Number.isFinite(sc) || sc < 0 || sc > 30) return `${kind} "${a.key}": staminaCost fora de 0–30`;
+    }
+    return null;
+  };
+  let e = checkActions(cfg.atkActions, 'Ataque') || checkActions(cfg.defActions, 'Defesa');
+  if (e) return { error: e };
+  for (const grp of ['win', 'lose', 'neu']) {
+    const m = cfg.adv && cfg.adv[grp];
+    if (!m || !Number.isFinite(Number(m.ma)) || !Number.isFinite(Number(m.md))) return { error: `multiplicador ${grp} inválido` };
+    if (Number(m.ma) < 0 || Number(m.ma) > 5 || Number(m.md) < 0 || Number(m.md) > 5) return { error: `multiplicador ${grp} fora de 0–5` };
+  }
+  const ruleKeys = ['STAMINA_START', 'STAMINA_LOW', 'STAMINA_DRAIN_MIN', 'LATE_MINUTE', 'MOMENTUM_MINUTES', 'MOMENTUM_BONUS', 'STAMINA_PENALTY', 'RED_PENALTY', 'CRIT_FAIL_PROB'];
+  for (const k of ruleKeys) if (!Number.isFinite(Number(cfg.rules && cfg.rules[k]))) return { error: `regra ${k} inválida` };
+  return { cfg };
+}
+
+app.post('/api/admin/events', (req, res) => {
+  if (!ADMIN_ENABLED) return res.status(403).json({ error: 'Painel admin desabilitado em produção.' });
+  try {
+    const { error } = validateEvents(req.body);
+    if (error) return res.status(400).json({ error });
+    const cfg = req.body;
+
+    const src = fs.readFileSync(EVENTS_FILE, 'utf8');
+    const START = '  const ATK_ACTIONS = {';
+    const END = "  const DIRECTIONS = ['esquerda', 'meio', 'direita'];";
+    const startIdx = src.indexOf(START);
+    const endAnchor = src.indexOf(END);
+    if (startIdx < 0 || endAnchor < 0) return res.status(500).json({ error: 'bloco de ações não encontrado no events.js' });
+    const endIdx = endAnchor + END.length;
+
+    const before = src.slice(0, startIdx);   // tudo até `const ATK_ACTIONS` (comentários acima ficam)
+    const after = src.slice(endIdx);         // de `const DIRECTIONS …` em diante
+    const newSrc = before + generateEventsBlock(cfg) + after;
+
+    fs.writeFileSync(EVENTS_FILE + '.bak', src);
+    fs.writeFileSync(EVENTS_FILE, newSrc);
+    res.json({ ok: true, atk: cfg.atkActions.length, def: cfg.defActions.length });
+  } catch (e) {
+    console.error('POST /api/admin/events', e);
+    res.status(500).json({ error: e.message || 'falha ao gravar' });
+  }
+});
+
 // ── Multiplayer: salas de torneio (até 16 jogadores) ─────────
 // Map<roomCode, {
 //   code, hostId, started, finished,

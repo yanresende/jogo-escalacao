@@ -140,6 +140,11 @@
         <button class="dice-btn" id="dice-btn">
           <span class="dice-face" id="dice-face">🎲</span>
         </button>
+        <div id="pity-meter" class="pity-meter hidden">
+          <div class="pity-bar"><span class="pity-fill" id="pity-fill"></span></div>
+          <span class="pity-label" id="pity-label"></span>
+        </div>
+        <button id="sfx-toggle" class="sfx-toggle" type="button" title="Ligar/desligar som">🔊</button>
       </div>
 
       <div id="draft-pick-list" class="draft-pick-list hidden">
@@ -156,6 +161,9 @@
             <button class="btn btn-ghost btn-sm" id="reroll-year-btn" disabled title="Manter Copa, mudar País">🔄 País</button>
             <button class="btn btn-ghost btn-sm" id="reroll-country-btn" disabled title="Manter País, mudar Copa">🔄 Copa</button>
           </div>
+        </div>
+        <div id="chem-readout" class="chem-readout hidden" title="Química do time escalado">
+          ⚛️ Química do time: <strong id="chem-readout-val">—</strong>
         </div>
         <div class="players-list" id="players-list"></div>
         <div id="position-selector" class="position-selector hidden">
@@ -347,6 +355,7 @@
 
 <!-- ========== TOAST ========== -->
 <div id="toast" class="toast hidden"></div>
+<div id="pull-flash" class="pull-flash"></div>
 
 <!-- Scripts -->
 <script src="js/engine.js"></script>

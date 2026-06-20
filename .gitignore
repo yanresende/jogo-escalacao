@@ -2,5 +2,6 @@ node_modules/
 .env
 *.log
 
-# Backup gerado pelo painel admin a cada salvar
+# Backups gerados pelo painel admin a cada salvar
 public/js/data.js.bak
+public/js/events.js.bak

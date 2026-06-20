@@ -269,14 +269,66 @@ body { background:
 .pick-slot-info { font-size: .85rem; color: var(--text2); }
 .pick-slot-info strong { color: var(--accent); }
 
-.players-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; }
-.player-card {
-  cursor: pointer; transition: transform .15s ease; opacity: 0;
-  animation: cardReveal .4s ease forwards;
-}
+.players-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; perspective: 900px; }
+.player-card { cursor: pointer; transition: transform .15s ease; position: relative; }
 .player-card:hover { transform: translateY(-4px); }
 .player-card.pick-selected .fut-card { outline: 3px solid var(--accent); outline-offset: 2px; }
-@keyframes cardReveal { from { opacity: 0; transform: translateY(14px) scale(.92); } to { opacity: 1; transform: none; } }
+
+/* ── Pack opening: flip 3D da carta ── */
+.card-flip { position: relative; transform-style: preserve-3d; transition: transform .47s cubic-bezier(.2,.7,.25,1.25); }
+.player-card.face-down .card-flip { transform: rotateY(180deg); }
+.card-front, .card-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.card-back {
+  position: absolute; inset: 0; transform: rotateY(180deg);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 12px; border: 1px solid var(--border);
+  background: radial-gradient(circle at 50% 35%, #2a3550, #131a2a 75%);
+  box-shadow: inset 0 0 24px rgba(0,0,0,.45);
+}
+.card-back::after {
+  content: '⚽'; position: absolute; font-size: .8rem; opacity: .25;
+  filter: grayscale(1);
+}
+.card-back-shield { font-size: 2.4rem; filter: saturate(1.1) drop-shadow(0 2px 6px rgba(0,0,0,.5)); }
+
+/* ── Badge de química no pick (ocupa o lugar da Copa no card) ── */
+.chem-badge.chem-strong { background: rgba(34,197,94,.18); border-color: rgba(34,197,94,.55); color: var(--accent); }
+.chem-badge.chem-weak   { background: rgba(34,197,94,.10); border-color: rgba(34,197,94,.30); color: var(--accent); }
+.chem-badge.chem-none   { background: rgba(239,68,68,.10); border-color: rgba(239,68,68,.35); color: var(--red); }
+
+/* ── Readout de química do time ── */
+.chem-readout { font-size: .82rem; color: var(--text2); padding: 6px 12px; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); }
+.chem-readout.hidden { display: none; }
+.chem-readout strong { color: var(--accent); }
+
+/* ── Medidor de pity (craque garantido) ── */
+.pity-meter { margin-top: 12px; width: 100%; max-width: 240px; display: flex; flex-direction: column; gap: 4px; align-items: center; }
+.pity-meter.hidden { display: none; }
+.pity-bar { width: 100%; height: 8px; background: var(--bg3); border-radius: 999px; overflow: hidden; border: 1px solid var(--border); }
+.pity-fill { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #6d28d9, #f59e0b); transition: width .3s ease; }
+.pity-label { font-size: .72rem; color: var(--text2); }
+.pity-meter.ready .pity-fill { background: linear-gradient(90deg, #f59e0b, #fde047); animation: pityPulse 1.1s ease-in-out infinite; }
+.pity-meter.ready .pity-label { color: var(--gold); font-weight: 700; }
+@keyframes pityPulse { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.4); } }
+
+/* ── Toggle de som ── */
+.sfx-toggle { margin-top: 10px; background: transparent; border: 1px solid var(--border); border-radius: 8px; padding: 4px 10px; cursor: pointer; font-size: 1rem; color: var(--text2); }
+.sfx-toggle:hover { border-color: var(--accent); }
+.sfx-toggle.off { opacity: .55; }
+
+/* ── Flash de raridade (pull) ── */
+.pull-flash { position: fixed; inset: 0; pointer-events: none; z-index: 1800; opacity: 0; }
+.pull-flash.show { animation: pullFlash .65s ease-out; }
+.pull-flash.tier-s { background: radial-gradient(circle at 50% 45%, rgba(245,158,11,.55), rgba(245,158,11,0) 60%); }
+.pull-flash.tier-a { background: radial-gradient(circle at 50% 45%, rgba(139,92,246,.40), rgba(139,92,246,0) 60%); }
+@keyframes pullFlash { 0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: 0; } }
+
+/* ── Shake do painel (S-tier) ── */
+.draft-pick-panel.shake { animation: shake .55s ease; }
+@keyframes shake {
+  10%,90% { transform: translateX(-2px); } 20%,80% { transform: translateX(4px); }
+  30%,50%,70% { transform: translateX(-7px); } 40%,60% { transform: translateX(7px); }
+}
 .player-ovr {
   min-width: 40px; height: 40px; border-radius: 8px; background: var(--bg3);
   display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem;
@@ -773,11 +825,12 @@ input[type="text"]:focus { border-color: var(--accent); }
 @keyframes chemFade { to { opacity: .9; } }
 .field-slot { z-index: 1; }
 
-/* chip de química no draft */
+/* chip de química no draft — inline no card, no lugar da Copa */
 .chem-badge {
-  display: inline-flex; align-items: center; gap: 5px;
+  display: inline-flex; align-items: center; gap: 4px; align-self: flex-start;
   background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.4); color: var(--accent);
-  font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+  font-size: .54rem; font-weight: 700; padding: 1px 7px; border-radius: 12px;
+  max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
 /* logo refinada */

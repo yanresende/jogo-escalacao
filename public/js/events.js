@@ -285,7 +285,9 @@
 
   return {
     ATK_ACTIONS, DEF_ACTIONS, ADVANTAGE_MATRIX, DIRECTIONS,
-    STAMINA_START, STAMINA_LOW, MOMENTUM_MINUTES, MOMENTUM_BONUS,
+    ADV_WIN, ADV_LOSE, ADV_NEU,
+    STAMINA_START, STAMINA_LOW, STAMINA_DRAIN_MIN, LATE_MINUTE,
+    MOMENTUM_MINUTES, MOMENTUM_BONUS, STAMINA_PENALTY, RED_PENALTY, CRIT_FAIL_PROB, BG_BASE,
     newMatchState, scheduleEventMinutes, resolveEvent,
     applyBackgroundMinute, backgroundGoalChance, pickAttackingSide, botChooseAction,
     teamModifier, momentumActive, effAttack, effDefense,
