@@ -31,6 +31,7 @@ Sem build step. Sem bundler. Sem framework. HTML/CSS/JS puro no client, Node.js 
 ```
 jogo/
 ├── server.js                  Node + Express + Socket.io + API REST (/api/*)
+├── matchServer.js             Driver do MODO INTERATIVO no servidor (torneio ao vivo, rodada a rodada)
 ├── db.js                      Persistência: PostgreSQL (pg) com fallback em memória
 ├── package.json
 └── public/                    Servido estaticamente pelo Express
@@ -39,17 +40,20 @@ jogo/
     └── js/
         ├── engine.js          Motor compartilhado (UMD): Poisson, química, táticas, pênaltis, conquistas
         ├── data.js            Banco de dados de jogadores + helpers (com export Node no fim)
-        ├── tournament.js      Motor de torneio (UMD): grupos + mata-mata, bots de seleções reais
+        ├── tournament.js      Motor de torneio (UMD): grupos + mata-mata, bots; runTournament + buildBracket
+        ├── events.js          Motor de EVENTOS interativos (UMD): RPS, momentum, stamina, vermelho, pênaltis L/M/R
         ├── simulation.js      Shim legado (núcleo migrou para engine.js)
         ├── game.js            Estado global + lógica de draft + restrições
         ├── profile.js         Perfil anônimo (uid no localStorage) + sync com backend
-        ├── modes.js           Modos single-player (Solo/Diário/Carreira/Restrição/Survival) + torneio local
+        ├── modes.js           Modos single-player + torneio local (clássico e interativo)
         ├── ui.js              Renderização DOM + cards + animações + bracket + ordem de pênaltis
-        └── multiplayer.js     Cliente Socket.io (lobby + torneio até 16)
+        ├── match.js           Playback "ao vivo" (modos clássicos): scoreboard, relógio, gols
+        ├── interactiveMatch.js Partida interativa no cliente: modal de decisão + board + pênaltis L/M/R
+        └── multiplayer.js     Cliente Socket.io (lobby + torneio até 16 + duelos interativos ao vivo)
 ```
 
 **Ordem de carregamento dos scripts** (declarada no `index.html`):
-`engine.js` → `data.js` → `tournament.js` → `simulation.js` → `game.js` → `profile.js` → `modes.js` → `ui.js` → `socket.io.js` → `multiplayer.js`
+`engine.js` → `data.js` → `tournament.js` → `simulation.js` → `game.js` → `profile.js` → `modes.js` → `ui.js` → `match.js` → `events.js` → `interactiveMatch.js` → `socket.io.js` → `multiplayer.js`
 
 Crítico: `engine.js` carrega **primeiro** (expõe globais via UMD `Object.assign(window, api)`).
 `data.js` vem em seguida (expõe `PLAYERS`, `SQUAD_LIST`, etc.). `tournament.js` depende de ambos.
@@ -111,6 +115,40 @@ Vagas (16) preenchidas: 4 grupos de 4 → top 2 de cada (8) → quartas → semi
 **Payload de retorno:** `{ bracketSize, champion: pid, participants[], groups[], knockout:{rounds[]}, seed }`.
 Cada `group` tem `table[]` (P/V/E/D/SG/Pts/rank) + `matches[]`. Cada `knockout.round` tem `matches[]`
 com `{a, b, ga, gb, winner, pens? }`.
+
+**Refator para o modo interativo:** `runTournament` foi quebrado em helpers reusáveis — `buildBracket`
+(monta participantes + bots + sorteio de grupos **sem jogar**), `applyGroupResult`, `rankGroupRows`,
+`koSeedingAlive`, `koRoundMeta`, `slimParticipants`, `playMatch`. O driver interativo (client e server)
+joga partida a partida e remonta o **mesmo payload** acima. `runTournament` continua idêntico (usa os
+helpers internamente) — não mexer no seu output, que os modos clássicos dependem dele.
+
+## Modo Interativo (Eventos — pedra-papel-tesoura)
+
+3ª opção na tela de modo (`#mode-interactive`, ⚔️) + disponível no multiplayer (host ativa no lobby).
+`state.eventsMode` (bool) + `state.eventCount` (nº de lances por partida). Difere dos modos clássicos:
+as partidas **do jogador** são jogadas **ao vivo, partida a partida** (o placar depende das escolhas),
+em vez de pré-simuladas. **Todas** as partidas do jogador são interativas; gols vêm de **eventos + Poisson de fundo**.
+
+**Motor puro (`events.js`, UMD compartilhado client+server):**
+- `ATK_ACTIONS`/`DEF_ACTIONS` (3 cada) + `ADVANTAGE_MATRIX` em ciclo (Lançamento vence Linha de Impedimento,
+  Drible vence Carrinho, Cruzamento vence Marcação) → multiplicadores `{ma, md}`.
+- `resolveEvent(ms, atkSide, atkKey, defKey, rng)` → `pGoal = clamp((effAtk·ma)/(effAtk·ma + effDef·md), .05, .95)`,
+  desfecho `goal|save|neutral`. Efeitos: **momentum** (+5% por 15 min de jogo), **cartão vermelho** (ação
+  agressiva `carrinho` → falha crítica), **stamina** (100, ações custam fôlego, <30 nos minutos finais → penalidade).
+- `newMatchState`, `scheduleEventMinutes`, `applyBackgroundMinute` (Poisson leve), `pickAttackingSide`,
+  `botChooseAction` (IA p/ bots e humano AFK), `resolvePenaltyKick` (cobrador L/M/R vs goleiro).
+
+**Solo (`interactiveMatch.js` + `runInteractiveTournament` em `modes.js`):** `buildBracket` → joga as
+partidas do humano com `playInteractiveMatch` (modal de decisão + board + pênaltis L/M/R), bot×bot via
+`Tournament.playMatch` instantâneo → remonta o payload e reusa `renderTournamentResult`/`humanResultShape`/`onTournamentComplete`.
+
+**Multiplayer (`matchServer.js`, servidor autoritativo):** `createInteractiveDriver(io, room, humans, {eventCount})`
+roda o torneio **rodada a rodada** (3 matchdays de grupo + KO), todas as partidas da rodada em paralelo
+(cada humano em ≤1). Nos minutos de evento emite `event_prompt` (escolha secreta) aos humanos envolvidos
+(timeout → IA), resolve e emite `event_result`; gols de fundo via `match_clock`. Empate no KO → `pen_prompt`.
+Eventos socket: C→S `set_match_mode`/`event_choice`/`pen_choice`; S→C `match_start`/`match_clock`/`event_prompt`/
+`event_result`/`pen_prompt`/`pen_result`/`match_end`/`round_phase` + `tournament_result` final (reusa o render).
+Timings overrideáveis por env (`IM_TICK_MS`/`IM_REVEAL_MS`/`IM_PEN_MS`/`IM_TIMEOUT_MS`) para testes rápidos.
 
 ## Modos de jogo (`modes.js`)
 
@@ -175,7 +213,7 @@ const state = {
   screen:        'menu',         // tela atual
   mode:          'classic',      // 'classic' | 'memory' (afeta só o draft)
   formation:     null,           // chave de FORMATIONS, ex: '4-3-3'
-  slots:         [],             // [{ pos: 'ST', player: null | PlayerObj }]
+  slots:         [],             // [{ pos: 'ca', player: null | PlayerObj }]
   wildcards:     3,
   currentRoll:   null,           // { squad, players[] } — resultado do dado atual
   pickedPlayers: [],             // jogadores já escolhidos (espelho de slots com player)
@@ -201,18 +239,24 @@ const state = {
 
 ```js
 {
-  id:       'pele-bra-70',   // string única — formato: nome-país-ano
-  name:     'Pelé',
-  country:  'Brasil',
-  flag:     '🇧🇷',
-  worldCup: 1970,            // número (ano da Copa)
-  position: 'ST',            // posição (ver abaixo)
-  overall:  99,              // 60–99
+  id:           'pele-bra-70',   // string única — formato: nome-país-ano
+  name:         'Pelé',
+  country:      'Brasil',
+  flag:         '🇧🇷',
+  worldCup:     1970,            // número (ano da Copa)
+  position:     'ca',           // posição primária (ver abaixo)
+  altPositions: ['pe', 'pd'],   // posições secundárias (pode ser [])
+  overall:      99,              // 60–99
 }
 ```
 
 ### Posições válidas
-`GK`, `CB`, `LB`, `RB`, `LWB`, `RWB`, `CDM`, `CM`, `LM`, `RM`, `CAM`, `LW`, `RW`, `ST`
+Códigos em **português, minúsculo** (12 no total — batem com os rótulos das imagens de formação):
+`gol`, `zag`, `le`, `ld`, `vol`, `mc`, `mei`, `me`, `md`, `pe`, `pd`, `ca`
+
+(GOL = goleiro, ZAG = zagueiro, LE/LD = laterais esq./dir., VOL = volante, MC = meio-campo, MEI = meia,
+ME/MD = meias esq./dir. de ala, PE/PD = pontas esq./dir., CA = centroavante.) Os rótulos exibidos na UI
+vêm de `POS_LABELS` em `game.js`.
 
 ### Tiers de rating
 | Tier | Faixa | Exemplos |
@@ -234,20 +278,23 @@ A função `getTier(overall)` está em `data.js` e retorna `'S'`, `'A'`, `'B'` o
 
 `POS_COMPAT` em `data.js` define quais slots uma posição pode preencher:
 ```js
-ST:  ['ST', 'LW', 'RW'],    // atacante pode jogar na ala
-CM:  ['CM', 'CDM', 'CAM', 'LM', 'RM'],
-LW:  ['LW', 'LM', 'ST'],
+ca:  ['ca', 'pe', 'pd'],    // centroavante pode jogar nas pontas
+mc:  ['mc', 'vol', 'mei', 'me', 'md'],
+pe:  ['pe', 'me', 'ca'],
 // etc.
 ```
 
-A função `playerFitsSlot(playerPos, slotPos)` usa esse mapa. É chamada tanto no `rollDice` quanto no `pickPlayer`.
+A função `playerFitsSlot(player, slotPos)` usa esse mapa — recebe o **objeto** do jogador (ou só a
+string de posição) e considera tanto `position` quanto `altPositions`. É chamada tanto no `rollDice`
+quanto no `pickPlayer`. (Nota: `POS_COMPAT` existe como referência, mas o encaixe real é decidido por
+`[position, ...altPositions].includes(slotPos)`.)
 
 ### Como adicionar jogadores
 
 Adicione um objeto ao array `PLAYERS` em `data.js`. O ID deve ser único e seguir o padrão `nome-pais-ano`. Exemplo:
 
 ```js
-{ id:"ronaldo-bra-94", name:"Ronaldo R9", country:"Brasil", flag:"🇧🇷", worldCup:1994, position:"ST", overall:88 },
+{ id:"ronaldo-bra-94", name:"Ronaldo R9", country:"Brasil", flag:"🇧🇷", worldCup:1994, position:"ca", altPositions:["pe","pd"], overall:88 },
 ```
 
 Os índices `SQUADS` e `SQUAD_LIST` são gerados automaticamente no carregamento — não precisa mexer neles.
@@ -260,7 +307,7 @@ Os índices `SQUADS` e `SQUAD_LIST` são gerados automaticamente no carregamento
 
 ```js
 FORMATIONS['4-3-3'] = {
-  slots: ['GK','RB','CB','CB','LB','CM','CM','CM','RW','ST','LW'],
+  slots: ['gol','le','zag','zag','ld','vol','mei','mc','pe','ca','pd'],
   desc:  'Balanceada e versátil',
 }
 ```
@@ -271,13 +318,13 @@ A ordem dos slots é importante: define o índice de cada posição no array `st
 
 ```js
 FIELD_POSITIONS['4-3-3'] = [
-  [92, 50],   // índice 0 → GK  (y=92%, x=50%)
-  [72, 80],   // índice 1 → RB
+  [90, 50],   // índice 0 → gol  (y=90%, x=50%)
+  [73, 18],   // índice 1 → le
   ...
 ]
 ```
 
-`y` = distância do topo (0 = beira do gol de cima, 100 = goleiro). `x` = distância da esquerda.
+`y` = distância do topo (0 = ataque/beira do gol adversário, 100 = goleiro/base). `x` = distância da esquerda.
 
 ### Como adicionar uma nova formação
 
@@ -318,11 +365,11 @@ function calcTeamStats(players) → { attack, defense, overall }
 Cada posição tem um peso de ataque e defesa (`WEIGHT_MAP` em `engine.js`). O ataque e defesa do time são médias ponderadas dos overalls dos jogadores multiplicados pelos pesos.
 
 Pesos principais:
-- ST: atk 1.0 / def 0.0
-- GK: atk 0.0 / def 1.0
-- CB: atk 0.0 / def 0.95
-- CM: atk 0.5 / def 0.5
-- CAM: atk 0.75 / def 0.1
+- ca: atk 1.0 / def 0.0
+- gol: atk 0.0 / def 1.0
+- zag: atk 0.0 / def 0.95
+- mc: atk 0.5 / def 0.5
+- mei: atk 0.75 / def 0.1
 
 ### Fórmulas de gols por partida
 
@@ -389,8 +436,8 @@ Para alterar a dificuldade, mude os `strength` aqui. Para adicionar fases (ex: f
 
 Rejeita jogador **já escalado** (`state.slots.some(s => s.player?.id === id)`) — sem isso, o mesmo
 jogador poderia ocupar dois slots. Depois tenta encaixe exato (posição do jogador == posição do slot);
-se não houver, usa qualquer slot aberto onde `playerFitsSlot` retorne true (evita desperdiçar um ST num
-slot de GK). `pickPlayerToSlot` aplica a mesma dedup. No painel de draft, jogadores já escalados ou
+se não houver, usa qualquer slot aberto onde `playerFitsSlot` retorne true (evita desperdiçar um ca num
+slot de gol). `pickPlayerToSlot` aplica a mesma dedup. No painel de draft, jogadores já escalados ou
 incompatíveis aparecem como `.incompatible` (sem clique).
 
 ### Wildcards

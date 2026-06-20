@@ -160,13 +160,9 @@ function renderField() {
       el.className = 'field-slot clickable';
       el.innerHTML = renderPlayerCard(slot.player, { size: 'xs', extraClass: extraClass || undefined });
       el.addEventListener('click', () => {
-        if (state.currentRoll) {
-          if (removePlayerFromSlot(i)) {
-            renderField();
-            renderDraftPick(state.currentRoll);
-          }
-          return;
-        }
+        // Clicar num jogador já escalado nunca o apaga — entra/segue no modo de
+        // troca de posições, mesmo com uma rolagem ativa (há sempre slot vago
+        // p/ escalar o sorteado, já que o draft avança ao preencher os 11).
         if (_swapSourceIndex !== null) {
           handleSwapClick(i);
         } else {
@@ -194,8 +190,8 @@ function renderField() {
       }
     }
 
-    // Drag-and-drop para trocar posições (sem roll ativo)
-    if (!state.currentRoll) {
+    // Drag-and-drop para trocar posições (funciona mesmo com rolagem ativa)
+    {
       if (slot.player) {
         el.draggable = true;
         el.addEventListener('dragstart', (e) => {
@@ -646,6 +642,8 @@ function confirmTactics() {
 function onPenaltiesConfirmed() {
   if (state.isMultiplayer) {
     if (typeof sendDraftComplete === 'function') sendDraftComplete();
+  } else if (state.eventsMode && typeof runInteractiveTournament === 'function') {
+    runInteractiveTournament();
   } else if (typeof runLocalTournament === 'function') {
     runLocalTournament();
   }
@@ -850,6 +848,33 @@ function renderLobbyRoster(data, myId) {
   }
 
   const isHost = data.hostId === myId;
+
+  // Painel de modo da partida (interativo + nº de lances)
+  const mm = document.getElementById('lobby-matchmode');
+  if (mm) {
+    mm.classList.remove('hidden');
+    const chk = document.getElementById('mm-interactive');
+    const countWrap = document.getElementById('mm-count');
+    const readonly = document.getElementById('mm-readonly');
+    if (chk) { chk.checked = !!data.interactive; chk.disabled = !isHost; }
+    if (countWrap) countWrap.classList.toggle('hidden', !data.interactive);
+    document.querySelectorAll('#mm-count .mm-c').forEach(b => {
+      b.classList.toggle('selected', parseInt(b.dataset.count, 10) === (data.eventCount || 5));
+      b.disabled = !isHost;
+    });
+    // Não-host: mostra o modo escolhido como texto
+    if (readonly) {
+      if (!isHost) {
+        readonly.classList.remove('hidden');
+        readonly.textContent = data.interactive
+          ? `Modo definido pelo host: ⚔️ Interativo (${data.eventCount || 5} lances)`
+          : 'Modo definido pelo host: Clássico';
+      } else {
+        readonly.classList.add('hidden');
+      }
+    }
+  }
+
   const startBtn = document.getElementById('btn-start-tournament');
   const hint = document.getElementById('roster-hint');
   if (startBtn) {

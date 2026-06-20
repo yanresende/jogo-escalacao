@@ -84,6 +84,24 @@
       <p>Ratings ocultos. Você precisa conhecer o futebol histórico.</p>
       <span class="mode-badge hard">Difícil</span>
     </div>
+    <div class="mode-card mode-card-interactive" id="mode-interactive">
+      <div class="mode-icon">⚔️</div>
+      <h3>Interativo</h3>
+      <p>Lances de decisão ao vivo (pedra-papel-tesoura) + pênaltis manuais. Você decide o jogo.</p>
+      <span class="mode-badge new">Novo</span>
+    </div>
+  </div>
+
+  <!-- Opções do modo interativo (aparecem ao escolher Interativo) -->
+  <div class="interactive-opts hidden" id="interactive-opts">
+    <h3 class="io-title">⚔️ Quantos lances por partida?</h3>
+    <p class="io-sub">Em cada lance você escolhe uma ação. Mais lances = mais decisões e partidas mais longas.</p>
+    <div class="io-count-grid">
+      <button class="io-count" data-count="3"><span class="io-n">3</span><span class="io-l">Rápido</span></button>
+      <button class="io-count selected" data-count="5"><span class="io-n">5</span><span class="io-l">Padrão</span></button>
+      <button class="io-count" data-count="7"><span class="io-n">7</span><span class="io-l">Intenso</span></button>
+    </div>
+    <button class="btn btn-primary btn-large" id="io-start">▶ Continuar</button>
   </div>
 </div>
 
@@ -281,6 +299,24 @@
       <h3>Jogadores <span class="roster-count"><span id="roster-count">0</span>/16</span></h3>
     </div>
     <ul class="roster-list" id="roster-list"></ul>
+
+    <!-- Modo da partida (host escolhe) -->
+    <div class="lobby-matchmode hidden" id="lobby-matchmode">
+      <label class="mm-toggle">
+        <input type="checkbox" id="mm-interactive" />
+        <span>⚔️ Modo Interativo <small>— lances de decisão ao vivo + pênaltis manuais</small></span>
+      </label>
+      <div class="mm-count hidden" id="mm-count">
+        <span class="mm-count-label">Lances por partida:</span>
+        <div class="mm-count-btns">
+          <button class="mm-c" data-count="3">3</button>
+          <button class="mm-c selected" data-count="5">5</button>
+          <button class="mm-c" data-count="7">7</button>
+        </div>
+      </div>
+      <p class="mm-readonly hidden" id="mm-readonly"></p>
+    </div>
+
     <button class="btn btn-primary hidden" id="btn-start-tournament">▶ Iniciar Torneio</button>
     <p class="waiting-text" id="roster-hint">Aguardando o host iniciar<span class="dots"></span></p>
   </div>
@@ -322,6 +358,8 @@
 <script src="js/modes.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/match.js"></script>
+<script src="js/events.js"></script>
+<script src="js/interactiveMatch.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/multiplayer.js"></script>
 </body>

@@ -365,3 +365,107 @@ function humanResultShape(result, pid) {
     seed: result.seed,
   };
 }
+
+// ════════════════════════════════════════════════════════════
+//  TORNEIO INTERATIVO (modo Eventos) — partida a partida
+// ════════════════════════════════════════════════════════════
+// Constrói o chaveamento com Tournament.buildBracket, joga AS PARTIDAS DO
+// JOGADOR de forma interativa (interactiveMatch.js) e resolve bot-vs-bot
+// instantaneamente. Monta o MESMO payload de runTournament para reusar o
+// render do bracket + conquistas (onTournamentComplete/humanResultShape).
+async function runInteractiveTournament() {
+  const players = state.slots.map(s => s.player).filter(Boolean);
+  if (players.length < 11) { showToast('Monte o time completo primeiro!'); return; }
+
+  const prof = (typeof Profile !== 'undefined' && Profile.get) ? Profile.get() : {};
+  const human = {
+    id: 'you', name: prof.name || 'Você', isBot: false, flag: '🎮',
+    team: {
+      players,
+      slots: state.slots.map(s => s.pos),
+      formation: state.formation,
+      tactic: state.tactic,
+      captainId: state.captainId,
+      penaltyOrder: state.penaltyOrder || players.map(p => p.id),
+    },
+  };
+
+  const T = Tournament;
+  const bracket = T.buildBracket([human], { bracketSize: 16 });
+  const { byId, baseSeed, size, participants, groups } = bracket;
+  const eventCount = state.eventCount || 5;
+  const slim = T.slimParticipants(participants);
+  const data = { bracketSize: size, participants: slim, groups: [], knockout: { rounds: [] }, seed: baseSeed, youId: 'you', champion: null };
+
+  goTo('bracket');
+  ['bracket-champion', 'bracket-yourpath', 'groups-wrap', 'knockout-wrap'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.innerHTML = '';
+  });
+  const stageEl = document.getElementById('match-stage');
+  if (stageEl) stageEl.innerHTML = '<div class="ib-waiting">Preparando o torneio…</div>';
+
+  // ── Fase de grupos ──
+  for (let g = 0; g < groups.length; g++) {
+    const grp = groups[g];
+    let humanGame = 0;
+    for (let pi = 0; pi < grp.matchPairs.length; pi++) {
+      const [aId, bId] = grp.matchPairs[pi];
+      let res;
+      if (aId === 'you' || bId === 'you') {
+        humanGame++;
+        const humanSide = aId === 'you' ? 'a' : 'b';
+        res = await playInteractiveMatch(byId[aId], byId[bId], {
+          humanSide, knockout: false,
+          phaseLabel: `Grupo ${grp.name} — Jogo ${humanGame}`, eventCount, container: 'match-stage',
+        });
+        await imSleep(600);
+      } else {
+        res = T.playMatch(byId[aId], byId[bId], baseSeed, `g${g}-${pi}`, false);
+      }
+      grp.matches.push(res);
+      T.applyGroupResult(grp.table, res);
+    }
+    grp.rows = T.rankGroupRows(grp.members.map(m => grp.table[m.id]), baseSeed);
+  }
+
+  const finalGroups = groups.map(g => ({ name: g.name, table: g.rows, matches: g.matches }));
+  data.groups = finalGroups;
+  if (typeof renderGroupsSection === 'function') renderGroupsSection(data);
+
+  // ── Mata-mata ──
+  let alive = T.koSeedingAlive(size, finalGroups, byId);
+  const rounds = [];
+  while (alive.length >= 2) {
+    const meta = T.koRoundMeta(alive.length);
+    const matches = [];
+    const next = [];
+    for (let i = 0; i < alive.length; i += 2) {
+      const pa = alive[i], pb = alive[i + 1];
+      let res;
+      if (pa.id === 'you' || pb.id === 'you') {
+        const humanSide = pa.id === 'you' ? 'a' : 'b';
+        res = await playInteractiveMatch(pa, pb, {
+          humanSide, knockout: true, phaseLabel: meta.label, eventCount, container: 'match-stage',
+        });
+        await imSleep(600);
+      } else {
+        res = T.playMatch(pa, pb, baseSeed, `${meta.id}-${i}`, true);
+      }
+      matches.push(res);
+      next.push(byId[res.winner]);
+    }
+    const round = { id: meta.id, label: meta.label, matches };
+    rounds.push(round);
+    data.knockout.rounds = rounds;
+    const koWrap = document.getElementById('knockout-wrap');
+    if (koWrap && typeof renderKnockoutRound === 'function') koWrap.insertAdjacentHTML('beforeend', renderKnockoutRound(round, data));
+    alive = next;
+  }
+  data.champion = alive.length === 1 ? alive[0].id : null;
+
+  if (stageEl) stageEl.innerHTML = '';
+  if (typeof renderChampionAndPath === 'function') renderChampionAndPath(data);
+
+  state.simResults = data;
+  if (typeof onTournamentComplete === 'function') onTournamentComplete(humanResultShape(data, 'you'));
+}

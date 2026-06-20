@@ -24,10 +24,46 @@ function initSocket() {
   });
 
   socket.on('tournament_starting', (info) => {
-    showToast(`Torneio iniciado! Chave de ${info.bracketSize}. Monte seu time.`);
     state.isMultiplayer = true;
+    state.eventsMode = !!(info && info.interactive);
+    state.eventCount = (info && info.eventCount) || 5;
+    const extra = state.eventsMode ? ' ⚔️ Modo interativo!' : '';
+    showToast(`Torneio iniciado! Chave de ${info.bracketSize}.${extra} Monte seu time.`);
     goTo('formation');
     renderFormationGrid();
+  });
+
+  // ── Modo interativo: partidas ao vivo mediadas pelo servidor ──
+  socket.on('round_phase', (info) => {
+    if (info && info.label) showToast(info.label);
+  });
+  socket.on('match_start', (d) => {
+    goTo('bracket');
+    ['bracket-champion', 'bracket-yourpath', 'groups-wrap', 'knockout-wrap'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.innerHTML = '';
+    });
+    if (typeof imMpStart === 'function') imMpStart(d);
+  });
+  socket.on('match_clock', (d) => { if (typeof imMpClock === 'function') imMpClock(d); });
+  socket.on('event_prompt', (d) => {
+    if (typeof imAskAction !== 'function') return;
+    imAskAction(d.role, d.minute).then(key => {
+      socket.emit('event_choice', { matchId: d.matchId, action: key });
+      if (typeof imWaiting === 'function') imWaiting('Escolha enviada — aguardando o lance…');
+    });
+  });
+  socket.on('event_result', (d) => { if (typeof imMpEventResult === 'function') imMpEventResult(d); });
+  socket.on('pen_prompt', (d) => {
+    if (typeof imAskDirection !== 'function') return;
+    const text = d.mode === 'kick' ? 'Onde bater?' : 'Onde defender? (adversário vai bater)';
+    imAskDirection(text, d.tally || '').then(dir => {
+      socket.emit('pen_choice', { matchId: d.matchId, dir });
+      if (typeof imWaiting === 'function') imWaiting('Cobrança enviada — aguardando…');
+    });
+  });
+  socket.on('pen_result', (d) => { if (typeof imMpPenResult === 'function') imMpPenResult(d); });
+  socket.on('match_end', (d) => {
+    if (typeof imHideModal === 'function') imHideModal();
   });
 
   socket.on('opponent_ready', (d) => {
@@ -42,7 +78,14 @@ function initSocket() {
 
   socket.on('tournament_result', (data) => {
     goTo('bracket');
-    // Playback "ao vivo" do caminho do jogador; espectador (sem youId) cai no bracket direto.
+    if (typeof imHideModal === 'function') imHideModal();
+    // No modo interativo as partidas já foram jogadas ao vivo → só renderiza o chaveamento final.
+    if (state.eventsMode) {
+      const stage = document.getElementById('match-stage'); if (stage) stage.innerHTML = '';
+      renderTournamentResult(data);
+      return;
+    }
+    // Modo clássico: playback "ao vivo" do caminho do jogador; espectador cai no bracket direto.
     if (data && data.youId && typeof playMatchSequence === 'function') {
       playMatchSequence(data, data.youId, { multiplayer: true });
     } else {
@@ -107,6 +150,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!socket) return;
     socket.emit('start_tournament', (res) => {
       if (res && res.error) showToast(res.error);
+    });
+  });
+
+  // Host: alternar modo interativo + nº de lances
+  function emitMatchMode() {
+    if (!socket) return;
+    const interactive = document.getElementById('mm-interactive').checked;
+    const selBtn = document.querySelector('#mm-count .mm-c.selected');
+    const eventCount = selBtn ? parseInt(selBtn.dataset.count, 10) : 5;
+    socket.emit('set_match_mode', { interactive, eventCount }, (res) => {
+      if (res && res.error) showToast(res.error);
+    });
+  }
+  const mmChk = document.getElementById('mm-interactive');
+  if (mmChk) mmChk.addEventListener('change', () => {
+    document.getElementById('mm-count').classList.toggle('hidden', !mmChk.checked);
+    emitMatchMode();
+  });
+  document.querySelectorAll('#mm-count .mm-c').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#mm-count .mm-c').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+      emitMatchMode();
     });
   });
 });

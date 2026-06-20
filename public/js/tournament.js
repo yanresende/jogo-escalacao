@@ -3,6 +3,11 @@
    Formato Copa do Mundo: grupos de 4 → mata-mata até a final.
    Reusa o motor compartilhado (engine.js) para cada partida.
    Padrão UMD: no browser usa os globais; no Node, require.
+
+   Além de runTournament (simula tudo de uma vez, usado pelos modos
+   clássicos), expõe buildBracket + helpers de standings para o driver
+   do MODO INTERATIVO, que joga partida a partida (ver interactiveMatch.js
+   no client e o driver no server.js).
    ============================================================ */
 (function (root, factory) {
   if (typeof module !== 'undefined' && module.exports) {
@@ -124,15 +129,62 @@
     return { pid, P: 0, W: 0, D: 0, L: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
   }
 
-  // runTournament(humanParticipants, opts)
-  //   humanParticipants: [{ id, name, isBot, flag, team:{players,slots,tactic,captainId,penaltyOrder} }]
-  //   opts: { bracketSize?, seed?, minAvgOverall? }
-  function runTournament(humanParticipants, opts) {
+  // ── Helpers de standings (reusados por runTournament e pelo driver interativo) ──
+
+  // Aplica o resultado de UM jogo de grupos às linhas das duas equipes.
+  // match = { a, b, ga, gb }.
+  function applyGroupResult(table, m) {
+    const ra = table[m.a], rb = table[m.b];
+    ra.P++; rb.P++; ra.gf += m.ga; ra.ga += m.gb; rb.gf += m.gb; rb.ga += m.ga;
+    if (m.ga > m.gb) { ra.W++; ra.pts += 3; rb.L++; }
+    else if (m.ga < m.gb) { rb.W++; rb.pts += 3; ra.L++; }
+    else { ra.D++; rb.D++; ra.pts++; rb.pts++; }
+  }
+
+  // Ordena e atribui rank (1..n) às linhas de um grupo. Desempate por seed (estável).
+  function rankGroupRows(rows, baseSeed) {
+    rows.forEach(rw => { rw.gd = rw.gf - rw.ga; });
+    rows.sort((a, b) =>
+      b.pts - a.pts || b.gd - a.gd || b.gf - a.gf ||
+      seedFor(baseSeed, 'tb' + a.pid) - seedFor(baseSeed, 'tb' + b.pid));
+    rows.forEach((rw, i) => { rw.rank = i + 1; });
+    return rows;
+  }
+
+  // Qualificados na ordem do chaveamento. groups[i].table = rows ordenadas (com .rank).
+  function koSeedingAlive(size, groups, byId) {
+    const seeding = KO_SEEDING[size];
+    return seeding.map(([gi, rank]) => byId[groups[gi].table[rank].pid]);
+  }
+
+  // Metadados (id/label) da rodada de mata-mata conforme nº de classificados restantes.
+  function koRoundMeta(entrants) {
+    return entrants >= 8 ? { id: 'qf', label: 'Quartas de Final' }
+      : entrants === 4 ? { id: 'sf', label: 'Semifinal' }
+      : { id: 'final', label: 'Final' };
+  }
+
+  // Versão "magra" dos participantes (para enviar ao client / render do bracket).
+  function slimParticipants(participants) {
+    return participants.map(p => ({
+      id: p.id, name: p.name, isBot: p.isBot, flag: p.flag || '🏳️',
+      tactic: p.team.tactic || null,
+      captainId: p.team.captainId || null,
+      slots: p.team.slots || [],
+      formation: p.team.formation || null,
+      stats: p.stats,
+      teamPlayers: p.team.players.map(pl => ({
+        id: pl.id, name: pl.name, position: pl.position, overall: pl.overall, flag: pl.flag, country: pl.country,
+      })),
+    }));
+  }
+
+  // Monta a lista de participantes (humanos + bots) com stats e índice por id.
+  function buildParticipants(humanParticipants, opts) {
     opts = opts || {};
     const size = opts.bracketSize || bracketSizeFor(Math.max(humanParticipants.length, 2));
     const baseSeed = (opts.seed != null) ? (opts.seed >>> 0) : E.generateSeed();
 
-    // Completa com bots (seleções reais distintas)
     const participants = [...humanParticipants];
     const botCount = size - participants.length;
     const botSquads = pickBotSquads(botCount, baseSeed, opts);
@@ -151,8 +203,12 @@
 
     const byId = {};
     for (const p of participants) { p.stats = teamStats(p.team); byId[p.id] = p; }
+    return { participants, byId, size, baseSeed };
+  }
 
-    // Embaralha e distribui em grupos de 4 (determinístico)
+  // Embaralha e distribui os participantes em grupos de 4 (determinístico).
+  // Retorna [{ name, members:[participant] }].
+  function drawGroups(participants, baseSeed, size) {
     const order = [...participants];
     const shuf = E.mulberry32(seedFor(baseSeed, 'groups'));
     for (let i = order.length - 1; i > 0; i--) {
@@ -162,39 +218,60 @@
     const numGroups = size / 4;
     const groups = [];
     for (let g = 0; g < numGroups; g++) {
-      const members = order.slice(g * 4, g * 4 + 4);
+      groups.push({ name: GROUP_NAMES[g], members: order.slice(g * 4, g * 4 + 4) });
+    }
+    return groups;
+  }
+
+  // ════════════════════════════════════════════════════════════
+  //  BUILD BRACKET (estrutura sem jogar) — para o driver interativo
+  // ════════════════════════════════════════════════════════════
+  // Retorna participantes + grupos com tabela zerada e os pares de jogos (RR4),
+  // sem simular nada. O driver (client/server) joga partida a partida e usa os
+  // helpers acima (applyGroupResult, rankGroupRows, koSeedingAlive, koRoundMeta).
+  function buildBracket(humanParticipants, opts) {
+    const { participants, byId, size, baseSeed } = buildParticipants(humanParticipants, opts);
+    const draw = drawGroups(participants, baseSeed, size);
+    const groups = draw.map(g => {
+      const table = {};
+      g.members.forEach(m => { table[m.id] = emptyRow(m.id); });
+      const matchPairs = RR4.map(([x, y]) => [g.members[x].id, g.members[y].id]);
+      return { name: g.name, members: g.members, table, matchPairs, matches: [] };
+    });
+    return { participants, byId, size, baseSeed, groups };
+  }
+
+  // ════════════════════════════════════════════════════════════
+  //  RUN TOURNAMENT (simula tudo de uma vez — modos clássicos)
+  // ════════════════════════════════════════════════════════════
+  // runTournament(humanParticipants, opts)
+  //   humanParticipants: [{ id, name, isBot, flag, team:{players,slots,tactic,captainId,penaltyOrder} }]
+  //   opts: { bracketSize?, seed?, minAvgOverall? }
+  function runTournament(humanParticipants, opts) {
+    const { participants, byId, size, baseSeed } = buildParticipants(humanParticipants, opts);
+    const draw = drawGroups(participants, baseSeed, size);
+
+    // Fase de grupos
+    const groups = [];
+    for (let g = 0; g < draw.length; g++) {
+      const members = draw[g].members;
       const table = {};
       members.forEach(m => { table[m.id] = emptyRow(m.id); });
       const matches = [];
       for (const [x, y] of RR4) {
         const r = playMatch(members[x], members[y], baseSeed, `g${g}-${x}${y}`, false);
         matches.push(r);
-        const ra = table[r.a], rb = table[r.b];
-        ra.P++; rb.P++; ra.gf += r.ga; ra.ga += r.gb; rb.gf += r.gb; rb.ga += r.ga;
-        if (r.ga > r.gb) { ra.W++; ra.pts += 3; rb.L++; }
-        else if (r.ga < r.gb) { rb.W++; rb.pts += 3; ra.L++; }
-        else { ra.D++; rb.D++; ra.pts++; rb.pts++; }
+        applyGroupResult(table, r);
       }
-      const rows = members.map(m => table[m.id]);
-      rows.forEach(rw => { rw.gd = rw.gf - rw.ga; });
-      rows.sort((a, b) =>
-        b.pts - a.pts || b.gd - a.gd || b.gf - a.gf ||
-        seedFor(baseSeed, 'tb' + a.pid) - seedFor(baseSeed, 'tb' + b.pid));
-      rows.forEach((rw, i) => { rw.rank = i + 1; });
-      groups.push({ name: GROUP_NAMES[g], table: rows, matches });
+      const rows = rankGroupRows(members.map(m => table[m.id]), baseSeed);
+      groups.push({ name: draw[g].name, table: rows, matches });
     }
 
-    // Qualificados na ordem do chaveamento
-    const seeding = KO_SEEDING[size];
-    let alive = seeding.map(([gi, rank]) => byId[groups[gi].table[rank].pid]);
-
+    // Mata-mata
+    let alive = koSeedingAlive(size, groups, byId);
     const rounds = [];
-    const labelFor = (entrants) => entrants >= 8 ? { id: 'qf', label: 'Quartas de Final' }
-      : entrants === 4 ? { id: 'sf', label: 'Semifinal' }
-      : { id: 'final', label: 'Final' };
-
     while (alive.length >= 2) {
-      const meta = labelFor(alive.length);
+      const meta = koRoundMeta(alive.length);
       const matches = [];
       const next = [];
       for (let i = 0; i < alive.length; i += 2) {
@@ -208,27 +285,21 @@
     }
     const champion = alive.length === 1 ? alive[0].id : null;
 
-    const slimParticipants = participants.map(p => ({
-      id: p.id, name: p.name, isBot: p.isBot, flag: p.flag || '🏳️',
-      tactic: p.team.tactic || null,
-      captainId: p.team.captainId || null,
-      slots: p.team.slots || [],
-      formation: p.team.formation || null,
-      stats: p.stats,
-      teamPlayers: p.team.players.map(pl => ({
-        id: pl.id, name: pl.name, position: pl.position, overall: pl.overall, flag: pl.flag, country: pl.country,
-      })),
-    }));
-
     return {
       bracketSize: size,
       champion,
-      participants: slimParticipants,
+      participants: slimParticipants(participants),
       groups: groups.map(g => ({ name: g.name, table: g.table, matches: g.matches })),
       knockout: { rounds },
       seed: baseSeed,
     };
   }
 
-  return { runTournament, bracketSizeFor, buildBotTeam, pickBotSquads };
+  return {
+    runTournament, bracketSizeFor, buildBotTeam, pickBotSquads,
+    // Para o driver interativo:
+    buildBracket, buildParticipants, drawGroups, playMatch,
+    applyGroupResult, rankGroupRows, koSeedingAlive, koRoundMeta, slimParticipants,
+    emptyRow, seedFor, RR4, KO_SEEDING, GROUP_NAMES, teamStats,
+  };
 });

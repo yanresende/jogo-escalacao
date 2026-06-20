@@ -5,6 +5,7 @@ const path = require('path');
 const E = require('./public/js/engine.js'); // motor compartilhado client/server
 const db = require('./db.js');               // persistência (PostgreSQL / memória)
 const tournament = require('./public/js/tournament.js'); // motor de torneio (UMD)
+const { createInteractiveDriver } = require('./matchServer.js'); // modo interativo (ao vivo)
 
 const app = express();
 const server = http.createServer(app);
@@ -92,6 +93,8 @@ function lobbyState(room) {
     started: room.started,
     max: MAX_PLAYERS,
     count: room.members.length,
+    interactive: !!(room.matchMode && room.matchMode.interactive),
+    eventCount: (room.matchMode && room.matchMode.eventCount) || 5,
     players: room.members.map(m => ({ id: m.id, name: m.name, isHost: m.id === room.hostId, ready: !!m.team })),
   };
 }
@@ -108,9 +111,27 @@ function finishTournament(room) {
 
   const humans = room.members
     .filter(m => m.team && m.team.players && m.team.players.length === 11)
-    .map(m => ({ id: m.id, name: m.name, isBot: false, flag: '🎮', team: normalizeTeam(m.team) }));
+    .map(m => ({ id: m.id, name: m.name, team: normalizeTeam(m.team) }));
 
-  const result = tournament.runTournament(humans);
+  // ── Modo interativo: torneio ao vivo, partida a partida (driver dedicado) ──
+  if (room.matchMode && room.matchMode.interactive) {
+    const driver = createInteractiveDriver(io, room, humans, { eventCount: room.matchMode.eventCount });
+    room.driver = driver;
+    driver.run()
+      .then(result => {
+        for (const m of room.members) {
+          const youId = (result._participantIds || []).includes(m.id) ? m.id : null;
+          io.to(m.id).emit('tournament_result', { ...result, youId });
+        }
+        room.cleanupTimer = setTimeout(() => rooms.delete(room.code), 5 * 60 * 1000);
+      })
+      .catch(err => console.error('[interativo] erro no torneio:', err));
+    return;
+  }
+
+  // ── Modo clássico: simula tudo de uma vez ──
+  const humanParts = humans.map(h => ({ id: h.id, name: h.name, isBot: false, flag: '🎮', team: h.team }));
+  const result = tournament.runTournament(humanParts);
 
   for (const m of room.members) {
     const youId = result.participants.some(p => p.id === m.id) ? m.id : null;
@@ -138,7 +159,8 @@ io.on('connection', (socket) => {
     const room = {
       code, hostId: socket.id, started: false, finished: false,
       members: [{ id: socket.id, name: sanitizeName(name, 'Host'), team: null, connected: true }],
-      draftTimer: null, cleanupTimer: null,
+      matchMode: { interactive: false, eventCount: 5 },
+      draftTimer: null, cleanupTimer: null, driver: null,
     };
     rooms.set(code, room);
     socket.join(code);
@@ -171,6 +193,20 @@ io.on('connection', (socket) => {
     broadcastLobby(room);
   });
 
+  // Host define o modo da partida (interativo + nº de lances) antes de iniciar.
+  socket.on('set_match_mode', (payload, cb) => {
+    const room = rooms.get(socket.data.roomCode);
+    if (!room) return typeof cb === 'function' && cb({ error: 'Sala não encontrada.' });
+    if (room.hostId !== socket.id) return typeof cb === 'function' && cb({ error: 'Só o host pode mudar o modo.' });
+    if (room.started) return typeof cb === 'function' && cb({ error: 'Torneio já iniciado.' });
+    const interactive = !!(payload && payload.interactive);
+    let eventCount = parseInt(payload && payload.eventCount, 10);
+    if (!(eventCount >= 1 && eventCount <= 12)) eventCount = 5;
+    room.matchMode = { interactive, eventCount };
+    if (typeof cb === 'function') cb({ ok: true });
+    broadcastLobby(room);
+  });
+
   socket.on('start_tournament', (cb) => {
     const room = rooms.get(socket.data.roomCode);
     if (!room) return typeof cb === 'function' && cb({ error: 'Sala não encontrada.' });
@@ -180,9 +216,23 @@ io.on('connection', (socket) => {
     room.started = true;
     const bracketSize = tournament.bracketSizeFor(room.members.length);
     if (typeof cb === 'function') cb({ ok: true });
-    io.to(room.code).emit('tournament_starting', { bracketSize, count: room.members.length });
+    io.to(room.code).emit('tournament_starting', {
+      bracketSize, count: room.members.length,
+      interactive: !!(room.matchMode && room.matchMode.interactive),
+      eventCount: (room.matchMode && room.matchMode.eventCount) || 5,
+    });
     // Deadline: quem não draftar vira ausente (vaga vira bot)
     room.draftTimer = setTimeout(() => finishTournament(room), DRAFT_DEADLINE_MS);
+  });
+
+  // Escolhas do modo interativo (roteadas ao driver da sala).
+  socket.on('event_choice', (payload) => {
+    const room = rooms.get(socket.data.roomCode);
+    if (room && room.driver) room.driver.onEventChoice(socket.id, payload);
+  });
+  socket.on('pen_choice', (payload) => {
+    const room = rooms.get(socket.data.roomCode);
+    if (room && room.driver) room.driver.onPenChoice(socket.id, payload);
   });
 
   socket.on('draft_complete', (team) => {

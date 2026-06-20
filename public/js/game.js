@@ -97,6 +97,8 @@ const state = {
   dailySeq:     null,          // sequência determinística de squads (modo diário)
   dailyPtr:     0,
   dailySeed:    null,
+  eventsMode:   false,         // modo interativo (lances de decisão + pênaltis manuais)
+  eventCount:   5,             // nº de lances interativos por partida
 };
 
 // Opções de simulação derivadas do estado atual (tática, capitão, slots, fases por modo).
@@ -375,6 +377,9 @@ window.addEventListener('DOMContentLoaded', () => {
     state.isMultiplayer = false;
     state.gameMode = 'solo';
     state.restrictions = null;
+    state.eventsMode = false;
+    const io = document.getElementById('interactive-opts');
+    if (io) io.classList.add('hidden');
     goTo('mode');
   });
 
@@ -406,11 +411,38 @@ window.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('mode-classic').addEventListener('click', () => {
     state.mode = 'classic';
+    state.eventsMode = false;
     goTo('formation');
     renderFormationGrid();
   });
   document.getElementById('mode-memory').addEventListener('click', () => {
     state.mode = 'memory';
+    state.eventsMode = false;
+    goTo('formation');
+    renderFormationGrid();
+  });
+
+  // Modo Interativo: revela o seletor de nº de lances, depois segue p/ formação
+  const interactiveCard = document.getElementById('mode-interactive');
+  if (interactiveCard) interactiveCard.addEventListener('click', () => {
+    const io = document.getElementById('interactive-opts');
+    if (io) { io.classList.remove('hidden'); io.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+    document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+    interactiveCard.classList.add('selected');
+  });
+  document.querySelectorAll('#interactive-opts .io-count').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#interactive-opts .io-count').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      state.eventCount = parseInt(btn.dataset.count, 10) || 5;
+    });
+  });
+  const ioStart = document.getElementById('io-start');
+  if (ioStart) ioStart.addEventListener('click', () => {
+    state.mode = 'classic';
+    state.eventsMode = true;
+    const sel = document.querySelector('#interactive-opts .io-count.selected');
+    state.eventCount = sel ? (parseInt(sel.dataset.count, 10) || 5) : 5;
     goTo('formation');
     renderFormationGrid();
   });
@@ -498,6 +530,7 @@ function onPlayAgain() {
   state.penaltyOrder = null;
   state.dailySeq = null;
   state.dailyPtr = 0;
+  state.eventsMode = false;
 
   // Volta para o hub do modo, mantendo o contexto quando faz sentido
   if (prevMode === 'career' && typeof renderCareerScreen === 'function') {
