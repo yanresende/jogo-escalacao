@@ -26,7 +26,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 function createInteractiveDriver(io, room, humans, opts) {
   opts = opts || {};
   const eventCount = opts.eventCount || 5;
-  const bracketSize = tournament.bracketSizeFor(Math.max(humans.length, 2));
+  const bracketSize = 16;
 
   const humanParticipants = humans.map(h => ({
     id: h.id, name: h.name, isBot: false, flag: '🎮', team: h.team,

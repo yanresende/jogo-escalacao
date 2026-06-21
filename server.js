@@ -346,7 +346,7 @@ function finishTournament(room) {
 
   // ── Modo clássico: simula tudo de uma vez ──
   const humanParts = humans.map(h => ({ id: h.id, name: h.name, isBot: false, flag: '🎮', team: h.team }));
-  const result = tournament.runTournament(humanParts);
+  const result = tournament.runTournament(humanParts, { bracketSize: 16 });
 
   for (const m of room.members) {
     const youId = result.participants.some(p => p.id === m.id) ? m.id : null;
@@ -429,7 +429,7 @@ io.on('connection', (socket) => {
     if (room.started) return typeof cb === 'function' && cb({ error: 'Já iniciado.' });
     if (room.members.filter(m => m.connected).length < 2) return typeof cb === 'function' && cb({ error: 'Mínimo de 2 jogadores.' });
     room.started = true;
-    const bracketSize = tournament.bracketSizeFor(room.members.length);
+    const bracketSize = 16;
     if (typeof cb === 'function') cb({ ok: true });
     io.to(room.code).emit('tournament_starting', {
       bracketSize, count: room.members.length,

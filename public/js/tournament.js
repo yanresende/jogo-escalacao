@@ -207,20 +207,35 @@
   }
 
   // Embaralha e distribui os participantes em grupos de 4 (determinístico).
+  // Humanos são espalhados um por grupo (round-robin) antes de preencher com bots.
   // Retorna [{ name, members:[participant] }].
   function drawGroups(participants, baseSeed, size) {
-    const order = [...participants];
-    const shuf = E.mulberry32(seedFor(baseSeed, 'groups'));
-    for (let i = order.length - 1; i > 0; i--) {
-      const j = Math.floor(shuf() * (i + 1));
-      [order[i], order[j]] = [order[j], order[i]];
-    }
     const numGroups = size / 4;
-    const groups = [];
-    for (let g = 0; g < numGroups; g++) {
-      groups.push({ name: GROUP_NAMES[g], members: order.slice(g * 4, g * 4 + 4) });
+    const shuf = E.mulberry32(seedFor(baseSeed, 'groups'));
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(shuf() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
     }
-    return groups;
+
+    const humans = shuffle(participants.filter(p => !p.isBot));
+    const bots   = shuffle(participants.filter(p =>  p.isBot));
+
+    // Distribui humanos round-robin: no máximo ⌈humans/grupos⌉ por grupo
+    const slots = Array.from({ length: numGroups }, () => []);
+    humans.forEach((h, i) => slots[i % numGroups].push(h));
+
+    // Preenche com bots até 4 por grupo
+    let bi = 0;
+    for (const g of slots) {
+      while (g.length < 4 && bi < bots.length) g.push(bots[bi++]);
+    }
+
+    return slots.map((members, g) => ({ name: GROUP_NAMES[g], members }));
   }
 
   // ════════════════════════════════════════════════════════════
